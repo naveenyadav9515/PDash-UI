@@ -7,7 +7,7 @@
 
 <main class="app-container">
   <div class="hello-card">
-    
+
     <!-- Header -->
     <header class="card-header">
       <div class="badge">
@@ -15,8 +15,56 @@
         Angular App
       </div>
       <h1 class="gradient-title">{{ greeting() }}, {{ userName }}</h1>
-      <p class="subtitle">Welcome to your new Angular application.</p>
+      <p class="subtitle">Welcome to your personal dashboard.</p>
     </header>
+
+    <!-- DB Status Indicator -->
+    <div class="db-status-panel">
+      <div class="status-row">
+        <span class="material-symbols-outlined status-icon"
+          [class.status-connected]="dbStatus() === 'connected'"
+          [class.status-connecting]="dbStatus() === 'connecting'"
+          [class.status-error]="dbStatus() === 'error'">
+          {{ dbStatus() === 'connected' ? 'cloud_done' : dbStatus() === 'connecting' ? 'cloud_sync' : 'cloud_off' }}
+        </span>
+        <div class="status-info">
+          <span class="status-label">MongoDB Atlas</span>
+          <span class="status-value"
+            [class.status-connected]="dbStatus() === 'connected'"
+            [class.status-connecting]="dbStatus() === 'connecting'"
+            [class.status-error]="dbStatus() === 'error'">
+            {{ dbStatus() === 'connected' ? 'Connected' : dbStatus() === 'connecting' ? 'Connecting...' : 'Disconnected' }}
+          </span>
+        </div>
+      </div>
+      @if (apiMessage()) {
+        <div class="api-message">
+          <span class="material-symbols-outlined" style="font-size: 16px;">api</span>
+          {{ apiMessage() }}
+        </div>
+      }
+    </div>
+
+    <!-- Features List from DB -->
+    @if (features().length > 0) {
+      <div class="features-section">
+        <h2 class="section-title">Features from Database</h2>
+        <div class="features-grid">
+          @for (feature of features(); track feature._id) {
+            <div class="feature-chip" [class.feature-disabled]="!feature.enabled">
+              <span class="material-symbols-outlined feature-icon">{{ feature.icon }}</span>
+              <div class="feature-details">
+                <span class="feature-name">{{ feature.name }}</span>
+                <span class="feature-desc">{{ feature.description }}</span>
+              </div>
+              <span class="feature-badge" [class.badge-on]="feature.enabled" [class.badge-off]="!feature.enabled">
+                {{ feature.enabled ? 'ON' : 'OFF' }}
+              </span>
+            </div>
+          }
+        </div>
+      </div>
+    }
 
   </div>
 </main>

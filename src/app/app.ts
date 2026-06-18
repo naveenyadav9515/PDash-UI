@@ -28,7 +28,19 @@ interface HelloResponse {
 })
 export class App {
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:5000/api';
+  
+  // Dynamic API URL Resolution for Production and Development
+  private get apiUrl(): string {
+    if (typeof window !== 'undefined') {
+      const host = window.location.hostname;
+      if (host !== 'localhost' && host !== '127.0.0.1') {
+        // Automatically map frontend subdomain (e.g. pdash-ui-latest.onrender.com)
+        // to backend service subdomain (e.g. pdash-services-latest.onrender.com)
+        return `https://${host.replace('-ui', '-services')}/api`;
+      }
+    }
+    return 'http://localhost:5000/api';
+  }
 
   protected readonly userName = 'Naani';
   protected readonly greeting = signal('Hello');

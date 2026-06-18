@@ -3,20 +3,21 @@ import { Component, signal, afterNextRender } from '@angular/core';
 @Component({
   selector: 'app-root',
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrl: './app.css',
 })
 export class App {
-  protected readonly greeting = signal('Hello, Naani');
+  protected readonly userName = 'Naani';
+  protected readonly greeting = signal('Hello');
 
   constructor() {
     afterNextRender(() => {
       const hour = new Date().getHours();
       if (hour < 12) {
-        this.greeting.set('Good morning, Naani');
+        this.greeting.set('Good morning');
       } else if (hour < 17) {
-        this.greeting.set('Good afternoon, Naani');
+        this.greeting.set('Good afternoon');
       } else {
-        this.greeting.set('Good evening, Naani');
+        this.greeting.set('Good evening');
       }
     });
   }

@@ -1,0 +1,431 @@
+<!-- App Shell (§8.3: Mobile-perfect, Desktop-contained) -->
+<div class="app-shell">
+
+  @if (dbStatus() === 'connecting') {
+    <!-- ── System Initialization Loader ── -->
+    <div class="system-loader-screen" data-testid="system-loader">
+      <div class="loader-orbit-wrap">
+        <div class="loader-orbit orbit-1"></div>
+        <div class="loader-orbit orbit-2"></div>
+        <div class="loader-orbit orbit-3"></div>
+        <span class="material-symbols-outlined loader-core-icon">settings_ethernet</span>
+      </div>
+      <h2 class="loader-status-title">Connecting to Services</h2>
+      <p class="loader-status-desc">Synchronizing system nodes and establishing secure pipeline...</p>
+    </div>
+  } @else {
+
+    <!-- ── Dashboard Header ── -->
+    <header class="dashboard-header" data-testid="dashboard-header">
+      <div class="header-row">
+        <div class="header-left">
+          <h1 class="brand-name">{{ strings.APP_NAME }}</h1>
+          <p class="greeting-text">{{ greeting() }}, {{ userName }} 👋</p>
+        </div>
+        
+        <div class="header-right">
+          <!-- DB Status Pill -->
+          <div
+            class="db-status-pill"
+            [class.pill-connected]="dbStatus() === 'connected'"
+            [class.pill-connecting]="dbStatus() === 'connecting'"
+            [class.pill-error]="dbStatus() === 'error'"
+            role="status"
+            [attr.aria-label]="'Database ' + (dbStatus() === 'connected' ? strings.DB_STATUS_CONNECTED : dbStatus() === 'connecting' ? strings.DB_STATUS_CONNECTING : strings.DB_STATUS_ERROR)"
+            data-testid="db-status-pill"
+          >
+            <span class="pill-dot"></span>
+            <span class="material-symbols-outlined pill-icon">{{ dbIcons[dbStatus()] }}</span>
+          </div>
+
+          <!-- Profile Picture Ring Design -->
+          <div class="profile-avatar-wrap" data-testid="profile-avatar">
+            <img src="/profile_avatar.png" alt="Naani's Avatar" class="profile-img" />
+            <span class="profile-status-dot" aria-label="System status online"></span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ── Premium Ambient Welcome Card ── -->
+    <section class="welcome-banner-section" aria-label="Daily Status Dashboard">
+      <div class="welcome-banner-card glass-card border-etched">
+        <div class="banner-top-row">
+          <div class="date-badge">
+            <span class="material-symbols-outlined date-icon">calendar_today</span>
+            <span>{{ todayDate() }}</span>
+          </div>
+          <div class="quote-text">
+            "Consistency is what transforms average into excellence."
+          </div>
+        </div>
+        
+        <!-- Summary metrics ribbon -->
+        <div class="banner-metrics-ribbon">
+          <div class="metric-chip">
+            <span class="metric-emoji" role="img" aria-label="streak">🔥</span>
+            <div class="metric-chip-content">
+              <span class="metric-chip-val">12 Days</span>
+              <span class="metric-chip-lbl">Streak</span>
+            </div>
+          </div>
+          <div class="metric-divider"></div>
+          <div class="metric-chip">
+            <span class="metric-emoji" role="img" aria-label="reminders">🔔</span>
+            <div class="metric-chip-content">
+              <span class="metric-chip-val">3 Alerts</span>
+              <span class="metric-chip-lbl">Reminders</span>
+            </div>
+          </div>
+          <div class="metric-divider"></div>
+          <div class="metric-chip">
+            <span class="metric-emoji" role="img" aria-label="finance">💰</span>
+            <div class="metric-chip-content">
+              <span class="metric-chip-val">68%</span>
+              <span class="metric-chip-lbl">Budget</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Hybrid Bento Flow ── -->
+    <main class="hybrid-flow" data-testid="features-section">
+
+      <!-- 1. Features Log (Full Width) -->
+      <section class="flow-item full-width">
+        <button
+          type="button"
+          class="hybrid-card hero-card glass-card border-etched"
+          (click)="openFeatureLog()"
+          aria-label="Open Features Log"
+          data-testid="upcoming-features-log-card"
+        >
+          <div class="card-header">
+            <div class="icon-wrap accent-bg">
+              <span class="material-symbols-outlined icon-color-accent" aria-hidden="true">lightbulb</span>
+            </div>
+            <div class="card-titles">
+              <h2 class="card-name">Features Log</h2>
+              <p class="card-description">Log and organize pointwise upcoming feature ideas</p>
+            </div>
+            <span class="material-symbols-outlined nav-arrow" aria-hidden="true">chevron_right</span>
+          </div>
+
+          <!-- Recent Features Glimpse -->
+          <div class="glimpse-box">
+            @if (recentLogs().length > 0) {
+              <div class="glimpse-list">
+                @for (log of recentLogs(); track log.id) {
+                  <div class="glimpse-item">
+                    <span class="glimpse-bullet">•</span>
+                    <div class="glimpse-content">
+                      <span class="glimpse-title">{{ log.name }}</span>
+                      @if (log.details.length > 0) {
+                        <span class="glimpse-snippet">{{ log.details[0] }}</span>
+                      }
+                    </div>
+                  </div>
+                }
+              </div>
+            } @else {
+              <p class="glimpse-empty">No features logged yet. Tap here to start planning!</p>
+            }
+          </div>
+        </button>
+      </section>
+
+      <!-- 2. Grid Section 1 (Notes & Kitchen) -->
+      <section class="flow-item grid-block">
+        <!-- Notes Card -->
+        @if (getFeature('Notes'); as feat) {
+          <button
+            type="button"
+            class="hybrid-card grid-card glass-card border-etched"
+            (click)="onFeatureClick(feat)"
+            [attr.aria-label]="feat.name"
+          >
+            <div class="icon-wrap">
+              <span class="material-symbols-outlined" aria-hidden="true">{{ feat.icon }}</span>
+            </div>
+            <span class="grid-card-name">{{ feat.name }}</span>
+          </button>
+        }
+
+        <!-- Kitchen Card -->
+        @if (getFeature('Kitchen'); as feat) {
+          <button
+            type="button"
+            class="hybrid-card grid-card glass-card border-etched"
+            (click)="onFeatureClick(feat)"
+            [attr.aria-label]="feat.name"
+          >
+            <div class="icon-wrap">
+              <span class="material-symbols-outlined" aria-hidden="true">{{ feat.icon }}</span>
+            </div>
+            <span class="grid-card-name">{{ feat.name }}</span>
+          </button>
+        }
+      </section>
+
+      <!-- 3. Finance Tracker (Full Width) -->
+      @if (getFeature('Finance Tracker'); as feat) {
+        <section class="flow-item full-width">
+          <button
+            type="button"
+            class="hybrid-card detailed-full-card glass-card border-etched"
+            (click)="onFeatureClick(feat)"
+            [attr.aria-label]="feat.name"
+          >
+            <div class="card-header">
+              <div class="icon-wrap">
+                <span class="material-symbols-outlined" aria-hidden="true">{{ feat.icon }}</span>
+              </div>
+              <div class="card-titles">
+                <h2 class="card-name">{{ feat.name }}</h2>
+                <p class="card-description">{{ feat.description }}</p>
+              </div>
+              <span class="material-symbols-outlined nav-arrow" aria-hidden="true">info</span>
+            </div>
+
+            <!-- Finance Mock Glimpse -->
+            <div class="glimpse-box preview-flex">
+              <div class="preview-metric">
+                <span class="metric-label">Monthly Spend</span>
+                <span class="metric-value">$1,240.00</span>
+              </div>
+              <div class="preview-progress-wrap">
+                <div class="progress-info">
+                  <span>Budget Status</span>
+                  <span>68% spent</span>
+                </div>
+                <div class="progress-bar-bg" aria-hidden="true">
+                  <div class="progress-bar-fill fill-purple" style="width: 68%"></div>
+                </div>
+              </div>
+            </div>
+          </button>
+        </section>
+      }
+
+      <!-- 4. Grid Section 2 (Travel & Purchases) -->
+      <section class="flow-item grid-block">
+        <!-- Travel Card -->
+        @if (getFeature('Travel'); as feat) {
+          <button
+            type="button"
+            class="hybrid-card grid-card glass-card border-etched"
+            (click)="onFeatureClick(feat)"
+            [attr.aria-label]="feat.name"
+          >
+            <div class="icon-wrap">
+              <span class="material-symbols-outlined" aria-hidden="true">{{ feat.icon }}</span>
+            </div>
+            <span class="grid-card-name">{{ feat.name }}</span>
+          </button>
+        }
+
+        <!-- Purchases Card -->
+        @if (getFeature('Purchases'); as feat) {
+          <button
+            type="button"
+            class="hybrid-card grid-card glass-card border-etched"
+            (click)="onFeatureClick(feat)"
+            [attr.aria-label]="feat.name"
+          >
+            <div class="icon-wrap">
+              <span class="material-symbols-outlined" aria-hidden="true">{{ feat.icon }}</span>
+            </div>
+            <span class="grid-card-name">{{ feat.name }}</span>
+          </button>
+        }
+      </section>
+
+      <!-- 5. Reminders (Full Width) -->
+      @if (getFeature('Reminders'); as feat) {
+        <section class="flow-item full-width">
+          <button
+            type="button"
+            class="hybrid-card detailed-full-card glass-card border-etched"
+            (click)="onFeatureClick(feat)"
+            [attr.aria-label]="feat.name"
+          >
+            <div class="card-header">
+              <div class="icon-wrap">
+                <span class="material-symbols-outlined" aria-hidden="true">{{ feat.icon }}</span>
+              </div>
+              <div class="card-titles">
+                <h2 class="card-name">{{ feat.name }}</h2>
+                <p class="card-description">{{ feat.description }}</p>
+              </div>
+              <span class="material-symbols-outlined nav-arrow" aria-hidden="true">info</span>
+            </div>
+
+            <!-- Reminders Mock Glimpse -->
+            <div class="glimpse-box">
+              <div class="mock-reminder-item">
+                <span class="material-symbols-outlined reminder-bullet">notifications</span>
+                <div class="reminder-content">
+                  <span class="reminder-text">Call family tonight</span>
+                  <span class="reminder-time">6:00 PM</span>
+                </div>
+              </div>
+            </div>
+          </button>
+        </section>
+      }
+
+      <!-- 6. Grid Section 3 (Kirana & Rules) -->
+      <section class="flow-item grid-block">
+        <!-- Kirana Card -->
+        @if (getFeature('Kirana'); as feat) {
+          <button
+            type="button"
+            class="hybrid-card grid-card glass-card border-etched"
+            (click)="onFeatureClick(feat)"
+            [attr.aria-label]="feat.name"
+          >
+            <div class="icon-wrap">
+              <span class="material-symbols-outlined" aria-hidden="true">{{ feat.icon }}</span>
+            </div>
+            <span class="grid-card-name">{{ feat.name }}</span>
+          </button>
+        }
+
+        <!-- Rules Card -->
+        @if (getFeature('Rules'); as feat) {
+          <button
+            type="button"
+            class="hybrid-card grid-card glass-card border-etched"
+            (click)="onFeatureClick(feat)"
+            [attr.aria-label]="feat.name"
+          >
+            <div class="icon-wrap">
+              <span class="material-symbols-outlined" aria-hidden="true">{{ feat.icon }}</span>
+            </div>
+            <span class="grid-card-name">{{ feat.name }}</span>
+          </button>
+        }
+      </section>
+
+      <!-- 7. Streak Loggers (Full Width) -->
+      @if (getFeature('Streak Loggers'); as feat) {
+        <section class="flow-item full-width">
+          <button
+            type="button"
+            class="hybrid-card detailed-full-card glass-card border-etched"
+            (click)="onFeatureClick(feat)"
+            [attr.aria-label]="feat.name"
+          >
+            <div class="card-header">
+              <div class="icon-wrap">
+                <span class="material-symbols-outlined" aria-hidden="true">{{ feat.icon }}</span>
+              </div>
+              <div class="card-titles">
+                <h2 class="card-name">{{ feat.name }}</h2>
+                <p class="card-description">{{ feat.description }}</p>
+              </div>
+              <span class="material-symbols-outlined nav-arrow" aria-hidden="true">info</span>
+            </div>
+
+            <!-- Streak Check-in Mock Glimpse -->
+            <div class="glimpse-box preview-flex">
+              <div class="preview-metric">
+                <span class="metric-label">Current Streak</span>
+                <span class="metric-value">12 Days</span>
+              </div>
+              <div class="mock-grid-row" aria-hidden="true">
+                <span class="streak-block checked"></span>
+                <span class="streak-block checked"></span>
+                <span class="streak-block checked"></span>
+                <span class="streak-block unchecked"></span>
+                <span class="streak-block checked"></span>
+                <span class="streak-block checked"></span>
+                <span class="streak-block checked"></span>
+              </div>
+            </div>
+          </button>
+        </section>
+      }
+
+      <!-- 8. Grid Section 4 (Movies) -->
+      <section class="flow-item grid-block">
+        <!-- Movies Card -->
+        @if (getFeature('Movies'); as feat) {
+          <button
+            type="button"
+            class="hybrid-card grid-card glass-card border-etched"
+            (click)="onFeatureClick(feat)"
+            [attr.aria-label]="feat.name"
+          >
+            <div class="icon-wrap">
+              <span class="material-symbols-outlined" aria-hidden="true">{{ feat.icon }}</span>
+            </div>
+            <span class="grid-card-name">{{ feat.name }}</span>
+          </button>
+        }
+      </section>
+
+      <!-- 9. Plans (Full Width) -->
+      @if (getFeature('Plans'); as feat) {
+        <section class="flow-item full-width">
+          <button
+            type="button"
+            class="hybrid-card detailed-full-card glass-card border-etched"
+            (click)="onFeatureClick(feat)"
+            [attr.aria-label]="feat.name"
+          >
+            <div class="card-header">
+              <div class="icon-wrap">
+                <span class="material-symbols-outlined" aria-hidden="true">{{ feat.icon }}</span>
+              </div>
+              <div class="card-titles">
+                <h2 class="card-name">{{ feat.name }}</h2>
+                <p class="card-description">{{ feat.description }}</p>
+              </div>
+              <span class="material-symbols-outlined nav-arrow" aria-hidden="true">info</span>
+            </div>
+
+            <!-- Plans Mock Glimpse -->
+            <div class="glimpse-box">
+              <div class="mock-reminder-item">
+                <span class="material-symbols-outlined plan-bullet">calendar_today</span>
+                <div class="reminder-content">
+                  <span class="reminder-text">Dinner with Friends</span>
+                  <span class="reminder-time">Friday, 8:00 PM</span>
+                </div>
+              </div>
+            </div>
+          </button>
+        </section>
+      }
+
+    </main>
+  }
+
+</div>
+
+<!-- ── Feature Details Modal ── -->
+@if (selectedFeature(); as feature) {
+  <div class="modal-backdrop glass-mantle" (click)="closeDetails()" role="dialog" aria-modal="true">
+    <div class="modal-content glass-float border-etched" (click)="$event.stopPropagation()">
+      <header class="modal-header">
+        <div class="modal-icon-wrap">
+          <span class="material-symbols-outlined modal-icon">{{ feature.icon }}</span>
+        </div>
+        <h3 class="modal-title">{{ feature.name }}</h3>
+        <button
+          type="button"
+          class="modal-close-btn"
+          (click)="closeDetails()"
+          aria-label="Close modal"
+        >
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </header>
+      <div class="modal-body">
+        <p class="modal-desc">{{ feature.description }}</p>
+      </div>
+    </div>
+  </div>
+}

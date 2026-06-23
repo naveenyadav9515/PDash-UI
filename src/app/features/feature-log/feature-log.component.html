@@ -1,0 +1,136 @@
+<!-- App Shell Container (§8.3: Mobile-perfect, Desktop-contained) -->
+<div class="app-shell">
+
+  <!-- Header with Back Navigation -->
+  <header class="feature-log-header">
+    <button
+      type="button"
+      class="back-btn"
+      (click)="goBack()"
+      aria-label="Return to Dashboard"
+      data-testid="back-to-dashboard-btn"
+    >
+      <span class="material-symbols-outlined" aria-hidden="true">arrow_back</span>
+    </button>
+    <div class="header-titles">
+      <span class="header-tagline">Isolated Feature Module</span>
+      <h1 class="feature-title">{{ strings.FEATURE_LOG_TITLE }}</h1>
+    </div>
+  </header>
+
+  <!-- Feature Form -->
+  <section aria-label="Log feature form">
+    <form
+      [formGroup]="featureLogForm"
+      (ngSubmit)="saveFeatureLog()"
+      class="log-form glass-card border-etched"
+      data-testid="feature-log-form"
+    >
+      <div class="form-field">
+        <label for="feat-name" class="field-label">Feature Name</label>
+        <input
+          id="feat-name"
+          formControlName="name"
+          class="glass-input"
+          type="text"
+          [placeholder]="strings.FEATURE_LOG_NAME_PLACEHOLDER"
+          aria-required="true"
+          data-testid="feature-name-input"
+        />
+      </div>
+
+      <!-- Pointwise Detail Inputs -->
+      <div class="details-group" formArrayName="details">
+        <span class="field-label">Feature Details (Pointwise)</span>
+        @for (control of detailControls; track $index; let i = $index) {
+          <div class="detail-row">
+            <span class="detail-number" aria-hidden="true">{{ i + 1 }}</span>
+            <input
+              [formControlName]="i"
+              class="glass-input detail-input"
+              type="text"
+              [placeholder]="strings.FEATURE_LOG_DETAIL_PLACEHOLDER"
+              [attr.aria-label]="'Detail point ' + (i + 1)"
+              aria-required="true"
+              data-testid="detail-point-input"
+            />
+            @if (detailControls.length > 1) {
+              <button
+                type="button"
+                class="remove-detail-btn"
+                (click)="removeDetailPoint(i)"
+                aria-label="Remove detail point"
+                data-testid="remove-detail-btn"
+              >
+                <span class="material-symbols-outlined" aria-hidden="true">close</span>
+              </button>
+            }
+          </div>
+        }
+        <button
+          type="button"
+          class="add-point-btn"
+          (click)="addDetailPoint()"
+          data-testid="add-point-btn"
+        >
+          <span class="material-symbols-outlined" aria-hidden="true">add</span>
+          {{ strings.FEATURE_LOG_ADD_POINT }}
+        </button>
+      </div>
+
+      <button
+        type="submit"
+        class="save-btn"
+        [disabled]="featureLogForm.invalid"
+        data-testid="save-feature-btn"
+      >
+        <span class="material-symbols-outlined" aria-hidden="true">check_circle</span>
+        {{ strings.FEATURE_LOG_SAVE_BTN }}
+      </button>
+    </form>
+  </section>
+
+  <!-- Logged Features list -->
+  <section aria-label="Logged features list" data-testid="logged-features-section">
+    <h2 class="section-label">Logged Features</h2>
+
+    @if (featureLogs().length > 0) {
+      <div class="logged-list" role="list">
+        @for (log of featureLogs(); track log.id) {
+          <article
+            class="logged-card glass-card border-etched"
+            role="listitem"
+            data-testid="logged-feature-card"
+          >
+            <div class="logged-header">
+              <h3 class="logged-name">{{ log.name }}</h3>
+              <button
+                type="button"
+                class="delete-log-btn"
+                (click)="deleteFeatureLog(log.id)"
+                aria-label="Delete feature log"
+                data-testid="delete-log-btn"
+              >
+                <span class="material-symbols-outlined" aria-hidden="true">delete_outline</span>
+              </button>
+            </div>
+            <ul class="logged-details">
+              @for (detail of log.details; track $index) {
+                <li>{{ detail }}</li>
+              }
+            </ul>
+            <time class="logged-date" [attr.datetime]="log.createdAt">
+              {{ log.createdAt | date:'MMM d, y · h:mm a' }}
+            </time>
+          </article>
+        }
+      </div>
+    } @else {
+      <div class="empty-state glass-card border-etched" data-testid="empty-state">
+        <span class="material-symbols-outlined empty-icon" aria-hidden="true">lightbulb</span>
+        <p>{{ strings.FEATURE_LOG_EMPTY }}</p>
+      </div>
+    }
+  </section>
+
+</div>

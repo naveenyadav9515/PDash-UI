@@ -1,85 +1,15 @@
-import { Component, signal, afterNextRender, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 
-interface Feature {
-  _id: string;
-  name: string;
-  description: string;
-  icon: string;
-  enabled: boolean;
-}
-
-interface FeaturesResponse {
-  status: string;
-  count: number;
-  data: Feature[];
-}
-
-interface HelloResponse {
-  status: string;
-  message: string;
-  timestamp: string;
-}
-
+/**
+ * Root Shell Component.
+ * Holds the background gradient decorations and the main router outlet.
+ */
 @Component({
   selector: 'app-root',
   templateUrl: './app.html',
   styleUrl: './app.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [RouterOutlet],
 })
-export class App {
-  private http = inject(HttpClient);
-  
-  // Dynamic API URL Resolution for Production and Development
-  private get apiUrl(): string {
-    if (typeof window !== 'undefined') {
-      const host = window.location.hostname;
-      if (host !== 'localhost' && host !== '127.0.0.1') {
-        // Automatically map frontend subdomain (e.g. pdash-ui-latest.onrender.com)
-        // to backend service subdomain (e.g. pdash-services-latest.onrender.com)
-        return `https://${host.replace('-ui', '-services')}/api`;
-      }
-    }
-    return 'http://localhost:5000/api';
-  }
-
-  protected readonly userName = 'Naani';
-  protected readonly greeting = signal('Hello');
-  protected readonly dbStatus = signal<'connecting' | 'connected' | 'error'>('connecting');
-  protected readonly features = signal<Feature[]>([]);
-  protected readonly apiMessage = signal('');
-
-  constructor() {
-    afterNextRender(() => {
-      // Set greeting based on time
-      const hour = new Date().getHours();
-      if (hour < 12) {
-        this.greeting.set('Good morning');
-      } else if (hour < 17) {
-        this.greeting.set('Good afternoon');
-      } else {
-        this.greeting.set('Good evening');
-      }
-
-      // Test API connection
-      this.http.get<HelloResponse>(`${this.apiUrl}/hello`).subscribe({
-        next: (res) => {
-          this.apiMessage.set(res.message);
-        },
-        error: () => {
-          this.dbStatus.set('error');
-        }
-      });
-
-      // Fetch features from MongoDB
-      this.http.get<FeaturesResponse>(`${this.apiUrl}/features`).subscribe({
-        next: (res) => {
-          this.features.set(res.data);
-          this.dbStatus.set('connected');
-        },
-        error: () => {
-          this.dbStatus.set('error');
-        }
-      });
-    });
-  }
-}
+export class App {}

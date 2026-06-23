@@ -153,6 +153,7 @@ This document is the step-by-step execution blueprint for implementing the front
   - `app-plans-widget` — upcoming social events.
   - `app-rules-widget` — rule of the day flip card.
   - `app-movies-widget` — watchlist status board.
+  - `app-streak-widget` — consistency streak tracker (GitHub-style calendar grid).
 - [ ] DB Connection Status indicator widget.
 - [ ] Sticky warning header for critical reminders.
 
@@ -198,6 +199,13 @@ This document is the step-by-step execution blueprint for implementing the front
 - [ ] Create service layer.
 - [ ] Build watchlist with status board (To Watch → Watching → Watched).
 - [ ] Implement rating system and search/filter.
+
+### 5.8. Streak Loggers & Activity Details Module (F11)
+- [ ] Create service layer (`streak.service.ts`, `streak.store.ts`) for tracking daily streaks and logging activities.
+- [ ] Build activity detail logging forms/options (category/type, duration, status, custom notes).
+- [ ] Implement consistency/streak tracker visualization (e.g., GitHub-style contribution grid or heat map).
+- [ ] Implement activity log history view with filter options (date range, type) and search.
+- [ ] Define interfaces for `Streak`, `ActivityLog`, and `LogActivityRequest`.
 
 ---
 
@@ -322,3 +330,4 @@ This document is the step-by-step execution blueprint for implementing the front
 - [ ] Create `CONTRIBUTING.md` with development setup instructions.
 - [ ] Document component API contracts in shared component README files.
 - [ ] Maintain CHANGELOG for all releases.
+- [ ] Dev Logs (development rules, guidelines, etc. — for later review).

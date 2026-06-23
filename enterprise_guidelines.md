@@ -275,8 +275,11 @@ All UI work must conform to the Lumina Adaptive specifications:
 
 * **Mobile-First**: Write base styles for mobile, then use `min-width` media queries for larger screens.
 * **Breakpoints**: Define breakpoints as SCSS variables/mixins (e.g., `$bp-tablet: 768px`, `$bp-desktop: 1024px`, `$bp-wide: 1440px`).
-* **Desktop**: Max content width 1440px with sidebar navigation.
-* **Mobile**: Bottom navigation bar with glass blur. Content fills viewport width.
+* **App Shell Container ("Mobile-Perfect, Desktop-Contained")**: Since this is a mobile-targeted PWA, use a max-width container strategy on larger screens:
+  - Mobile: Full viewport width, zero design compromise.
+  - Tablet (768px+): `max-width: 520px`, centered with `margin-inline: auto`.
+  - Desktop (1024px+): `max-width: 560px`, centered. Background effects fill the remaining viewport.
+  - This ensures the mobile UI is always the primary experience and desktop users see a clean, centered app panel.
 * **Touch Targets**: Minimum 44×44px touch targets on all interactive elements.
 * **No Horizontal Scroll**: Content must never cause horizontal scroll on any viewport.
 

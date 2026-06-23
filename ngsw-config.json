@@ -26,5 +26,31 @@
         ]
       }
     }
+  ],
+  "dataGroups": [
+    {
+      "name": "fonts-cdn",
+      "urls": [
+        "https://fonts.googleapis.com/**",
+        "https://fonts.gstatic.com/**"
+      ],
+      "cacheConfig": {
+        "strategy": "performance",
+        "maxSize": 20,
+        "maxAge": "365d"
+      }
+    },
+    {
+      "name": "api-data",
+      "urls": [
+        "/api/**"
+      ],
+      "cacheConfig": {
+        "strategy": "freshness",
+        "maxSize": 50,
+        "maxAge": "1h",
+        "timeout": "5s"
+      }
+    }
   ]
 }

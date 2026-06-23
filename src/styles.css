@@ -1,31 +1,162 @@
-/* Custom properties for theme tokens */
+/*
+ * ==========================================================================
+ * Lumina Adaptive Design System — Global Styles
+ * ==========================================================================
+ *
+ * All design tokens use the `--lm-*` prefix (§8.2).
+ * Dark Mode ("Deep Space") is the default theme.
+ * Light Mode ("Snow Glass") is toggled via `[data-theme="light"]` on <html> (§8.4).
+ * Mobile-first: base styles for mobile, min-width queries for larger screens (§8.3).
+ * Spacing is based on a 4px unit (§8.2).
+ * Typography uses Geist as primary, Outfit as display, Inter as body fallback (§8.2).
+ */
+
+/* ==========================================================================
+   Dark Mode ("Deep Space") — Default Theme Tokens
+   ========================================================================== */
+
 :root {
-  --font-sans: 'Outfit', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  
-  /* Color Palette - Cyberpunk Dark/Glassmorphic theme */
-  --bg-dark: #080612;
-  --bg-orb-1: #6d28d9;
-  --bg-orb-2: #db2777;
-  --bg-orb-3: #2563eb;
-  
-  --panel-bg: rgba(15, 12, 38, 0.45);
-  --panel-border: rgba(255, 255, 255, 0.08);
-  --panel-border-hover: rgba(255, 255, 255, 0.18);
-  --panel-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-  --panel-blur: 16px;
-  
-  --text-primary: #f8fafc;
-  --text-secondary: #94a3b8;
-  --text-muted: #64748b;
-  
-  --gradient-text: linear-gradient(135deg, #a78bfa 0%, #f472b6 50%, #60a5fa 100%);
-  --gradient-button: linear-gradient(135deg, #7c3aed 0%, #db2777 100%);
-  --gradient-button-hover: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
-  
-  --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  /* --- Typography (§8.2) --- */
+  --lm-font-display: 'Outfit', 'Geist', sans-serif;
+  --lm-font-body: 'Geist', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --lm-font-mono: 'Geist Mono', 'Fira Code', monospace;
+
+  /* Typography Scale (display-lg through mono-sm) */
+  --lm-type-display-lg: 800 2.75rem/1.2 var(--lm-font-display);
+  --lm-type-display-md: 700 2rem/1.25 var(--lm-font-display);
+  --lm-type-display-sm: 600 1.5rem/1.3 var(--lm-font-display);
+  --lm-type-heading-lg: 600 1.25rem/1.35 var(--lm-font-body);
+  --lm-type-heading-md: 600 1.05rem/1.4 var(--lm-font-body);
+  --lm-type-body-lg: 400 1.05rem/1.5 var(--lm-font-body);
+  --lm-type-body-md: 400 0.95rem/1.5 var(--lm-font-body);
+  --lm-type-body-sm: 400 0.85rem/1.5 var(--lm-font-body);
+  --lm-type-caption: 500 0.8rem/1.4 var(--lm-font-body);
+  --lm-type-overline: 600 0.75rem/1.4 var(--lm-font-body);
+  --lm-type-mono-sm: 400 0.8rem/1.5 var(--lm-font-mono);
+
+  /* --- Color Palette — Deep Space Dark Theme (§8.2) --- */
+  --lm-color-bg: #080612;
+  --lm-color-surface: rgba(15, 12, 38, 0.45);
+  --lm-color-surface-hover: rgba(255, 255, 255, 0.08);
+  --lm-color-surface-subtle: rgba(255, 255, 255, 0.03);
+
+  --lm-color-primary: #a78bfa;
+  --lm-color-primary-glow: rgba(139, 92, 246, 0.15);
+  --lm-color-secondary: #f472b6;
+  --lm-color-tertiary: #60a5fa;
+
+  --lm-color-success: #34d399;
+  --lm-color-success-glow: rgba(52, 211, 153, 0.15);
+  --lm-color-warning: #fbbf24;
+  --lm-color-error: #f87171;
+  --lm-color-error-glow: rgba(248, 113, 113, 0.15);
+
+  --lm-color-text-primary: #f8fafc;
+  --lm-color-text-secondary: #94a3b8;
+  --lm-color-text-muted: #64748b;
+
+  /* --- Gradients --- */
+  --lm-gradient-text: linear-gradient(135deg, #a78bfa 0%, #f472b6 50%, #60a5fa 100%);
+  --lm-gradient-button: linear-gradient(135deg, #7c3aed 0%, #db2777 100%);
+  --lm-gradient-button-hover: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
+
+  /* --- Orb Colors (background decorations) --- */
+  --lm-color-orb-1: #6d28d9;
+  --lm-color-orb-2: #db2777;
+  --lm-color-orb-3: #2563eb;
+
+  /* --- Borders (§8.2: etched borders) --- */
+  --lm-border-subtle: 1px solid rgba(255, 255, 255, 0.08);
+  --lm-border-hover: 1px solid rgba(255, 255, 255, 0.18);
+  --lm-border-etched: 0.5px solid rgba(255, 255, 255, 0.12);
+  --lm-border-accent: 1px solid rgba(139, 92, 246, 0.3);
+
+  /* --- Elevation (§8.2: blur values, shadows) --- */
+  --lm-blur-sm: 8px;
+  --lm-blur-md: 16px;
+  --lm-blur-lg: 24px;
+  --lm-shadow-panel: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  --lm-shadow-panel-hover: 0 12px 48px 0 rgba(0, 0, 0, 0.5), 0 0 40px rgba(139, 92, 246, 0.15);
+  --lm-shadow-float: 0 16px 64px 0 rgba(0, 0, 0, 0.5);
+
+  /* --- Spacing (§8.2: 4px base unit) --- */
+  --lm-space-unit: 4px;
+  --lm-space-2xs: 4px;    /* 1 unit  */
+  --lm-space-xs: 8px;     /* 2 units */
+  --lm-space-sm: 12px;    /* 3 units */
+  --lm-space-md: 16px;    /* 4 units */
+  --lm-space-lg: 24px;    /* 6 units */
+  --lm-space-xl: 32px;    /* 8 units */
+  --lm-space-2xl: 48px;   /* 12 units */
+  --lm-space-3xl: 64px;   /* 16 units */
+
+  --lm-space-stack-sm: 8px;
+  --lm-space-stack-md: 16px;
+  --lm-space-stack-lg: 24px;
+  --lm-space-container-padding: 16px;
+  --lm-space-gutter: 16px;
+
+  /* --- Radius --- */
+  --lm-radius-sm: 8px;
+  --lm-radius-md: 12px;
+  --lm-radius-lg: 16px;
+  --lm-radius-xl: 24px;
+  --lm-radius-pill: 9999px;
+
+  /* --- Transitions --- */
+  --lm-transition-fast: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  --lm-transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --lm-transition-slow: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* --- Touch targets (§8.3: minimum 44×44px) --- */
+  --lm-touch-target-min: 44px;
 }
 
-/* Base resets */
+/* ==========================================================================
+   Light Mode ("Snow Glass") — Theme Override (§8.4)
+   ========================================================================== */
+
+[data-theme="light"] {
+  --lm-color-bg: #f0eff5;
+  --lm-color-surface: rgba(255, 255, 255, 0.65);
+  --lm-color-surface-hover: rgba(0, 0, 0, 0.04);
+  --lm-color-surface-subtle: rgba(0, 0, 0, 0.02);
+
+  --lm-color-primary: #7c3aed;
+  --lm-color-primary-glow: rgba(124, 58, 237, 0.1);
+  --lm-color-secondary: #db2777;
+  --lm-color-tertiary: #2563eb;
+
+  --lm-color-success: #059669;
+  --lm-color-success-glow: rgba(5, 150, 105, 0.1);
+  --lm-color-warning: #d97706;
+  --lm-color-error: #dc2626;
+  --lm-color-error-glow: rgba(220, 38, 38, 0.1);
+
+  --lm-color-text-primary: #0f172a;
+  --lm-color-text-secondary: #475569;
+  --lm-color-text-muted: #94a3b8;
+
+  --lm-gradient-text: linear-gradient(135deg, #7c3aed 0%, #db2777 50%, #2563eb 100%);
+
+  --lm-color-orb-1: #c4b5fd;
+  --lm-color-orb-2: #f9a8d4;
+  --lm-color-orb-3: #93c5fd;
+
+  --lm-border-subtle: 1px solid rgba(0, 0, 0, 0.08);
+  --lm-border-hover: 1px solid rgba(0, 0, 0, 0.15);
+  --lm-border-etched: 0.5px solid rgba(0, 0, 0, 0.1);
+  --lm-border-accent: 1px solid rgba(124, 58, 237, 0.3);
+
+  --lm-shadow-panel: 0 8px 32px 0 rgba(0, 0, 0, 0.08);
+  --lm-shadow-panel-hover: 0 12px 48px 0 rgba(0, 0, 0, 0.12), 0 0 40px rgba(124, 58, 237, 0.08);
+  --lm-shadow-float: 0 16px 64px 0 rgba(0, 0, 0, 0.12);
+}
+
+/* ==========================================================================
+   Base Resets
+   ========================================================================== */
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -33,19 +164,92 @@
 }
 
 body {
-  font-family: var(--font-sans);
-  background-color: var(--bg-dark);
-  color: var(--text-primary);
+  font: var(--lm-type-body-md);
+  background-color: var(--lm-color-bg);
+  color: var(--lm-color-text-primary);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  overflow-x: hidden;
+  overflow-x: hidden; /* §8.3: no horizontal scroll */
   position: relative;
 }
 
-/* Background Glowing Orbs */
+/* ==========================================================================
+   App Shell — Mobile-Perfect, Desktop-Contained (§8.3)
+   On mobile: full viewport width, zero compromise on design.
+   On tablets/desktops: centered container capped at mobile-like width,
+   background orbs fill the viewport behind it for a premium look.
+   ========================================================================== */
+
+.app-shell {
+  width: 100%;
+  min-height: 100vh;
+  padding: var(--lm-space-md);
+  padding-bottom: var(--lm-space-3xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--lm-space-lg);
+  z-index: 10;
+  position: relative;
+}
+
+@media (min-width: 768px) {
+  .app-shell {
+    max-width: 520px;
+    margin-inline: auto;
+    padding: var(--lm-space-xl);
+  }
+}
+
+@media (min-width: 1024px) {
+  .app-shell {
+    max-width: 560px;
+  }
+}
+
+/* ==========================================================================
+   Glassmorphism Utility Classes (§8.2)
+   ========================================================================== */
+
+/** Base refractive glass layer — used for full-page overlays or mantle surfaces */
+.glass-mantle {
+  background: var(--lm-color-surface);
+  backdrop-filter: blur(var(--lm-blur-lg));
+  -webkit-backdrop-filter: blur(var(--lm-blur-lg));
+}
+
+/** Standard glass card — primary container for content panels */
+.glass-card {
+  background: var(--lm-color-surface);
+  backdrop-filter: blur(var(--lm-blur-md));
+  -webkit-backdrop-filter: blur(var(--lm-blur-md));
+  box-shadow: var(--lm-shadow-panel);
+  transition: var(--lm-transition-smooth);
+}
+
+.glass-card:hover {
+  box-shadow: var(--lm-shadow-panel-hover);
+}
+
+/** Floating glass surface — elevated elements like modals, tooltips */
+.glass-float {
+  background: var(--lm-color-surface);
+  backdrop-filter: blur(var(--lm-blur-lg));
+  -webkit-backdrop-filter: blur(var(--lm-blur-lg));
+  box-shadow: var(--lm-shadow-float);
+}
+
+/** Etched border — every glass element must use this (§8.2) */
+.border-etched {
+  border: var(--lm-border-etched);
+}
+
+/* ==========================================================================
+   Background Glowing Orbs
+   ========================================================================== */
+
 .bg-glow-container {
   position: absolute;
   top: 0;
@@ -67,18 +271,10 @@ body {
   transition: opacity 1s ease-in-out;
 }
 
-.bg-orb-active {
-  opacity: 0.35 !important;
-}
-
-.bg-orb-inactive {
-  opacity: 0.02 !important;
-}
-
 .orb-purple {
   width: 50vw;
   height: 50vw;
-  background-color: var(--bg-orb-1);
+  background-color: var(--lm-color-orb-1);
   top: -10%;
   left: -10%;
   animation: float-orb-1 25s infinite ease-in-out alternate;
@@ -87,7 +283,7 @@ body {
 .orb-pink {
   width: 45vw;
   height: 45vw;
-  background-color: var(--bg-orb-2);
+  background-color: var(--lm-color-orb-2);
   bottom: -10%;
   right: -10%;
   animation: float-orb-2 30s infinite ease-in-out alternate;
@@ -96,7 +292,7 @@ body {
 .orb-blue {
   width: 35vw;
   height: 35vw;
-  background-color: var(--bg-orb-3);
+  background-color: var(--lm-color-orb-3);
   top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -119,17 +315,23 @@ body {
   100% { transform: translate(-40%, -60%) rotate(180deg) scale(1.1); }
 }
 
-/* Custom scrollbars */
+/* ==========================================================================
+   Custom Scrollbars
+   ========================================================================== */
+
 ::-webkit-scrollbar {
-  width: 8px;
+  width: var(--lm-space-xs);
 }
+
 ::-webkit-scrollbar-track {
   background: rgba(255, 255, 255, 0.01);
 }
+
 ::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.08);
-  border-radius: 4px;
+  border-radius: var(--lm-radius-sm);
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.16);
 }

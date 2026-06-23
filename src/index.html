@@ -1,23 +1,98 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="utf-8">
-  <title>Lumina - Hello World</title>
+  <title>P-Dash</title>
+  <meta name="description" content="P-Dash — your unified enterprise dashboard.">
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Outfit:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
   <link rel="manifest" href="manifest.webmanifest">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Lumina">
+  <meta name="apple-mobile-web-app-title" content="P-Dash">
   <link rel="apple-touch-icon" href="icons/icon-192x192.png">
+  <meta name="theme-color" content="#080612">
 </head>
 <body>
-  <app-root></app-root>
+  <app-root>
+    <div class="pre-loader">
+      <div class="loader-content">
+        <div class="loader-ring">
+          <div class="ring-core"></div>
+        </div>
+        <h1 class="loader-brand">P-Dash</h1>
+        <p class="loader-text">Loading secure services...</p>
+      </div>
+    </div>
+    <style>
+      body {
+        margin: 0;
+        background-color: #080612;
+        font-family: 'Geist', 'Inter', sans-serif;
+        color: #ffffff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        overflow: hidden;
+      }
+      .pre-loader {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+      }
+      .loader-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+      }
+      .loader-ring {
+        position: relative;
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #8b5cf6, #ec4899);
+        padding: 3px;
+        box-sizing: border-box;
+        animation: spin-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+        box-shadow: 0 0 20px rgba(139, 92, 246, 0.4);
+      }
+      .ring-core {
+        width: 100%;
+        height: 100%;
+        background-color: #080612;
+        border-radius: 50%;
+      }
+      .loader-brand {
+        font-size: 1.6rem;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        margin: 0;
+        background: linear-gradient(135deg, #a78bfa, #f472b6);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      .loader-text {
+        font-size: 0.8rem;
+        color: #9ca3af;
+        margin: 0;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+      }
+      @keyframes spin-ring {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+    </style>
+  </app-root>
   <noscript>Please enable JavaScript to continue using this application.</noscript>
 </body>
 </html>

@@ -7,16 +7,170 @@
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+  <!-- ═══ Font Loading Strategy ═══
+       1. Preconnect to Google Fonts CDN for faster DNS/TLS handshake
+       2. Preload the Material Symbols font CSS (highest priority, non-render-blocking)
+       3. Load body fonts with display=swap (text visible immediately, swaps gracefully)
+       4. Load icon font with display=block (hides icon text until font is ready)
+       5. CSS rule hides .material-symbols-outlined until the font face loads via JS
+  -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+
+  <!-- Preload the icon font stylesheet so it starts downloading immediately -->
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=block" as="style">
+
+  <!-- Body fonts: display=swap is fine — system fallback text is acceptable -->
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+
+  <!-- Icon font: display=block — hides icon name text completely until font loads -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=block" rel="stylesheet">
+
   <link rel="manifest" href="manifest.webmanifest">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="P-Dash">
   <link rel="apple-touch-icon" href="icons/icon-192x192.png">
-  <meta name="theme-color" content="#080612">
+  <meta name="theme-color" content="#13111c">
+
+  <style>
+    /*
+     * Critical CSS: Inlined to prevent any FOUC (Flash of Unstyled Content)
+     * This loads BEFORE any external stylesheet or Angular bundle.
+     */
+
+    /* ── Icon Font FOUT Prevention ──
+     * Hide icon elements entirely until the Material Symbols font face has loaded.
+     * The <html> element gets a 'fonts-loaded' class via JS below once the font is ready.
+     * This ensures users NEVER see raw icon name strings like "lightbulb" or "chevron_right".
+     */
+    .material-symbols-outlined {
+      font-family: 'Material Symbols Outlined';
+      font-weight: normal;
+      font-style: normal;
+      font-size: 24px;
+      line-height: 1;
+      letter-spacing: normal;
+      text-transform: none;
+      display: inline-block;
+      white-space: nowrap;
+      word-wrap: normal;
+      direction: ltr;
+      -webkit-font-feature-settings: 'liga';
+      -webkit-font-smoothing: antialiased;
+
+      /* Hidden by default — revealed once font loads */
+      opacity: 0;
+      transition: opacity 0.15s ease-in;
+    }
+
+    /* Reveal icons once fonts have loaded */
+    html.fonts-loaded .material-symbols-outlined {
+      opacity: 1;
+    }
+
+    /* ── Pre-Loader Styles ── */
+    body {
+      margin: 0;
+      background-color: #13111c;
+      font-family: 'Geist', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      color: #f0eef6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    .pre-loader {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .loader-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+    .loader-ring {
+      position: relative;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #7c5cbf, #a78bfa);
+      padding: 3px;
+      box-sizing: border-box;
+      animation: spin-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+      box-shadow: 0 0 20px rgba(124, 92, 191, 0.35);
+    }
+    .ring-core {
+      width: 100%;
+      height: 100%;
+      background-color: #13111c;
+      border-radius: 50%;
+    }
+    .loader-brand {
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin: 0;
+      background: linear-gradient(135deg, #a78bfa, #c084fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .loader-text {
+      font-size: 0.8rem;
+      color: #9b95b0;
+      margin: 0;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    @keyframes spin-ring {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+
+  <script>
+    /**
+     * Font Loading Detection Script
+     *
+     * Uses the CSS Font Loading API (document.fonts) to detect when the
+     * Material Symbols Outlined font has fully loaded, then adds a
+     * 'fonts-loaded' class to <html> to reveal all icon elements.
+     *
+     * Fallback: If the API isn't available or the font takes too long (>3s),
+     * we reveal icons anyway — a brief text flash is better than permanently
+     * hidden icons.
+     */
+    (function() {
+      var TIMEOUT_MS = 3000;
+
+      function revealFonts() {
+        document.documentElement.classList.add('fonts-loaded');
+      }
+
+      if ('fonts' in document) {
+        // Modern browsers: wait for the specific icon font to load
+        document.fonts.load('24px "Material Symbols Outlined"').then(function() {
+          revealFonts();
+        }).catch(function() {
+          // Font load failed — reveal anyway after a brief delay
+          revealFonts();
+        });
+
+        // Safety timeout: never leave icons hidden forever
+        setTimeout(revealFonts, TIMEOUT_MS);
+      } else {
+        // Fallback for older browsers without Font Loading API
+        // Wait a reasonable time for the font to likely have loaded
+        setTimeout(revealFonts, 800);
+      }
+    })();
+  </script>
 </head>
 <body>
   <app-root>
@@ -29,69 +183,6 @@
         <p class="loader-text">Loading secure services...</p>
       </div>
     </div>
-    <style>
-      body {
-        margin: 0;
-        background-color: #080612;
-        font-family: 'Geist', 'Inter', sans-serif;
-        color: #ffffff;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 100vh;
-        overflow: hidden;
-      }
-      .pre-loader {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-      }
-      .loader-content {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 16px;
-      }
-      .loader-ring {
-        position: relative;
-        width: 56px;
-        height: 56px;
-        border-radius: 50%;
-        background: linear-gradient(135deg, #8b5cf6, #ec4899);
-        padding: 3px;
-        box-sizing: border-box;
-        animation: spin-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-        box-shadow: 0 0 20px rgba(139, 92, 246, 0.4);
-      }
-      .ring-core {
-        width: 100%;
-        height: 100%;
-        background-color: #080612;
-        border-radius: 50%;
-      }
-      .loader-brand {
-        font-size: 1.6rem;
-        font-weight: 700;
-        letter-spacing: -0.02em;
-        margin: 0;
-        background: linear-gradient(135deg, #a78bfa, #f472b6);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-      }
-      .loader-text {
-        font-size: 0.8rem;
-        color: #9ca3af;
-        margin: 0;
-        letter-spacing: 0.05em;
-        text-transform: uppercase;
-      }
-      @keyframes spin-ring {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-      }
-    </style>
   </app-root>
   <noscript>Please enable JavaScript to continue using this application.</noscript>
 </body>

@@ -5,6 +5,8 @@ import {
   afterNextRender,
   inject,
   PLATFORM_ID,
+  HostListener,
+  ElementRef,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { Router } from '@angular/router';
@@ -54,11 +56,20 @@ export class DashboardComponent {
   /** Current feature selected for showing detail modal */
   protected readonly selectedFeature = signal<Feature | null>(null);
 
+  /** Settings and Theme options state */
+  protected readonly isSettingsOpen = signal<boolean>(false);
+  protected readonly currentTheme = signal<'dark' | 'light'>('dark');
+
+  /** Extra metrics for welcome card */
+  protected readonly notesCount = signal<number>(8);
+  protected readonly kitchenCount = signal<number>(5);
+
   /* ── Private Injectable References ── */
 
   private readonly apiService = inject(ApiService);
   private readonly router = inject(Router);
   private readonly platformId = inject(PLATFORM_ID);
+  private readonly elementRef = inject(ElementRef);
 
   constructor() {
     afterNextRender(() => {
@@ -66,6 +77,8 @@ export class DashboardComponent {
       this.loadApiData();
       this.loadRecentLogs();
       this.setCurrentDate();
+      this.initializeTheme();
+      this.loadExtraMetrics();
     });
   }
 
@@ -102,6 +115,47 @@ export class DashboardComponent {
     this.selectedFeature.set(null);
   }
 
+  /** Toggles the settings theme dropdown menu */
+  protected toggleSettingsMenu(event: MouseEvent): void {
+    event.stopPropagation();
+    this.isSettingsOpen.update((open) => !open);
+  }
+
+  /** Sets the active system theme (dark/light) */
+  protected setTheme(theme: 'dark' | 'light'): void {
+    if (isPlatformBrowser(this.platformId)) {
+      // Add smooth transition helper class
+      document.documentElement.classList.add('theme-transitioning');
+      
+      this.currentTheme.set(theme);
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('pdash-theme', theme);
+
+      // Remove transition class after the transition is complete
+      setTimeout(() => {
+        document.documentElement.classList.remove('theme-transitioning');
+      }, 1500); // 1.5s transition window
+    }
+    this.isSettingsOpen.set(false);
+  }
+
+  /** Click handler to automatically close the settings dropdown when clicking outside */
+  @HostListener('document:click', ['$event'])
+  protected onDocumentClick(event: MouseEvent): void {
+    const target = event.target as HTMLElement;
+    const settingsContainer = this.elementRef.nativeElement.querySelector('.settings-container');
+    const isClickInside = settingsContainer && settingsContainer.contains(target);
+    if (!isClickInside) {
+      this.isSettingsOpen.set(false);
+    }
+  }
+
+  /** Keydown handler to close settings dropdown on Escape key press */
+  @HostListener('document:keydown.escape')
+  protected onEscapePress(): void {
+    this.isSettingsOpen.set(false);
+  }
+
   /* ── Private Methods ── */
 
   /** Sets greeting message based on current hour */
@@ -113,6 +167,34 @@ export class DashboardComponent {
       this.greeting.set(GREETINGS.AFTERNOON);
     } else {
       this.greeting.set(GREETINGS.EVENING);
+    }
+  }
+
+  /** Initializes theme from localStorage */
+  private initializeTheme(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      const savedTheme = localStorage.getItem('pdash-theme') as 'dark' | 'light' || 'dark';
+      this.currentTheme.set(savedTheme);
+      document.documentElement.setAttribute('data-theme', savedTheme);
+    }
+  }
+
+  /** Loads extra counts for welcome banner card from local storage */
+  private loadExtraMetrics(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      const savedNotes = localStorage.getItem('pdash-notes-count');
+      if (savedNotes) {
+        this.notesCount.set(parseInt(savedNotes, 10));
+      } else {
+        localStorage.setItem('pdash-notes-count', '8');
+      }
+
+      const savedKitchen = localStorage.getItem('pdash-kitchen-count');
+      if (savedKitchen) {
+        this.kitchenCount.set(parseInt(savedKitchen, 10));
+      } else {
+        localStorage.setItem('pdash-kitchen-count', '5');
+      }
     }
   }
 

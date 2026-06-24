@@ -38,6 +38,44 @@
             <span class="material-symbols-outlined pill-icon">{{ dbIcons[dbStatus()] }}</span>
           </div>
 
+          <!-- Theme Settings Container -->
+          <div class="settings-container">
+            <button
+              type="button"
+              class="settings-btn"
+              (click)="toggleSettingsMenu($event)"
+              aria-label="Toggle settings menu"
+              [class.active]="isSettingsOpen()"
+              data-testid="settings-toggle-btn"
+            >
+              <span class="material-symbols-outlined">settings</span>
+            </button>
+
+            @if (isSettingsOpen()) {
+              <div class="settings-dropdown glass-float border-etched">
+                <div class="dropdown-header">Theme</div>
+                <button
+                  type="button"
+                  class="dropdown-item"
+                  (click)="setTheme('dark')"
+                  [class.active]="currentTheme() === 'dark'"
+                >
+                  <span class="material-symbols-outlined dropdown-item-icon">dark_mode</span>
+                  <span>Dark</span>
+                </button>
+                <button
+                  type="button"
+                  class="dropdown-item"
+                  (click)="setTheme('light')"
+                  [class.active]="currentTheme() === 'light'"
+                >
+                  <span class="material-symbols-outlined dropdown-item-icon">light_mode</span>
+                  <span>Light</span>
+                </button>
+              </div>
+            }
+          </div>
+
           <!-- Profile Picture Ring Design -->
           <div class="profile-avatar-wrap" data-testid="profile-avatar">
             <img src="/profile_avatar.png" alt="Naani's Avatar" class="profile-img" />
@@ -60,8 +98,9 @@
           </div>
         </div>
         
-        <!-- Summary metrics ribbon -->
-        <div class="banner-metrics-ribbon">
+        <!-- Summary metrics grid -->
+        <div class="banner-metrics-grid">
+          <!-- Column 1 (Streak) -->
           <div class="metric-chip">
             <span class="metric-emoji" role="img" aria-label="streak">🔥</span>
             <div class="metric-chip-content">
@@ -69,7 +108,7 @@
               <span class="metric-chip-lbl">Streak</span>
             </div>
           </div>
-          <div class="metric-divider"></div>
+          <!-- Column 2 (Reminders) -->
           <div class="metric-chip">
             <span class="metric-emoji" role="img" aria-label="reminders">🔔</span>
             <div class="metric-chip-content">
@@ -77,12 +116,37 @@
               <span class="metric-chip-lbl">Reminders</span>
             </div>
           </div>
-          <div class="metric-divider"></div>
+          <!-- Column 3 (Budget) -->
           <div class="metric-chip">
             <span class="metric-emoji" role="img" aria-label="finance">💰</span>
             <div class="metric-chip-content">
               <span class="metric-chip-val">68%</span>
               <span class="metric-chip-lbl">Budget</span>
+            </div>
+          </div>
+
+          <!-- Column 1 (Features) -->
+          <div class="metric-chip">
+            <span class="metric-emoji" role="img" aria-label="features">💡</span>
+            <div class="metric-chip-content">
+              <span class="metric-chip-val">{{ features().length || 8 }}</span>
+              <span class="metric-chip-lbl">Features</span>
+            </div>
+          </div>
+          <!-- Column 2 (Notes) -->
+          <div class="metric-chip">
+            <span class="metric-emoji" role="img" aria-label="notes">📝</span>
+            <div class="metric-chip-content">
+              <span class="metric-chip-val">{{ notesCount() }}</span>
+              <span class="metric-chip-lbl">Notes</span>
+            </div>
+          </div>
+          <!-- Column 3 (Kitchen) -->
+          <div class="metric-chip">
+            <span class="metric-emoji" role="img" aria-label="kitchen">🛒</span>
+            <div class="metric-chip-content">
+              <span class="metric-chip-val">{{ kitchenCount() }} Items</span>
+              <span class="metric-chip-lbl">To Buy</span>
             </div>
           </div>
         </div>

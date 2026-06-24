@@ -1,5 +1,7 @@
 /*
  * Feature Log isolated module stylesheet
+ * Uses --lm-* design tokens exclusively.
+ * Design reference: Clean cards, soft borders, purple accents.
  */
 
 .feature-log-header {
@@ -17,18 +19,20 @@
   justify-content: center;
   border-radius: 50%;
   border: var(--lm-border-subtle);
-  background: var(--lm-color-surface-subtle);
+  background: var(--lm-color-surface);
   color: var(--lm-color-text-primary);
   cursor: pointer;
   transition: var(--lm-transition-fast);
   min-height: var(--lm-touch-target-min);
   flex-shrink: 0;
+  box-shadow: var(--lm-shadow-card);
 }
 
 .back-btn:hover {
   background: var(--lm-color-surface-hover);
-  border-color: rgba(255, 255, 255, 0.18);
+  border-color: rgba(167, 139, 250, 0.2);
   transform: translateX(-2px);
+  box-shadow: var(--lm-shadow-panel);
 }
 
 .header-titles {
@@ -53,7 +57,7 @@
 }
 
 /* ==========================================================================
-   Form Styling
+   Form Styling — Clean, refined inputs
    ========================================================================== */
 
 .log-form {
@@ -62,6 +66,9 @@
   gap: var(--lm-space-md);
   padding: var(--lm-space-lg);
   border-radius: var(--lm-radius-xl);
+  background: var(--lm-color-surface);
+  border: var(--lm-border-card);
+  box-shadow: var(--lm-shadow-card);
 }
 
 .form-field {
@@ -97,6 +104,7 @@
 .glass-input:focus {
   border-color: var(--lm-color-primary);
   box-shadow: 0 0 0 3px var(--lm-color-primary-glow);
+  background: var(--lm-color-surface);
 }
 
 .details-group {
@@ -131,7 +139,7 @@
   align-items: center;
   justify-content: center;
   border: none;
-  background: var(--lm-color-error-glow);
+  background: var(--lm-color-error-subtle);
   color: var(--lm-color-error);
   border-radius: var(--lm-radius-sm);
   cursor: pointer;
@@ -140,7 +148,8 @@
 }
 
 .remove-detail-btn:hover {
-  background: rgba(248, 113, 113, 0.3);
+  background: rgba(248, 113, 113, 0.25);
+  transform: scale(1.05);
 }
 
 .remove-detail-btn .material-symbols-outlined {
@@ -152,7 +161,7 @@
   align-items: center;
   gap: var(--lm-space-2xs);
   padding: var(--lm-space-xs) var(--lm-space-md);
-  border: 1px dashed rgba(139, 92, 246, 0.3);
+  border: 1px dashed rgba(124, 92, 191, 0.25);
   border-radius: var(--lm-radius-md);
   background: transparent;
   color: var(--lm-color-primary);
@@ -164,6 +173,7 @@
 
 .add-point-btn:hover {
   background: var(--lm-color-primary-glow);
+  border-color: rgba(124, 92, 191, 0.4);
 }
 
 .add-point-btn .material-symbols-outlined {
@@ -185,11 +195,13 @@
   cursor: pointer;
   transition: var(--lm-transition-smooth);
   min-height: var(--lm-touch-target-min);
+  box-shadow: 0 2px 8px rgba(124, 58, 237, 0.25);
 }
 
 .save-btn:hover:not(:disabled) {
   background: var(--lm-gradient-button-hover);
-  box-shadow: 0 4px 20px rgba(124, 58, 237, 0.4);
+  box-shadow: 0 4px 16px rgba(124, 58, 237, 0.35);
+  transform: translateY(-1px);
 }
 
 .save-btn:disabled {
@@ -202,7 +214,7 @@
 }
 
 /* ==========================================================================
-   Logged Cards List
+   Logged Cards List — Clean card surfaces with soft borders
    ========================================================================== */
 
 .section-label {
@@ -227,6 +239,15 @@
   flex-direction: column;
   gap: var(--lm-space-sm);
   animation: fade-in 0.3s ease-out;
+  background: var(--lm-color-surface);
+  border: var(--lm-border-card);
+  box-shadow: var(--lm-shadow-card);
+  transition: var(--lm-transition-smooth);
+}
+
+.logged-card:hover {
+  box-shadow: var(--lm-shadow-panel);
+  border-color: rgba(167, 139, 250, 0.1);
 }
 
 @keyframes fade-in {
@@ -262,7 +283,7 @@
 }
 
 .delete-log-btn:hover {
-  background: var(--lm-color-error-glow);
+  background: var(--lm-color-error-subtle);
   color: var(--lm-color-error);
 }
 
@@ -311,6 +332,9 @@
   padding: var(--lm-space-2xl) var(--lm-space-lg);
   border-radius: var(--lm-radius-xl);
   text-align: center;
+  background: var(--lm-color-surface);
+  border: var(--lm-border-card);
+  box-shadow: var(--lm-shadow-card);
 }
 
 .empty-icon {

@@ -49,6 +49,7 @@ export class DashboardComponent {
 
   /** Current date string formatted nicely for dashboard display */
   protected readonly todayDate = signal<string>('');
+  protected readonly quoteText = signal<string>('');
 
   /** Most recently logged upcoming features for dashboard glimpse */
   protected readonly recentLogs = signal<FeatureLog[]>([]);
@@ -79,6 +80,7 @@ export class DashboardComponent {
       this.setCurrentDate();
       this.initializeTheme();
       this.loadExtraMetrics();
+      this.setRandomQuote();
     });
   }
 
@@ -177,6 +179,21 @@ export class DashboardComponent {
       this.currentTheme.set(savedTheme);
       document.documentElement.setAttribute('data-theme', savedTheme);
     }
+  }
+
+  /** Sets a random motivational quote on load */
+  private setRandomQuote(): void {
+    const quotes = [
+      "Consistency is what transforms average into excellence.",
+      "Simplicity is the ultimate sophistication.",
+      "The best way to predict the future is to create it.",
+      "Focus on being productive instead of busy.",
+      "Make it simple, but significant.",
+      "Quality is not an act, it is a habit.",
+      "Strive for progress, not perfection."
+    ];
+    const randomIndex = Math.floor(Math.random() * quotes.length);
+    this.quoteText.set(quotes[randomIndex]);
   }
 
   /** Loads extra counts for welcome banner card from local storage */

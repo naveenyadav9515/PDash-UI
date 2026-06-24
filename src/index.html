@@ -34,6 +34,21 @@
   <link rel="apple-touch-icon" href="icons/icon-192x192.png">
   <meta name="theme-color" content="#13111c">
 
+  <!-- Immediately set active theme from localStorage before body renders to prevent FOUC -->
+  <script>
+    (function() {
+      try {
+        var savedTheme = localStorage.getItem('lm_theme') || localStorage.getItem('pdash-theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        var themeColor = savedTheme === 'light' ? '#f4f3f8' : '#13111c';
+        var meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) {
+          meta.setAttribute('content', themeColor);
+        }
+      } catch (e) {}
+    })();
+  </script>
+
   <style>
     /*
      * Critical CSS: Inlined to prevent any FOUC (Flash of Unstyled Content)
@@ -82,6 +97,13 @@
       min-height: 100vh;
       overflow-x: hidden;
     }
+
+    /* Light mode pre-loader background & color override */
+    html[data-theme="light"] body {
+      background-color: #f4f3f8;
+      color: #1a1525;
+    }
+
     .pre-loader {
       display: flex;
       align-items: center;
@@ -111,6 +133,12 @@
       background-color: #13111c;
       border-radius: 50%;
     }
+
+    /* Light mode pre-loader ring inner core override */
+    html[data-theme="light"] .ring-core {
+      background-color: #ffffff;
+    }
+
     .loader-brand {
       font-size: 1.6rem;
       font-weight: 700;
@@ -128,6 +156,12 @@
       letter-spacing: 0.05em;
       text-transform: uppercase;
     }
+
+    /* Light mode text override */
+    html[data-theme="light"] .loader-text {
+      color: #5c5470;
+    }
+
     @keyframes spin-ring {
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }

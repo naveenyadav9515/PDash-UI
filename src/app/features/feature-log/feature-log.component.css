@@ -5,10 +5,35 @@
  */
 
 .feature-log-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
   display: flex;
   align-items: center;
   gap: var(--lm-space-md);
+
+  /* WhatsApp-style: transparent background with blur for content scrolling behind */
+  background: transparent;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  /* Expand to edges of app-shell, offsetting its padding */
+  margin-top: calc(-1 * var(--lm-space-md));
+  padding-top: var(--lm-space-md);
+  padding-bottom: var(--lm-space-sm);
+  margin-inline: calc(-1 * var(--lm-space-md));
+  padding-inline: var(--lm-space-md);
   margin-bottom: var(--lm-space-xs);
+}
+
+/* Adjust spacing inside app-shell media queries */
+@media (min-width: 768px) {
+  .feature-log-header {
+    margin-top: calc(-1 * var(--lm-space-xl));
+    padding-top: var(--lm-space-xl);
+    margin-inline: calc(-1 * var(--lm-space-xl));
+    padding-inline: var(--lm-space-xl);
+  }
 }
 
 .back-btn {

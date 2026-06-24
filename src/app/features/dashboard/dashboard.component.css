@@ -11,9 +11,34 @@
    ========================================================================== */
 
 .dashboard-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
   display: flex;
   flex-direction: column;
   gap: var(--lm-space-2xs);
+
+  /* WhatsApp-style: transparent background with blur for content scrolling behind */
+  background: transparent;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  /* Expand to edges of app-shell, offsetting its padding */
+  margin-top: calc(-1 * var(--lm-space-md));
+  padding-top: var(--lm-space-md);
+  padding-bottom: var(--lm-space-sm);
+  margin-inline: calc(-1 * var(--lm-space-md));
+  padding-inline: var(--lm-space-md);
+}
+
+/* Adjust spacing inside app-shell media queries */
+@media (min-width: 768px) {
+  .dashboard-header {
+    margin-top: calc(-1 * var(--lm-space-xl));
+    padding-top: var(--lm-space-xl);
+    margin-inline: calc(-1 * var(--lm-space-xl));
+    padding-inline: var(--lm-space-xl);
+  }
 }
 
 .header-row {
@@ -290,7 +315,7 @@
 .metric-chip {
   display: flex;
   align-items: center;
-  gap: var(--lm-space-sm);
+  gap: var(--lm-space-md);
   min-width: 0;
 }
 
@@ -301,11 +326,11 @@
 }
 
 .metric-emoji {
-  font-size: 20px;
+  font-size: 26px;
   background: var(--lm-color-surface-elevated);
   border-radius: var(--lm-radius-sm);
-  width: 32px;
-  height: 32px;
+  width: 44px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -320,25 +345,28 @@
 }
 
 .metric-chip-val {
-  font: var(--lm-type-body-sm);
-  font-weight: 700;
+  font: var(--lm-type-heading-sm);
+  font-size: 1.15rem;
+  font-weight: 800;
   color: var(--lm-color-text-primary);
-  line-height: 1.25;
+  line-height: 1.2;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  letter-spacing: -0.01em;
 }
 
 .metric-chip-lbl {
   font: var(--lm-type-overline);
-  font-size: 0.58rem;
+  font-size: 0.65rem;
+  font-weight: 600;
   color: var(--lm-color-text-muted);
-  letter-spacing: 0.04em;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  margin-top: 1px;
+  margin-top: 2px;
 }
 
 /* Responsive adjustment for tablet/desktop views */
@@ -914,4 +942,56 @@
   .glimpse-snippet {
     max-width: 380px;
   }
+}
+
+/* ==========================================================================
+   App Footer
+   ========================================================================== */
+
+.app-footer {
+  margin-top: var(--lm-space-md);
+  padding-top: var(--lm-space-xl);
+  border-top: var(--lm-border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  opacity: 0.6;
+  transition: opacity var(--lm-transition-smooth);
+}
+
+.app-footer:hover {
+  opacity: 1;
+}
+
+.footer-content {
+  display: flex;
+  align-items: center;
+  gap: var(--lm-space-md);
+}
+
+.footer-logo-icon {
+  font-size: 1.5rem;
+  color: var(--lm-color-primary);
+  background: var(--lm-color-surface-hover);
+  padding: var(--lm-space-sm);
+  border-radius: var(--lm-radius-md);
+}
+
+.footer-brand {
+  font: var(--lm-type-heading-md);
+  color: var(--lm-color-text-primary);
+  margin-bottom: 2px;
+}
+
+.footer-credit {
+  font: var(--lm-type-caption);
+  color: var(--lm-color-text-secondary);
+}
+
+.footer-version {
+  font: var(--lm-type-mono-sm);
+  color: var(--lm-color-text-muted);
+  background: var(--lm-color-surface-hover);
+  padding: 4px 8px;
+  border-radius: var(--lm-radius-sm);
 }

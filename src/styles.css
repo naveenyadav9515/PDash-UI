@@ -142,6 +142,11 @@
 
   /* --- Touch targets (§8.3: minimum 44×44px) --- */
   --lm-touch-target-min: 44px;
+
+  /* --- Sticky Header Variables --- */
+  --lm-color-header-bg: rgba(19, 17, 28, 0.85);
+  --lm-color-header-border: rgba(255, 255, 255, 0.06);
+  --lm-color-header-divider: rgba(255, 255, 255, 0.08);
 }
 
 /* ==========================================================================
@@ -214,6 +219,11 @@
   --lm-shadow-panel: 0 2px 12px 0 rgba(0, 0, 0, 0.06);
   --lm-shadow-panel-hover: 0 4px 20px 0 rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(124, 92, 191, 0.08);
   --lm-shadow-float: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+
+  /* --- Sticky Header Variables --- */
+  --lm-color-header-bg: rgba(244, 243, 248, 0.85);
+  --lm-color-header-border: rgba(0, 0, 0, 0.06);
+  --lm-color-header-divider: rgba(0, 0, 0, 0.06);
 }
 
 /* ==========================================================================
@@ -238,7 +248,7 @@ body {
   color: var(--lm-color-text-primary);
   min-height: 100vh;
   overflow-y: auto;
-  overflow-x: hidden; /* §8.3: no horizontal scroll */
+  overflow-x: hidden;
   position: relative;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -283,7 +293,6 @@ html.fonts-loaded .material-symbols-outlined {
   width: 100%;
   min-height: 100vh;
   padding: var(--lm-space-md);
-  padding-bottom: var(--lm-space-3xl);
   display: flex;
   flex-direction: column;
   gap: var(--lm-space-lg);

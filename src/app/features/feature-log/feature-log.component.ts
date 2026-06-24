@@ -5,6 +5,7 @@ import {
   afterNextRender,
   inject,
   PLATFORM_ID,
+  HostListener,
 } from '@angular/core';
 import { isPlatformBrowser, DatePipe } from '@angular/common';
 import { Router } from '@angular/router';

@@ -131,7 +131,16 @@ export class DashboardComponent {
       
       this.currentTheme.set(theme);
       document.documentElement.setAttribute('data-theme', theme);
+      
+      // Store in both standard keys for full compliance
+      localStorage.setItem(STORAGE_KEYS.THEME_PREFERENCE, theme);
       localStorage.setItem('pdash-theme', theme);
+
+      // Update theme-color meta tag for Android address bar styling
+      const meta = document.querySelector('meta[name="theme-color"]');
+      if (meta) {
+        meta.setAttribute('content', theme === 'light' ? '#f4f3f8' : '#13111c');
+      }
 
       // Remove transition class after the transition is complete
       setTimeout(() => {
@@ -158,6 +167,8 @@ export class DashboardComponent {
     this.isSettingsOpen.set(false);
   }
 
+
+
   /* ── Private Methods ── */
 
   /** Sets greeting message based on current hour */
@@ -175,9 +186,15 @@ export class DashboardComponent {
   /** Initializes theme from localStorage */
   private initializeTheme(): void {
     if (isPlatformBrowser(this.platformId)) {
-      const savedTheme = localStorage.getItem('pdash-theme') as 'dark' | 'light' || 'dark';
+      const savedTheme = (localStorage.getItem(STORAGE_KEYS.THEME_PREFERENCE) || localStorage.getItem('pdash-theme')) as 'dark' | 'light' || 'dark';
       this.currentTheme.set(savedTheme);
       document.documentElement.setAttribute('data-theme', savedTheme);
+      
+      // Update theme-color meta tag for Android address bar styling on init
+      const meta = document.querySelector('meta[name="theme-color"]');
+      if (meta) {
+        meta.setAttribute('content', savedTheme === 'light' ? '#f4f3f8' : '#13111c');
+      }
     }
   }
 

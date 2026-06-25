@@ -1,0 +1,12 @@
+<div 
+  class="app-card glass-card border-etched" 
+  [class.card-hoverable]="hoverable"
+  [class.pad-none]="padding === 'none'"
+  [class.pad-sm]="padding === 'sm'"
+  [class.pad-md]="padding === 'md'"
+  [class.pad-lg]="padding === 'lg'"
+>
+  <div class="card-header"><ng-content select="[cardHeader]"></ng-content></div>
+  <div class="card-body"><ng-content></ng-content></div>
+  <div class="card-footer"><ng-content select="[cardFooter]"></ng-content></div>
+</div>

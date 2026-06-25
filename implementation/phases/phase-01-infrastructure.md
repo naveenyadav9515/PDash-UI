@@ -116,9 +116,9 @@
 
 ---
 
-## Epic 12.1: Unit & Component Testing
+## Epic 1.5: Unit & Component Testing
 
-### Feature 12.1.1: Core Tests
+### Feature 1.5.1: Core Tests
 - [ ] Configure Jasmine/Karma (or Jest)
 - [ ] Test core services (Auth, Workspace, Theme)
 - [ ] Test shared components (Button, Input, Modal)
@@ -126,9 +126,9 @@
 
 ---
 
-## Epic 12.2: End-to-End Testing
+## Epic 1.6: End-to-End Testing
 
-### Feature 12.2.1: E2E Suite
+### Feature 1.6.1: E2E Suite
 - [ ] Set up Cypress or Playwright
 - [ ] Test Login flow
 - [ ] Test Drag-to-assign module import flow

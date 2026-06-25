@@ -4,17 +4,17 @@
 
 ---
 
-## Epic 19.1: Local Data Store
+## Epic 6.1: Local Data Store
 
-### Feature 19.1.1: IndexedDB Integration
+### Feature 6.1.1: IndexedDB Integration
 - [ ] Setup `localforage` or native IndexedDB wrapper
 - [ ] Cache API responses (`GET`) to local DB for instantaneous initial loads
 
 ---
 
-## Epic 19.2: Offline Mutation Queue
+## Epic 6.2: Offline Mutation Queue
 
-### Feature 19.2.1: Background Sync Interceptor
+### Feature 6.2.1: Background Sync Interceptor
 - [ ] Create `core/interceptors/offline-sync.interceptor.ts`
 - [ ] If `navigator.onLine` is false, intercept `POST/PATCH/DELETE` requests
 - [ ] Save mutations to a local queue in IndexedDB

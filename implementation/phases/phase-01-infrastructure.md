@@ -109,28 +109,3 @@
 
 
 ---
-
-## Integrated Testing (Frontend)
-
-> Unit tests, component tests, and E2E critical paths.
-
----
-
-## Epic 1.5: Unit & Component Testing
-
-### Feature 1.5.1: Core Tests
-- [ ] Configure Jasmine/Karma (or Jest)
-- [ ] Test core services (Auth, Workspace, Theme)
-- [ ] Test shared components (Button, Input, Modal)
-- [ ] Test Workspace Dashboard auto-placement rendering
-
----
-
-## Epic 1.6: End-to-End Testing
-
-### Feature 1.6.1: E2E Suite
-- [ ] Set up Cypress or Playwright
-- [ ] Test Login flow
-- [ ] Test Drag-to-assign module import flow
-- [ ] Test Three-Tier module removal operations
-- [ ] Test Edit Mode toggles

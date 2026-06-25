@@ -78,6 +78,6 @@
 ## Epic 13.2: Pipelines
 
 ### Feature 13.2.1: GitHub Actions & Environments
-- [ ] Workflow 1 (Staging): Merge from `feature/*` to `staging` builds Angular and auto-deploys to **Staging URL** (Testing API)
-- [ ] Workflow 2 (Production): Merge from `feature/*` to `main` builds production Angular bundle and auto-deploys to **Prod URL**
-- [ ] Lighthouse CI action integration on `main` merges
+- [ ] Workflow 1 (Staging): Merge from `feature/*` to `staging` builds Angular, deploys to **Staging URL**, and auto-deletes feature branch
+- [ ] Workflow 2 (Production): Merge from `staging` to `release` builds production bundle and auto-deploys to **Prod URL**
+- [ ] Lighthouse CI action integration on `release` merges

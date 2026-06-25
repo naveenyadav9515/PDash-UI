@@ -66,18 +66,18 @@
 
 ---
 
-## Epic 13.1: Containerization
+## Epic 2.4: Containerization
 
-### Feature 13.1.1: Nginx Docker
+### Feature 2.4.1: Nginx Docker
 - [ ] Create multi-stage `Dockerfile` (Node build -> Nginx serve)
 - [ ] Create `nginx.conf` handling SPA fallback (index.html)
 - [ ] Setup gzip compression in Nginx
 
 ---
 
-## Epic 13.2: Pipelines
+## Epic 2.5: Pipelines
 
-### Feature 13.2.1: GitHub Actions & Environments
+### Feature 2.5.1: GitHub Actions & Environments
 - [ ] Workflow 1 (Staging): Merge from `feature/*` to `staging` builds Angular, deploys to **Staging URL**, and auto-deletes feature branch
 - [ ] Workflow 2 (Production): Merge from `staging` to `release` builds production bundle and auto-deploys to **Prod URL**
 - [ ] Lighthouse CI action integration on `release` merges

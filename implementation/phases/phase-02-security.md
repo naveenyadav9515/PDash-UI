@@ -58,7 +58,6 @@
 - [ ] Display user-friendly notification via `NotificationService`
 - [ ] Never show raw stack traces to user
 
-
 ---
 
 ## Integrated DevOps & CI/CD (Frontend)
@@ -78,7 +77,8 @@
 
 ## Epic 13.2: Pipelines
 
-### Feature 13.2.1: GitHub Actions
-- [ ] Workflow for PRs: lint + test
-- [ ] Workflow for `main`: build production bundle + push image
-- [ ] Lighthouse CI action integration
+### Feature 13.2.1: GitHub Actions & Environments
+- [ ] Workflow 1 (PRs): PR to `develop` triggers lint + test
+- [ ] Workflow 2 (Staging): Merge to `develop` builds Angular and auto-deploys to the **Dev/Staging URL**
+- [ ] Workflow 3 (Production): Merge from `develop` to `main` builds production Angular bundle and auto-deploys to the **Prod URL**
+- [ ] Lighthouse CI action integration on `develop` merges

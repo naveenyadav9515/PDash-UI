@@ -27,6 +27,11 @@
 | 13 | [DevOps & CI/CD](./phases/phase-13-devops.md) | 🔲 Not Started | Docker, nginx, GitHub Actions |
 | 14 | [Performance & Monitoring](./phases/phase-14-performance.md) | 🔲 Not Started | Lighthouse, bundle optimization, SEO |
 | 15 | [Polish & Hardening](./phases/phase-15-polish.md) | 🔲 Not Started | Accessibility, visual polish, documentation |
+| 16 | [AI Insights & Data Synthesis](./phases/phase-16-ai-insights.md) | 🔲 Not Started | Global AI widget, cross-module insight UI |
+| 17 | [Notifications & Real-Time Sync](./phases/phase-17-notifications.md) | 🔲 Not Started | Notification Center and Socket signals |
+| 18 | [File Storage & Media Mgt](./phases/phase-18-file-storage.md) | 🔲 Not Started | Drag/drop uploader and image optimization |
+| 19 | [Offline-First Architecture](./phases/phase-19-offline-sync.md) | 🔲 Not Started | IndexedDB cache and mutation queueing |
+| 20 | [Localization & Data Export](./phases/phase-20-localization-export.md) | 🔲 Not Started | Language toggles and data download UI |
 | Future | [Individual Module Screen Implementations](./phases/phase-future-modules.md) | 🔲 Not Started | F1–F12 module-specific screens |
 
 ---

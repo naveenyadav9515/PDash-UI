@@ -14,19 +14,31 @@
 
 ### Feature 10.1.2: Workspace Management
 - [ ] List all active and archived workspaces
-- [ ] Restore archived workspaces
 - [ ] Permanently delete workspaces (with warnings)
 
 ---
 
 ## Epic 10.2: Admin Console
 
-### Feature 10.2.1: Admin Dashboard
-- [ ] Build `features/admin/admin-dashboard.component.ts` (protected by RoleGuard)
-- [ ] User list table (virtual scrolling if > 50)
-- [ ] Deactivate user toggle
+### Feature 10.2.1: User Management Panel
+- [ ] Build `features/admin/user-management.component.ts` (protected by RoleGuard)
+- [ ] User list table (virtual scrolling if > 50) with active/inactive status filters
+- [ ] Live Presence Indicator: display a green/gray dot based on real-time `isOnline` status mapped from WebSocket
+- [ ] Security actions menu: Deactivate/Suspend user, Force Logout, Trigger Password Reset
+- [ ] Admin messaging action: "Send Direct Message/Notification" opening a modal to push an urgent alert to the user's screen
+- [ ] Admin data edit mode: capability to edit a user's basic data limits if needed
 
-### Feature 10.2.2: Module Gallery Management
-- [ ] UI to add new module definitions
-- [ ] UI to edit descriptions/icons
-- [ ] UI to deactivate modules from catalog
+### Feature 10.2.2: Module Gallery & Feature Flags
+- [ ] UI to add new module definitions globally
+- [ ] UI to edit descriptions/icons of existing modules
+- [ ] Global enable/disable toggles (Feature Flags): instantly hide a module from the catalog for all users if it requires maintenance
+
+---
+
+## Epic 10.3: Admin Insights Dashboard
+
+### Feature 10.3.1: System Analytics View
+- [ ] Build `features/admin/admin-insights.component.ts`
+- [ ] Key Metrics Cards: Total Users, Active Users (Last 7 days), Total Workspaces
+- [ ] Visual Charts: Most popular modules across the platform
+- [ ] System Health indicator: Server uptime and storage usage warnings

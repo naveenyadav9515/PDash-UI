@@ -1,6 +1,7 @@
 # Future Phase: Individual Module Screens (Frontend)
 
-> To be executed ONLY AFTER the foundation (Phases 0-15) is stable.
+> To be executed ONLY AFTER the foundation (Phases 0-16) is stable.
+> Detailed Product Requirement Documents (PRDs) for each module are stored in the `../modules/` directory.
 
 ---
 
@@ -15,8 +16,15 @@
 - [ ] Feature: Widget (Quick Order Button)
 
 ## Epic F3: Expense Tracker Screen
-- [ ] Feature: Expense API service
-- [ ] Feature: Fixed Cards (Monthly Chart, Recent Transactions)
-- [ ] Feature: Widget (Quick Add Expense)
+> See full spec: `../modules/F3-expense-tracker.md`
+- [ ] Feature: Expense API & OAuth integration
+- [ ] Feature: Fixed Cards (Monthly Chart, Recent Transactions, Pending Approvals)
+- [ ] Feature: Widget (Quick Add Expense, Pending Review Alert)
 
 *(Repeat Epic structure for F4 through F12)*
+
+## Epic F13: Friends & Forum Screen
+> See full spec: `../modules/F13-friends-forum.md`
+- [ ] Feature: Opt-In Directory & Friend Request UI
+- [ ] Feature: Real-time Chat Interface with typing indicators
+- [ ] Feature: Community Forum Feed & Admin Post Creation UI

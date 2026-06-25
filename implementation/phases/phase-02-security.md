@@ -78,7 +78,6 @@
 ## Epic 13.2: Pipelines
 
 ### Feature 13.2.1: GitHub Actions & Environments
-- [ ] Workflow 1 (PRs): PR to `develop` triggers lint + test
-- [ ] Workflow 2 (Staging): Merge to `develop` builds Angular and auto-deploys to the **Dev/Staging URL**
-- [ ] Workflow 3 (Production): Merge from `develop` to `main` builds production Angular bundle and auto-deploys to the **Prod URL**
-- [ ] Lighthouse CI action integration on `develop` merges
+- [ ] Workflow 1 (Staging): Merge from `feature/*` to `staging` builds Angular and auto-deploys to **Staging URL** (Testing API)
+- [ ] Workflow 2 (Production): Merge from `feature/*` to `main` builds production Angular bundle and auto-deploys to **Prod URL**
+- [ ] Lighthouse CI action integration on `main` merges

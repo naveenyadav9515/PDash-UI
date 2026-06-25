@@ -1,4 +1,4 @@
-# Phase 15: Polish & Hardening (Frontend)
+# Phase 17: Polish & Hardening (Frontend)
 
 > Accessibility, micro-animations, and UX cleanup.
 

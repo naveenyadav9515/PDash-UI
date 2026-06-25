@@ -1,4 +1,4 @@
-# Phase 18: File Storage & Media Management (Frontend)
+# Phase 5: File Storage & Media Management (Frontend)
 
 > Drag-and-drop file uploaders and image optimization.
 

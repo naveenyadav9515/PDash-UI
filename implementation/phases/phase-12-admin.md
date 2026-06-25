@@ -1,4 +1,4 @@
-# Phase 10: User Management, Settings & Admin (Frontend)
+# Phase 12: User Management, Settings & Admin (Frontend)
 
 > User settings page and admin console.
 

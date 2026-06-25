@@ -1,86 +1,52 @@
-# P-Dash — Frontend (Angular) Implementation Plan
+# P-Dash: UI Implementation Plan
+> A mobile-first Personal Dashboard PWA
 
-> **Structure:** Phase → Epic → Feature → Story
-> **Stack:** Angular 20, TypeScript, CSS (Glassmorphism)
-> **Approach:** Foundation first (Phases 0–11), then individual module screen implementations.
-> **Sync:** Phase numbers are synchronized with the Backend implementation plan.
+This document serves as the master blueprint for frontend development, optimized for AI-assisted workflows. 
 
----
-
-## Phase Overview
-
-| Phase | Name | Status | Details |
-|-------|------|--------|---------|
-| 0 | [Project Scaffolding & Foundation](./phases/phase-00-scaffolding.md) | 🔲 Not Started | Angular init, directory structure, tooling |
-| 1 | [Core Infrastructure & Configuration](./phases/phase-01-infrastructure.md) | 🔲 Not Started | Design system, shared components, theme |
-| 2 | [Security & HTTP Layer](./phases/phase-02-security.md) | 🔲 Not Started | Interceptors, guards, error handler |
-| 3 | [Authentication & Authorization](./phases/phase-03-auth.md) | 🔲 Not Started | Auth service, login/register UI, user switcher |
-| 4 | [Workspace System](./phases/phase-04-workspace.md) | 🔲 Not Started | Workspace service, footer nav, create/manage |
-| 5 | [Module System & Module Gallery](./phases/phase-05-module-gallery.md) | 🔲 Not Started | Gallery UI, module cards, usage counters |
-| 6 | [Workspace-Module References & Import](./phases/phase-06-references.md) | 🔲 Not Started | Drag-to-assign, batch save, workspace dashboard |
-| 7 | [Module Screen — Fixed Cards & User Widgets](./phases/phase-07-module-screen.md) | 🔲 Not Started | Module screen layout, cards, widget gallery |
-| 8 | [Edit Mode & Module Visibility Management](./phases/phase-08-edit-visibility.md) | 🔲 Not Started | Edit mode toggle, reorder, three-tier removal UI |
-| 9 | [Global Search](./phases/phase-09-search.md) | 🔲 Not Started | Search overlay, categorized results |
-| 10 | [User Management, Settings & Admin](./phases/phase-10-admin.md) | 🔲 Not Started | Settings panel, admin console, profile |
-| 11 | [PWA & Offline Support](./phases/phase-11-pwa.md) | 🔲 Not Started | Service worker, manifest, update notification |
-| 12 | [Testing](./phases/phase-12-testing.md) | 🔲 Not Started | Unit tests, component tests, E2E tests |
-| 13 | [DevOps & CI/CD](./phases/phase-13-devops.md) | 🔲 Not Started | Docker, nginx, GitHub Actions |
-| 14 | [Performance & Monitoring](./phases/phase-14-performance.md) | 🔲 Not Started | Lighthouse, bundle optimization, SEO |
-| 15 | [Polish & Hardening](./phases/phase-15-polish.md) | 🔲 Not Started | Accessibility, visual polish, documentation |
-| 16 | [AI Insights & Data Synthesis](./phases/phase-16-ai-insights.md) | 🔲 Not Started | Global AI widget, cross-module insight UI |
-| 17 | [Notifications & Real-Time Sync](./phases/phase-17-notifications.md) | 🔲 Not Started | Notification Center and Socket signals |
-| 18 | [File Storage & Media Mgt](./phases/phase-18-file-storage.md) | 🔲 Not Started | Drag/drop uploader and image optimization |
-| 19 | [Offline-First Architecture](./phases/phase-19-offline-sync.md) | 🔲 Not Started | IndexedDB cache and mutation queueing |
-| 20 | [Localization & Data Export](./phases/phase-20-localization-export.md) | 🔲 Not Started | Language toggles and data download UI |
-| Future | [Individual Module Screen Implementations](./phases/phase-future-modules.md) | 🔲 Not Started | F1–F12 module-specific screens |
+## AI-Safe Development Rules
+Before executing any phase below, read the [AI-Safe Development Guidelines](./ai-safety-guidelines.md) to ensure context preservation and zero regressions.
 
 ---
 
-## Module List (F1–F12)
+## Stage 1: The Ironclad Core
+| Phase | Feature Focus | Status | Description |
+| :--- | :--- | :--- | :--- |
+| 00 | [Project Scaffolding](./phases/phase-00-scaffolding.md) | 🔲 Not Started | Angular v20, folder structure, `.env` |
+| 01 | [Infrastructure & Testing](./phases/phase-01-infrastructure.md) | 🔲 Not Started | Core services, Http interceptors, Karma/Jest |
+| 02 | [Security & DevOps](./phases/phase-02-security.md) | 🔲 Not Started | Route Guards, GitHub Actions CI/CD |
+| 03 | [Authentication & RBAC](./phases/phase-03-auth.md) | 🔲 Not Started | Login UI, Token management, signals |
 
-| Code | Module | Description |
-|------|--------|-------------|
-| F1 | Notes | Quick notes and bookmarks |
-| F2 | Kitchen Utilities | Track utility levels (gas, water, power) |
-| F3 | Expense Tracker | Track income, expenses, budgets |
-| F4 | Travel Logger | Past journeys and future trip planning |
-| F5 | Big Purchases | Savings goals with deadline tracking |
-| F6 | Reminders | Manual + automated alerts |
-| F7 | Kirana Planner | Weekly grocery list with master catalog |
-| F8 | Plans | Social plans with friends and family |
-| F9 | Rules | Personal rules with "rule of the day" |
-| F10 | Movies | Watchlist with status tracking |
-| F11 | Streak Loggers & Activity Details | Consistency tracking with activity logs |
-| F12 | Splitwise | Shared expense splitting |
-| — | Feature Log | Development feature logging |
+## Stage 2: Advanced Foundations
+| Phase | Feature Focus | Status | Description |
+| :--- | :--- | :--- | :--- |
+| 04 | [Real-Time Sync & Notifications](./phases/phase-04-notifications.md) | 🔲 Not Started | Socket.io client, Notification bell, Toasts |
+| 05 | [File Storage & Media](./phases/phase-05-file-storage.md) | 🔲 Not Started | Drag-and-drop uploader, Canvas image compression |
+| 06 | [Offline-First Architecture](./phases/phase-06-offline-sync.md) | 🔲 Not Started | IndexedDB interceptor, mutation queueing |
 
----
+## Stage 3: The Dashboard Engine
+| Phase | Feature Focus | Status | Description |
+| :--- | :--- | :--- | :--- |
+| 07 | [Workspace System](./phases/phase-07-workspace.md) | 🔲 Not Started | Fixed footer launcher, dashboard grid |
+| 08 | [Module System & Gallery](./phases/phase-08-module-gallery.md) | 🔲 Not Started | Global module catalog view |
+| 09 | [References & Import](./phases/phase-09-references.md) | 🔲 Not Started | Drag-to-assign flow, batch saving |
+| 10 | [Module Screen & Widgets](./phases/phase-10-module-screen.md) | 🔲 Not Started | Fixed Cards, User Widget container |
+| 11 | [Edit Mode & Visibility](./phases/phase-11-edit-visibility.md) | 🔲 Not Started | Global edit toggle, three-tier removal UI |
 
-## Core Hierarchy
+## Stage 4: Platform Maturity
+| Phase | Feature Focus | Status | Description |
+| :--- | :--- | :--- | :--- |
+| 12 | [Admin Console & Settings](./phases/phase-12-admin.md) | 🔲 Not Started | Live presence dots, system analytics UI |
+| 13 | [Global Search](./phases/phase-13-search.md) | 🔲 Not Started | Glassmorphism floating search overlay |
+| 14 | [Localization & Export](./phases/phase-14-localization-export.md) | 🔲 Not Started | i18n setup, Data Takeout buttons |
+| 15 | [PWA & Performance](./phases/phase-15-pwa.md) | 🔲 Not Started | Service Worker caching, bundle splitting, SEO |
 
-```
-Application
-  └── Workspace (user-created, max 6, footer navigation)
-        └── Module Reference (many-to-many, drag-to-assign)
-              └── Module (reusable mini-application)
-                    └── Module Screen
-                          ├── Fixed Cards (mandatory, system-controlled)
-                          └── User Widgets (optional, user-controlled)
-```
+## Stage 5: The "Magic" & Final Polish
+| Phase | Feature Focus | Status | Description |
+| :--- | :--- | :--- | :--- |
+| 16 | [AI Insights & Data Synthesis](./phases/phase-16-ai-insights.md) | 🔲 Not Started | Global AI widget, interactive insights |
+| 17 | [Final Polish & Hardening](./phases/phase-17-polish.md) | 🔲 Not Started | Accessibility (a11y), 60fps animations |
 
----
-
-## Architecture Principles
-
-1. Mobile-first design — Mobile-Perfect, Desktop-Contained (`max-width: 480px` centered).
-2. Glassmorphism footer navigation — fixed, transparent, frosted glass, Apple-inspired.
-3. User-created workspaces — users decide structure, not the system.
-4. Configuration-driven workspace limits — never hardcoded.
-5. Reusable modules — one module, many workspace references, zero duplication.
-6. Simple drag-to-workspace import — no sizing, positioning, or dialog questions.
-7. Automatic placement — modules auto-arrange in workspace dashboard.
-8. Explicit Edit Mode — reorder, remove, configure only when activated.
-9. Fixed Cards for core functionality — mandatory, always visible in module screens.
-10. Optional Widgets for customization — user-controlled, inside module screens only.
-11. Separate visibility from existence — removing references ≠ deleting data.
-12. Archive before delete — workspace lifecycle: Active → Archived → Restored.
+## Future: Individual Modules
+| Phase | Feature Focus | Status | Description |
+| :--- | :--- | :--- | :--- |
+| F1-F13 | [Module Blueprints](./phases/phase-future-modules.md) | 🔲 Not Started | Expense Tracker, Friends & Forums screens |

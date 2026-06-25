@@ -1,4 +1,4 @@
-# Phase 17: Notifications & Real-Time Sync (Frontend)
+# Phase 4: Notifications & Real-Time Sync (Frontend)
 
 > Notification Center UI and WebSocket state syncing.
 

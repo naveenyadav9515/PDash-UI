@@ -1,4 +1,4 @@
-# Phase 20: Localization & Data Portability (Frontend)
+# Phase 14: Localization & Data Portability (Frontend)
 
 > Language support and data download UI.
 

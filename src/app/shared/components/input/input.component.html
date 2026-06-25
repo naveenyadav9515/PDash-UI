@@ -1,0 +1,30 @@
+<div class="input-wrapper" [class.is-focused]="isFocused" [class.has-error]="!!error" [class.is-disabled]="disabled">
+  @if (label) {
+    <label class="input-label">{{ label }}</label>
+  }
+  
+  <div class="input-container glass-card border-etched">
+    @if (icon) {
+      <span class="input-icon material-symbols-outlined" aria-hidden="true">{{ icon }}</span>
+    }
+    
+    <input
+      [type]="type"
+      class="input-field"
+      [placeholder]="placeholder"
+      [value]="value"
+      [disabled]="disabled"
+      (input)="handleInput($event)"
+      (focus)="handleFocus()"
+      (blur)="handleBlur()"
+      [attr.data-testid]="'app-input-' + (label || type)"
+    />
+  </div>
+
+  @if (error) {
+    <div class="input-error-message" role="alert">
+      <span class="material-symbols-outlined error-icon" aria-hidden="true">error</span>
+      {{ error }}
+    </div>
+  }
+</div>

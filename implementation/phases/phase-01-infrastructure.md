@@ -54,11 +54,11 @@
 ## Epic 1.3: Shared Component Library
 
 ### Feature 1.3.1: Button Component
-- [ ] Build `app-button` standalone component
-- [ ] Variants: primary, secondary/glass, danger
-- [ ] States: default, hover, active, disabled, loading (spinner)
-- [ ] Use `ChangeDetectionStrategy.OnPush`
-- [ ] Add `data-testid` attribute
+- [x] **Completed** - Build `app-button` standalone component
+- [x] **Completed** - Variants: primary, secondary/glass, danger
+- [x] **Completed** - States: default, hover, active, disabled, loading (spinner)
+- [x] **Completed** - Use `ChangeDetectionStrategy.OnPush`
+- [x] **Completed** - Add `data-testid` attribute
 
 ### Feature 1.3.2: Input Component
 - [ ] Build `app-input` standalone component

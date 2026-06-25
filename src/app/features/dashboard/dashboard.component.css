@@ -369,26 +369,8 @@
   margin-top: 2px;
 }
 
-/* Responsive adjustment for tablet/desktop views */
-@media (min-width: 768px) {
-  .banner-metrics-grid {
-    grid-template-columns: repeat(3, 1fr); /* 3 columns on desktop/tablet */
-    gap: var(--lm-space-md) var(--lm-space-md);
-    padding: var(--lm-space-md) var(--lm-space-lg);
-  }
-  
-  /* Reset mobile 2-column borders */
-  .metric-chip:not(:nth-child(2n)) {
-    border-right: none;
-    padding-right: 0;
-  }
-  
-  /* Apply 3-column borders: columns 1 and 2 get right border */
-  .metric-chip:not(:nth-child(3n)) {
-    border-right: 1px solid rgba(155, 149, 176, 0.12);
-    padding-right: var(--lm-space-md);
-  }
-}
+/* Responsive adjustment removed: forcing 2-column layout across all screen sizes 
+   to prevent text truncation within the max-width: 560px app-shell container. */
 
 /* ==========================================================================
    Interactive System Loader Screen

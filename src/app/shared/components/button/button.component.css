@@ -1,0 +1,107 @@
+/* Using the tokens from the globally restored styles.css */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--lm-space-xs);
+  padding: 10px var(--lm-space-md);
+  font: var(--lm-type-body-md);
+  font-weight: 600;
+  border-radius: var(--lm-radius-sm);
+  border: none;
+  cursor: pointer;
+  transition: var(--lm-transition-fast);
+  position: relative;
+  overflow: hidden;
+  user-select: none;
+  outline: none;
+}
+
+.btn:focus-visible {
+  box-shadow: 0 0 0 2px var(--lm-color-bg), 0 0 0 4px var(--lm-color-primary);
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.btn-full {
+  width: 100%;
+}
+
+/* ── Variants ── */
+
+.btn-primary {
+  background: var(--lm-gradient-button);
+  color: #ffffff; /* Explicitly white for contrast */
+  box-shadow: 0 4px 12px 0 rgba(124, 92, 191, 0.3);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--lm-gradient-button-hover);
+  box-shadow: 0 6px 16px 0 rgba(124, 92, 191, 0.4);
+  transform: translateY(-1px);
+}
+
+.btn-primary:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.btn-secondary {
+  background: var(--lm-color-surface-subtle);
+  color: var(--lm-color-text-primary);
+  border: var(--lm-border-etched);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: var(--lm-color-surface-elevated);
+  border: var(--lm-border-hover);
+}
+
+.btn-glass {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--lm-color-text-primary);
+  backdrop-filter: blur(var(--lm-blur-sm));
+  -webkit-backdrop-filter: blur(var(--lm-blur-sm));
+  border: var(--lm-border-subtle);
+}
+
+[data-theme="light"] .btn-glass {
+  background: rgba(0, 0, 0, 0.03);
+}
+
+.btn-glass:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.1);
+  border: var(--lm-border-hover);
+}
+
+.btn-danger {
+  background: var(--lm-color-error-subtle);
+  color: var(--lm-color-error);
+  border: 1px solid var(--lm-color-error-glow);
+}
+
+.btn-danger:hover:not(:disabled) {
+  background: var(--lm-color-error);
+  color: #ffffff;
+}
+
+/* ── Loading State ── */
+.btn-loading {
+  cursor: wait;
+}
+
+.btn-spinner {
+  animation: spin 1s linear infinite;
+  font-size: 1.2rem;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.btn-icon {
+  font-size: 1.25rem;
+}

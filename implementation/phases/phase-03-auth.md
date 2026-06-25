@@ -47,3 +47,19 @@
 - [ ] Dropdown to select a predefined test user (e.g., User A, User B, Admin)
 - [ ] Hidden entirely when `environment.production === true`
 - [ ] Placed in the main layout header during development
+
+---
+
+## Epic 3.3: Password Recovery Flow
+
+### Feature 3.3.1: Forgot Password Page
+- [ ] Build `features/auth/forgot-password/forgot-password.component.ts`
+- [ ] Input field for Email Address
+- [ ] API call to trigger reset email
+- [ ] Success state: "If an account exists, a recovery email has been sent."
+
+### Feature 3.3.2: Reset Password Page
+- [ ] Build `features/auth/reset-password/reset-password.component.ts` (Route: `/reset-password/:token`)
+- [ ] Input fields for New Password and Confirm Password
+- [ ] Form validation to ensure passwords match
+- [ ] API call to submit new password and auto-login user upon success

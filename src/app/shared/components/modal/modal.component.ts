@@ -54,19 +54,20 @@ export class ModalComponent implements AfterViewChecked {
   }
 
   @HostListener('document:keydown.tab', ['$event'])
-  onTabPress(event: KeyboardEvent): void {
+  onTabPress(event: Event): void {
     if (!this.isOpen) return;
+    const keyboardEvent = event as KeyboardEvent;
     
     this.updateFocusableElements();
     if (this.focusableElements.length === 0) {
-      event.preventDefault();
+      keyboardEvent.preventDefault();
       return;
     }
 
     const firstElement = this.focusableElements[0];
     const lastElement = this.focusableElements[this.focusableElements.length - 1];
 
-    if (event.shiftKey) {
+    if (keyboardEvent.shiftKey) {
       if (document.activeElement === firstElement) {
         lastElement.focus();
         event.preventDefault();

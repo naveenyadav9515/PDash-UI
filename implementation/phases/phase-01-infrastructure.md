@@ -61,10 +61,10 @@
 - [x] **Completed** - Add `data-testid` attribute
 
 ### Feature 1.3.2: Input Component
-- [ ] Build `app-input` standalone component
-- [ ] Glass-styled input with focus ring animation
-- [ ] Validation error display below input
-- [ ] Support: text, email, password, number types
+- [x] **Completed** - Build `app-input` standalone component
+- [x] **Completed** - Glass-styled input with focus ring animation
+- [x] **Completed** - Validation error display below input
+- [x] **Completed** - Support: text, email, password, number types
 
 ### Feature 1.3.3: Card Component
 - [ ] Build `app-card` standalone component

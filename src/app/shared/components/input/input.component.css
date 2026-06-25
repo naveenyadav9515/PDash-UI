@@ -1,0 +1,105 @@
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--lm-space-2xs);
+  width: 100%;
+}
+
+.input-label {
+  font: var(--lm-type-caption);
+  color: var(--lm-color-text-secondary);
+  font-weight: 500;
+  margin-left: var(--lm-space-2xs);
+}
+
+.input-container {
+  display: flex;
+  align-items: center;
+  padding: 0 var(--lm-space-sm);
+  background: var(--lm-color-surface-subtle);
+  border-radius: var(--lm-radius-sm);
+  transition: var(--lm-transition-fast);
+  position: relative;
+  overflow: hidden;
+}
+
+.input-icon {
+  color: var(--lm-color-text-muted);
+  font-size: 1.25rem;
+  margin-right: var(--lm-space-xs);
+  transition: color 0.2s ease;
+}
+
+.input-field {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--lm-color-text-primary);
+  font: var(--lm-type-body-md);
+  padding: 12px 0;
+  outline: none;
+  width: 100%;
+}
+
+.input-field::placeholder {
+  color: var(--lm-color-text-muted);
+  opacity: 0.7;
+}
+
+.input-field:disabled {
+  cursor: not-allowed;
+}
+
+/* ── Focus Ring Animation ── */
+.input-wrapper.is-focused .input-container {
+  background: var(--lm-color-surface-elevated);
+  box-shadow: 0 0 0 2px var(--lm-color-primary-glow), inset 0 0 0 1px var(--lm-color-primary);
+  border-color: transparent;
+}
+
+.input-wrapper.is-focused .input-icon {
+  color: var(--lm-color-primary);
+}
+
+/* ── Error State ── */
+.input-wrapper.has-error .input-container {
+  box-shadow: 0 0 0 1px var(--lm-color-error), 0 0 0 3px var(--lm-color-error-glow);
+  border-color: transparent;
+}
+
+.input-wrapper.has-error .input-label {
+  color: var(--lm-color-error);
+}
+
+.input-wrapper.has-error .input-icon {
+  color: var(--lm-color-error);
+}
+
+.input-error-message {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--lm-color-error);
+  font: var(--lm-type-caption);
+  margin-top: 2px;
+  margin-left: var(--lm-space-2xs);
+  animation: slideDown 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.error-icon {
+  font-size: 1rem;
+}
+
+/* ── Disabled State ── */
+.input-wrapper.is-disabled .input-container {
+  opacity: 0.6;
+  background: rgba(0,0,0,0.1);
+}
+[data-theme="light"] .input-wrapper.is-disabled .input-container {
+  background: rgba(255,255,255,0.4);
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}

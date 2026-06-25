@@ -7,47 +7,47 @@
 ## Epic 1.1: Design System — CSS Foundation
 
 ### Feature 1.1.1: Typography & Fonts
-- [ ] Import `Geist` font from Google Fonts CDN in `index.html`
-- [ ] Import `Material Symbols Outlined` icon font in `index.html`
-- [ ] Define typography scale tokens in `src/styles.css`: `--lm-font-display-lg` through `--lm-font-mono-sm`
+- [x] **Completed** - Import `Geist` font from Google Fonts CDN in `index.html`
+- [x] **Completed** - Import `Material Symbols Outlined` icon font in `index.html`
+- [x] **Completed** - Define typography scale tokens in `src/styles.css`: `--lm-font-display-lg` through `--lm-font-mono-sm`
 
 ### Feature 1.1.2: Color Tokens
-- [ ] Define all `--lm-color-*` CSS custom properties in `src/styles.css`
-- [ ] Primary, secondary, tertiary, error colors
-- [ ] Surface variants (background, card, elevated)
-- [ ] Text variants (primary, secondary, muted, inverse)
+- [x] **Completed** - Define all `--lm-color-*` CSS custom properties in `src/styles.css`
+- [x] **Completed** - Primary, secondary, tertiary, error colors
+- [x] **Completed** - Surface variants (background, card, elevated)
+- [x] **Completed** - Text variants (primary, secondary, muted, inverse)
 
 ### Feature 1.1.3: Spacing & Elevation Tokens
-- [ ] Define spacing tokens using 4px base unit: `--lm-space-2xs` (4px) through `--lm-space-3xl` (48px)
-- [ ] Define stack spacing: `--lm-stack-sm`, `--lm-stack-md`, `--lm-stack-lg`
-- [ ] Define container padding and gutter tokens
-- [ ] Define elevation tokens: blur values, border widths, shadow layers
+- [x] **Completed** - Define spacing tokens using 4px base unit: `--lm-space-2xs` (4px) through `--lm-space-3xl` (48px)
+- [x] **Completed** - Define stack spacing: `--lm-stack-sm`, `--lm-stack-md`, `--lm-stack-lg`
+- [x] **Completed** - Define container padding and gutter tokens
+- [x] **Completed** - Define elevation tokens: blur values, border widths, shadow layers
 
 ### Feature 1.1.4: Glassmorphism Utility Classes
-- [ ] Create `.glass-mantle` — heavy blur for backdrops/overlays
-- [ ] Create `.glass-card` — medium blur for card containers with hover animation
-- [ ] Create `.glass-float` — highest elevation for floating elements/modals
-- [ ] Create `.border-etched` — subtle border to define glass edges
+- [x] **Completed** - Create `.glass-mantle` — heavy blur for backdrops/overlays
+- [x] **Completed** - Create `.glass-card` — medium blur for card containers with hover animation
+- [x] **Completed** - Create `.glass-float` — highest elevation for floating elements/modals
+- [x] **Completed** - Create `.border-etched` — subtle border to define glass edges
 
 ### Feature 1.1.5: Theme System
-- [ ] Create Dark Mode ("Deep Space") as default theme token set
-- [ ] Create Light Mode ("Snow Glass") theme token set
-- [ ] Toggle themes via `[data-theme="light"]` attribute on `<html>`
-- [ ] Ensure all color tokens swap seamlessly between themes
+- [x] **Completed** - Create Dark Mode ("Deep Space") as default theme token set
+- [x] **Completed** - Create Light Mode ("Snow Glass") theme token set
+- [x] **Completed** - Toggle themes via `[data-theme="light"]` attribute on `<html>`
+- [x] **Completed** - Ensure all color tokens swap seamlessly between themes
 
 ---
 
 ## Epic 1.2: Responsive Layout System
 
 ### Feature 1.2.1: Breakpoints
-- [ ] Define CSS breakpoint variables: `768px` (tablet), `1024px` (desktop), `1440px` (wide)
-- [ ] Use `min-width` media queries (mobile-first approach)
+- [x] **Completed** - Define CSS breakpoint variables: `768px` (tablet), `1024px` (desktop), `1440px` (wide)
+- [x] **Completed** - Use `min-width` media queries (mobile-first approach)
 
 ### Feature 1.2.2: App Shell Container
-- [ ] Implement Mobile-Perfect, Desktop-Contained pattern
-- [ ] Mobile: `width: 100%` — no compromise on mobile design
-- [ ] Desktop: `max-width: 480px`, `margin-inline: auto` — centered panel
-- [ ] CSS logical properties for RTL-readiness (`margin-inline-start`, `padding-inline-end`)
+- [x] **Completed** - Implement Mobile-Perfect, Desktop-Contained pattern
+- [x] **Completed** - Mobile: `width: 100%` — no compromise on mobile design
+- [x] **Completed** - Desktop: `max-width: 480px`, `margin-inline: auto` — centered panel
+- [x] **Completed** - CSS logical properties for RTL-readiness (`margin-inline-start`, `padding-inline-end`)
 
 ---
 

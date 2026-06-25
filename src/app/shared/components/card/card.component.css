@@ -1,0 +1,49 @@
+/* Using the tokens from the globally restored styles.css */
+.app-card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  overflow: hidden;
+  height: 100%;
+}
+
+/* ── Padding Variants ── */
+.pad-none .card-body { padding: 0; }
+.pad-sm .card-body { padding: var(--lm-space-sm); }
+.pad-md .card-body { padding: var(--lm-space-lg); }
+.pad-lg .card-body { padding: var(--lm-space-2xl); }
+
+/* The global glass-card already handles hover, 
+   but we disable it if hoverable=false */
+.app-card:not(.card-hoverable):hover {
+  transform: none !important;
+  box-shadow: var(--lm-shadow-card) !important;
+}
+
+/* ── Structural layout ── */
+.card-header:empty,
+.card-footer:empty {
+  display: none;
+}
+
+.card-header {
+  padding: var(--lm-space-md) var(--lm-space-lg);
+  border-bottom: var(--lm-border-subtle);
+  display: flex;
+  align-items: center;
+}
+
+.card-footer {
+  padding: var(--lm-space-md) var(--lm-space-lg);
+  border-top: var(--lm-border-subtle);
+  background: rgba(0, 0, 0, 0.1);
+  margin-top: auto;
+}
+
+[data-theme="light"] .card-footer {
+  background: rgba(0, 0, 0, 0.02);
+}
+
+.card-body {
+  flex: 1;
+}

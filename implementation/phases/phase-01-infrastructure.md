@@ -67,9 +67,9 @@
 - [x] **Completed** - Support: text, email, password, number types
 
 ### Feature 1.3.3: Card Component
-- [ ] Build `app-card` standalone component
-- [ ] Glass-card wrapper with content projection slots: header, body, footer
-- [ ] Hover elevation animation
+- [x] **Completed** - Build `app-card` standalone component
+- [x] **Completed** - Glass-card wrapper with content projection slots: header, body, footer
+- [x] **Completed** - Hover elevation animation
 
 ### Feature 1.3.4: Modal Component
 - [ ] Build `app-modal` standalone component

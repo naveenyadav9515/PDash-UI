@@ -1,4 +1,4 @@
-# Phase 8: Edit Mode & Module Visibility Management (Frontend)
+# Phase 11: Edit Mode & Module Visibility Management (Frontend)
 
 > The global edit mode state and the Three-Tier Removal UI.
 

@@ -1,4 +1,4 @@
-# Phase 5: Module System & Module Gallery (Frontend)
+# Phase 8: Module System & Module Gallery (Frontend)
 
 > Module state management and the Module Gallery UI.
 

@@ -1,4 +1,4 @@
-# Phase 19: Offline-First Architecture (Frontend)
+# Phase 6: Offline-First Architecture (Frontend)
 
 > Robust IndexedDB caching and mutation queueing for subway/airplane scenarios.
 

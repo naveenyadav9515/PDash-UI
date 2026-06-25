@@ -1,4 +1,4 @@
-# Phase 4: Workspace System (Frontend)
+# Phase 7: Workspace System (Frontend)
 
 > Workspace state management, footer navigation launcher, and workspace creation UI.
 

@@ -1,4 +1,4 @@
-# Phase 9: Global Search (Frontend)
+# Phase 13: Global Search (Frontend)
 
 > Search overlay and real-time results.
 

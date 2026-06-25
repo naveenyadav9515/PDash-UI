@@ -1,4 +1,4 @@
-# Phase 6: Workspace-Module References & Import (Frontend)
+# Phase 9: Workspace-Module References & Import (Frontend)
 
 > Drag-to-assign import flow and rendering modules in the workspace dashboard.
 

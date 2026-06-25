@@ -1,0 +1,30 @@
+@if (isOpen) {
+  <div class="modal-backdrop glass-mantle" (click)="handleBackdropClick($event)" role="dialog" aria-modal="true">
+    <div class="modal-content glass-float border-etched" (click)="handleContentClick($event)">
+      
+      <header class="modal-header">
+        @if (icon) {
+          <div class="modal-icon-wrap">
+            <span class="material-symbols-outlined modal-icon" aria-hidden="true">{{ icon }}</span>
+          </div>
+        }
+        
+        <h3 class="modal-title">{{ title }}</h3>
+        
+        <button
+          type="button"
+          class="modal-close-btn"
+          (click)="close()"
+          aria-label="Close modal"
+        >
+          <span class="material-symbols-outlined" aria-hidden="true">close</span>
+        </button>
+      </header>
+
+      <div class="modal-body">
+        <ng-content></ng-content>
+      </div>
+
+    </div>
+  </div>
+}

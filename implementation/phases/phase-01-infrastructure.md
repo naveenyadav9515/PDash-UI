@@ -72,11 +72,11 @@
 - [x] **Completed** - Hover elevation animation
 
 ### Feature 1.3.4: Modal Component
-- [ ] Build `app-modal` standalone component
-- [ ] Glass-float overlay with backdrop blur
-- [ ] Focus trap (tab key stays within modal)
-- [ ] Keyboard dismiss (Escape key closes)
-- [ ] Backdrop click closes modal
+- [x] **Completed** - Build `app-modal` standalone component
+- [x] **Completed** - Glass-float overlay with backdrop blur
+- [x] **Completed** - Focus trap (tab key stays within modal)
+- [x] **Completed** - Keyboard dismiss (Escape key closes)
+- [x] **Completed** - Backdrop click closes modal
 
 ### Feature 1.3.5: Loader Component
 - [ ] Build `app-loader` standalone component

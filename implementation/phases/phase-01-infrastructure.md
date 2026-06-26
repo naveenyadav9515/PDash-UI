@@ -79,16 +79,16 @@
 - [x] **Completed** - Backdrop click closes modal
 
 ### Feature 1.3.5: Loader Component
-- [ ] Build `app-loader` standalone component
-- [ ] Variants: skeleton loader (placeholder shapes), spinner (circular animation)
-- [ ] Full-page loader variant for app initialization
+- [x] **Completed** - Build `app-loader` standalone component
+- [x] **Completed** - Variants: skeleton loader (placeholder shapes), spinner (circular animation)
+- [x] **Completed** - Full-page loader variant for app initialization
 
 ### Feature 1.3.6: Toast/Notification Component
-- [ ] Build `app-toast` standalone component
-- [ ] Create `NotificationService` for centralized user feedback
-- [ ] Types: success, error, warning, info
-- [ ] Auto-dismiss with configurable duration
-- [ ] Stack multiple toasts vertically
+- [x] **Completed** - Build `app-toast` standalone component
+- [x] **Completed** - Create `NotificationService` for centralized user feedback
+- [x] **Completed** - Types: success, error, warning, info
+- [x] **Completed** - Auto-dismiss with configurable duration
+- [x] **Completed** - Stack multiple toasts vertically
 
 ### Feature 1.3.7: Empty State Component
 - [ ] Build `app-empty-state` standalone component

@@ -1,5 +1,6 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { ToastComponent } from './shared/components/toast/toast.component';
 
 /**
  * Root Shell Component.
@@ -10,6 +11,6 @@ import { RouterOutlet } from '@angular/router';
   templateUrl: './app.html',
   styleUrl: './app.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, ToastComponent],
 })
 export class App {}

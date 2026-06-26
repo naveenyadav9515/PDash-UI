@@ -1,0 +1,98 @@
+.toast-container {
+  position: fixed;
+  bottom: var(--lm-space-xl);
+  right: var(--lm-space-xl);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: var(--lm-space-sm);
+  pointer-events: none;
+  max-width: 380px;
+  width: calc(100vw - var(--lm-space-xl) * 2);
+}
+
+@media (max-width: 500px) {
+  .toast-container {
+    bottom: var(--lm-space-md);
+    right: 50%;
+    transform: translateX(50%);
+    width: calc(100vw - var(--lm-space-md) * 2);
+  }
+}
+
+.toast-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--lm-space-md);
+  padding: var(--lm-space-md);
+  pointer-events: auto;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Theme variants using CSS properties */
+.toast-success .toast-icon-wrap { color: #10B981; }
+.toast-error .toast-icon-wrap { color: #EF4444; }
+.toast-warning .toast-icon-wrap { color: #F59E0B; }
+.toast-info .toast-icon-wrap { color: #3B82F6; }
+
+/* Subtle accent bar on the left based on type */
+.toast-success::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: #10B981; }
+.toast-error::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: #EF4444; }
+.toast-warning::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: #F59E0B; }
+.toast-info::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: #3B82F6; }
+
+.toast-icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2px;
+}
+
+.toast-icon-wrap .material-symbols-outlined {
+  font-size: 24px;
+}
+
+.toast-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.toast-title {
+  font: var(--lm-type-heading-sm);
+  color: var(--lm-color-text-primary);
+  margin: 0;
+}
+
+.toast-message {
+  font: var(--lm-type-body-sm);
+  color: var(--lm-color-text-muted);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.toast-close-btn {
+  background: transparent;
+  border: none;
+  color: var(--lm-color-text-muted);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  margin-top: -2px;
+  margin-right: -4px;
+}
+
+.toast-close-btn:hover {
+  background: var(--lm-color-surface-hover);
+  color: var(--lm-color-text-primary);
+}
+
+.toast-close-btn .material-symbols-outlined {
+  font-size: 18px;
+}

@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 import { ApiService } from '@core/services/api.service';
 import { Feature } from '@core/models/feature.model';
 import { FeatureLog } from '@core/models/feature-log.model';
+import { NotificationService } from '@core/services/notification.service';
 import {
   DbConnectionStatus,
   APP_STRINGS,
@@ -66,9 +67,9 @@ export class DashboardComponent {
   protected readonly notesCount = signal<number>(8);
   protected readonly kitchenCount = signal<number>(5);
 
-  /* ── Private Injectable References ── */
-
+  /* ── Private Dependencies ── */
   private readonly apiService = inject(ApiService);
+  private readonly notificationService = inject(NotificationService);
   private readonly router = inject(Router);
   private readonly platformId = inject(PLATFORM_ID);
   private readonly elementRef = inject(ElementRef);
@@ -247,13 +248,17 @@ export class DashboardComponent {
   private loadApiData(): void {
     this.apiService.fetchHello().subscribe({
       next: (res) => this.apiMessage.set(res.message),
-      error: () => this.dbStatus.set('error'),
+      error: () => {
+        this.dbStatus.set('error');
+        this.notificationService.error('Failed to establish connection with server', 'System Offline');
+      },
     });
 
     this.apiService.fetchFeatures().subscribe({
       next: (res) => {
         this.features.set(res.data);
         this.dbStatus.set('connected');
+        this.notificationService.success('Secure pipeline established successfully', 'Systems Online');
       },
       error: () => {
         this.dbStatus.set('error');

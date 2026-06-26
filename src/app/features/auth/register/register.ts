@@ -1,7 +1,8 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, OnInit } from '@angular/core';
 import { AbstractControl, NonNullableFormBuilder, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '@core/services/auth.service';
+import { ApiService } from '@core/services/api.service';
 import { NgIf } from '@angular/common';
 
 /** Custom validator to check if passwords match */
@@ -23,10 +24,19 @@ export const passwordMatchValidator: ValidatorFn = (control: AbstractControl): V
   templateUrl: './register.html',
   styleUrls: ['./register.css'] // Reusing login styles plus custom if needed
 })
-export class Register {
+export class Register implements OnInit {
   private readonly fb = inject(NonNullableFormBuilder);
   private readonly authService = inject(AuthService);
+  private readonly apiService = inject(ApiService);
   private readonly router = inject(Router);
+
+  ngOnInit(): void {
+    // 🚀 Background Warm-Up Ping: Wake up Render
+    this.apiService.fetchHello().subscribe({
+      next: () => console.log('Backend server warmed up and ready!'),
+      error: () => console.warn('Backend server is waking up...')
+    });
+  }
 
   protected readonly isLoading = signal<boolean>(false);
   protected readonly errorMessage = signal<string | null>(null);

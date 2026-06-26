@@ -64,8 +64,8 @@ export class DashboardComponent {
   protected readonly isSettingsOpen = signal<boolean>(false);
 
   /** Extra metrics for welcome card */
-  protected readonly notesCount = signal<number>(8);
-  protected readonly kitchenCount = signal<number>(5);
+  protected readonly notesCount = signal<number>(0);
+  protected readonly kitchenCount = signal<number>(0);
 
   /* ── Private Dependencies ── */
   private readonly apiService = inject(ApiService);
@@ -90,20 +90,11 @@ export class DashboardComponent {
 
   /* ── Protected Methods ── */
 
-  /** Gets a loaded feature by name (returns mock if not loaded yet) */
-  protected getFeature(name: string): Feature {
-    const found = this.features().find(
+  /** Gets a loaded feature by name */
+  protected getFeature(name: string): Feature | undefined {
+    return this.features().find(
       (f) => f.name.toLowerCase().trim() === name.toLowerCase().trim()
     );
-    if (found) return found;
-
-    return {
-      _id: `mock-${name}`,
-      name,
-      description: `Track and organize your daily ${name.toLowerCase()} updates`,
-      icon: this.getIconForFeature(name),
-      enabled: true,
-    };
   }
 
   /** Navigates to the Feature Log screen */
@@ -177,17 +168,8 @@ export class DashboardComponent {
 
   /** Sets a random motivational quote on load */
   private setRandomQuote(): void {
-    const quotes = [
-      "Consistency is what transforms average into excellence.",
-      "Simplicity is the ultimate sophistication.",
-      "The best way to predict the future is to create it.",
-      "Focus on being productive instead of busy.",
-      "Make it simple, but significant.",
-      "Quality is not an act, it is a habit.",
-      "Strive for progress, not perfection."
-    ];
-    const randomIndex = Math.floor(Math.random() * quotes.length);
-    this.quoteText.set(quotes[randomIndex]);
+    // TODO: Connect to Quote API in backend
+    this.quoteText.set('');
   }
 
   /** Loads extra counts for welcome banner card from local storage */
@@ -197,14 +179,14 @@ export class DashboardComponent {
       if (savedNotes) {
         this.notesCount.set(parseInt(savedNotes, 10));
       } else {
-        localStorage.setItem('pdash-notes-count', '8');
+        this.notesCount.set(0);
       }
 
       const savedKitchen = localStorage.getItem('pdash-kitchen-count');
       if (savedKitchen) {
         this.kitchenCount.set(parseInt(savedKitchen, 10));
       } else {
-        localStorage.setItem('pdash-kitchen-count', '5');
+        this.kitchenCount.set(0);
       }
     }
   }
@@ -233,7 +215,6 @@ export class DashboardComponent {
       next: (res) => {
         this.features.set(res.data);
         this.dbStatus.set('connected');
-        this.notificationService.success('Secure pipeline established successfully', 'Systems Online');
       },
       error: () => {
         this.dbStatus.set('error');

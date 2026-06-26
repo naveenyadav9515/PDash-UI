@@ -1,0 +1,60 @@
+<div class="form-container">
+  <div class="form-header">
+    <h2>Welcome Back</h2>
+    <p>Please log in to continue</p>
+  </div>
+
+  <div *ngIf="errorMessage()" class="alert-box error">
+    <span class="material-symbols-outlined">error</span>
+    {{ errorMessage() }}
+  </div>
+
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="auth-form">
+    <div class="form-group">
+      <label for="email">Email Address</label>
+      <input 
+        type="email" 
+        id="email" 
+        formControlName="email" 
+        class="form-control" 
+        placeholder="you@example.com"
+        [class.is-invalid]="loginForm.controls.email.invalid && loginForm.controls.email.touched"
+      >
+      <div class="invalid-feedback" *ngIf="loginForm.controls.email.invalid && loginForm.controls.email.touched">
+        Please enter a valid email.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input 
+        type="password" 
+        id="password" 
+        formControlName="password" 
+        class="form-control" 
+        placeholder="••••••••"
+        [class.is-invalid]="loginForm.controls.password.invalid && loginForm.controls.password.touched"
+      >
+      <div class="invalid-feedback" *ngIf="loginForm.controls.password.invalid && loginForm.controls.password.touched">
+        Password is required (min 6 chars).
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-block" [disabled]="isLoading()">
+      <span class="material-symbols-outlined" *ngIf="!isLoading()">login</span>
+      <span class="material-symbols-outlined rotating" *ngIf="isLoading()">progress_activity</span>
+      {{ isLoading() ? 'Signing in...' : 'Sign In' }}
+    </button>
+  </form>
+
+  <div class="divider">
+    <span>OR</span>
+  </div>
+
+    <!-- Google Identity Services Target Wrapper -->
+    <div id="google-btn-wrapper" class="google-btn-wrapper"></div>
+
+  <div class="form-footer">
+    <p>Don't have an account? <a routerLink="/auth/register">Register here</a></p>
+  </div>
+</div>

@@ -14,6 +14,7 @@ import { ApiService } from '@core/services/api.service';
 import { Feature } from '@core/models/feature.model';
 import { FeatureLog } from '@core/models/feature-log.model';
 import { NotificationService } from '@core/services/notification.service';
+import { ThemeService } from '@core/services/theme.service';
 import {
   DbConnectionStatus,
   APP_STRINGS,
@@ -61,7 +62,6 @@ export class DashboardComponent {
 
   /** Settings and Theme options state */
   protected readonly isSettingsOpen = signal<boolean>(false);
-  protected readonly currentTheme = signal<'dark' | 'light'>('dark');
 
   /** Extra metrics for welcome card */
   protected readonly notesCount = signal<number>(8);
@@ -70,6 +70,9 @@ export class DashboardComponent {
   /* ── Private Dependencies ── */
   private readonly apiService = inject(ApiService);
   private readonly notificationService = inject(NotificationService);
+  private readonly themeService = inject(ThemeService);
+  
+  protected readonly currentTheme = this.themeService.currentTheme;
   private readonly router = inject(Router);
   private readonly platformId = inject(PLATFORM_ID);
   private readonly elementRef = inject(ElementRef);
@@ -80,7 +83,6 @@ export class DashboardComponent {
       this.loadApiData();
       this.loadRecentLogs();
       this.setCurrentDate();
-      this.initializeTheme();
       this.loadExtraMetrics();
       this.setRandomQuote();
     });
@@ -128,26 +130,13 @@ export class DashboardComponent {
   /** Sets the active system theme (dark/light) */
   protected setTheme(theme: 'dark' | 'light'): void {
     if (isPlatformBrowser(this.platformId)) {
-      // Add smooth transition helper class
       document.documentElement.classList.add('theme-transitioning');
       
-      this.currentTheme.set(theme);
-      document.documentElement.setAttribute('data-theme', theme);
-      
-      // Store in both standard keys for full compliance
-      localStorage.setItem(STORAGE_KEYS.THEME_PREFERENCE, theme);
-      localStorage.setItem('pdash-theme', theme);
+      this.themeService.setTheme(theme);
 
-      // Update theme-color meta tag for Android address bar styling
-      const meta = document.querySelector('meta[name="theme-color"]');
-      if (meta) {
-        meta.setAttribute('content', theme === 'light' ? '#f4f3f8' : '#13111c');
-      }
-
-      // Remove transition class after the transition is complete
       setTimeout(() => {
         document.documentElement.classList.remove('theme-transitioning');
-      }, 1500); // 1.5s transition window
+      }, 1500);
     }
     this.isSettingsOpen.set(false);
   }
@@ -185,20 +174,6 @@ export class DashboardComponent {
     }
   }
 
-  /** Initializes theme from localStorage */
-  private initializeTheme(): void {
-    if (isPlatformBrowser(this.platformId)) {
-      const savedTheme = (localStorage.getItem(STORAGE_KEYS.THEME_PREFERENCE) || localStorage.getItem('pdash-theme')) as 'dark' | 'light' || 'dark';
-      this.currentTheme.set(savedTheme);
-      document.documentElement.setAttribute('data-theme', savedTheme);
-      
-      // Update theme-color meta tag for Android address bar styling on init
-      const meta = document.querySelector('meta[name="theme-color"]');
-      if (meta) {
-        meta.setAttribute('content', savedTheme === 'light' ? '#f4f3f8' : '#13111c');
-      }
-    }
-  }
 
   /** Sets a random motivational quote on load */
   private setRandomQuote(): void {

@@ -2,6 +2,7 @@ import { Component, inject, signal, AfterViewInit, NgZone } from '@angular/core'
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '@core/services/auth.service';
+import { ApiService } from '@core/services/api.service';
 import { NgIf } from '@angular/common';
 
 declare var google: any;
@@ -16,6 +17,7 @@ declare var google: any;
 export class Login implements AfterViewInit {
   private readonly fb = inject(NonNullableFormBuilder);
   private readonly authService = inject(AuthService);
+  private readonly apiService = inject(ApiService);
   private readonly router = inject(Router);
   private readonly ngZone = inject(NgZone);
 
@@ -28,6 +30,13 @@ export class Login implements AfterViewInit {
   });
 
   ngAfterViewInit(): void {
+    // 🚀 Background Warm-Up Ping: 
+    // Hit the server the moment the user opens the login page to wake up Render from its cold sleep!
+    this.apiService.fetchHello().subscribe({
+      next: () => console.log('Backend server warmed up and ready!'),
+      error: () => console.warn('Backend server is waking up...')
+    });
+
     if (typeof google !== 'undefined') {
       google.accounts.id.initialize({
         client_id: '305562630147-u7hnu7q3udsbmtag2cjd98mr53eq59am.apps.googleusercontent.com',

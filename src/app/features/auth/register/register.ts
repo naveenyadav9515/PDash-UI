@@ -1,9 +1,9 @@
-import { Component, inject, signal, OnInit } from '@angular/core';
+import { Component, inject, signal, OnInit, PLATFORM_ID } from '@angular/core';
 import { AbstractControl, NonNullableFormBuilder, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '@core/services/auth.service';
 import { ApiService } from '@core/services/api.service';
-import { NgIf } from '@angular/common';
+import { NgIf, isPlatformBrowser } from '@angular/common';
 
 /** Custom validator to check if passwords match */
 export const passwordMatchValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
@@ -29,13 +29,16 @@ export class Register implements OnInit {
   private readonly authService = inject(AuthService);
   private readonly apiService = inject(ApiService);
   private readonly router = inject(Router);
+  private readonly platformId = inject(PLATFORM_ID);
 
   ngOnInit(): void {
-    // 🚀 Background Warm-Up Ping: Wake up Render
-    this.apiService.fetchHello().subscribe({
-      next: () => console.log('Backend server warmed up and ready!'),
-      error: () => console.warn('Backend server is waking up...')
-    });
+    if (isPlatformBrowser(this.platformId)) {
+      // 🚀 Background Warm-Up Ping: Wake up Render
+      this.apiService.fetchHello().subscribe({
+        next: () => console.log('Backend server warmed up and ready!'),
+        error: () => console.warn('Backend server is waking up...')
+      });
+    }
   }
 
   protected readonly isLoading = signal<boolean>(false);

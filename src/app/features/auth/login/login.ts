@@ -1,9 +1,9 @@
-import { Component, inject, signal, AfterViewInit, NgZone } from '@angular/core';
+import { Component, inject, signal, AfterViewInit, NgZone, PLATFORM_ID } from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '@core/services/auth.service';
 import { ApiService } from '@core/services/api.service';
-import { NgIf } from '@angular/common';
+import { NgIf, isPlatformBrowser } from '@angular/common';
 
 declare var google: any;
 
@@ -20,6 +20,7 @@ export class Login implements AfterViewInit {
   private readonly apiService = inject(ApiService);
   private readonly router = inject(Router);
   private readonly ngZone = inject(NgZone);
+  private readonly platformId = inject(PLATFORM_ID);
 
   protected readonly isLoading = signal<boolean>(false);
   protected readonly errorMessage = signal<string | null>(null);
@@ -30,25 +31,26 @@ export class Login implements AfterViewInit {
   });
 
   ngAfterViewInit(): void {
-    // 🚀 Background Warm-Up Ping: 
-    // Hit the server the moment the user opens the login page to wake up Render from its cold sleep!
-    this.apiService.fetchHello().subscribe({
-      next: () => console.log('Backend server warmed up and ready!'),
-      error: () => console.warn('Backend server is waking up...')
-    });
-
-    if (typeof google !== 'undefined') {
-      google.accounts.id.initialize({
-        client_id: '305562630147-u7hnu7q3udsbmtag2cjd98mr53eq59am.apps.googleusercontent.com',
-        callback: this.handleGoogleCredentialResponse.bind(this)
+    if (isPlatformBrowser(this.platformId)) {
+      // 🚀 Background Warm-Up Ping: 
+      this.apiService.fetchHello().subscribe({
+        next: () => console.log('Backend server warmed up and ready!'),
+        error: () => console.warn('Backend server is waking up...')
       });
-      
-      google.accounts.id.renderButton(
-        document.getElementById('google-btn-wrapper'),
-        { theme: 'outline', size: 'large', width: '340' } 
-      );
-    } else {
-      console.warn('Google Identity Services SDK not loaded.');
+
+      if (typeof google !== 'undefined') {
+        google.accounts.id.initialize({
+          client_id: '305562630147-u7hnu7q3udsbmtag2cjd98mr53eq59am.apps.googleusercontent.com',
+          callback: this.handleGoogleCredentialResponse.bind(this)
+        });
+        
+        google.accounts.id.renderButton(
+          document.getElementById('google-btn-wrapper'),
+          { theme: 'outline', size: 'large', width: '340' } 
+        );
+      } else {
+        console.warn('Google Identity Services SDK not loaded.');
+      }
     }
   }
 

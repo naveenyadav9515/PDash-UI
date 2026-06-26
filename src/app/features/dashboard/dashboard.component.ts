@@ -266,6 +266,7 @@ export class DashboardComponent {
     });
   }
 
+
   /** Loads the 2 most recent logged features for preview */
   private loadRecentLogs(): void {
     if (isPlatformBrowser(this.platformId)) {

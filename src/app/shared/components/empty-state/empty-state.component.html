@@ -1,0 +1,18 @@
+<div class="empty-state-wrapper">
+  <div class="empty-state-icon-box">
+    <span class="material-symbols-outlined empty-icon">{{ icon }}</span>
+  </div>
+  
+  <h3 class="empty-state-title">{{ title }}</h3>
+  <p class="empty-state-desc">{{ description }}</p>
+  
+  @if (actionText) {
+    <button 
+      class="empty-state-action-btn glass-float" 
+      (click)="actionClick.emit()"
+      type="button"
+    >
+      {{ actionText }}
+    </button>
+  }
+</div>

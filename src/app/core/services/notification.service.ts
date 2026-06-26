@@ -55,19 +55,21 @@ export class NotificationService {
    */
   private show(config: Omit<ToastMessage, 'id'>): void {
     const id = `toast_${Date.now()}_${this.counter++}`;
+    const safeDuration: number = config.duration ?? this.DEFAULT_DURATION;
+    
     const newToast: ToastMessage = {
       id,
       ...config,
-      duration: config.duration || this.DEFAULT_DURATION
+      duration: safeDuration
     };
 
     this.toastsSignal.update(current => [...current, newToast]);
 
     // Auto-remove after duration
-    if (newToast.duration > 0) {
+    if (safeDuration > 0) {
       setTimeout(() => {
         this.remove(id);
-      }, newToast.duration);
+      }, safeDuration);
     }
   }
 

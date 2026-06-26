@@ -1,0 +1,26 @@
+@if (variant === 'full-page') {
+  <div class="system-loader-screen" data-testid="system-loader-full">
+    <div class="loader-orbit-wrap">
+      <div class="loader-orbit orbit-1"></div>
+      <div class="loader-orbit orbit-2"></div>
+      <div class="loader-orbit orbit-3"></div>
+      <span class="material-symbols-outlined loader-core-icon">settings_ethernet</span>
+    </div>
+    @if (title) {
+      <h2 class="loader-status-title">{{ title }}</h2>
+    }
+    @if (description) {
+      <p class="loader-status-desc">{{ description }}</p>
+    }
+  </div>
+}
+
+@if (variant === 'spinner') {
+  <div class="basic-spinner" data-testid="system-loader-spinner" role="status" aria-label="Loading">
+    <span class="spinner-ring"></span>
+  </div>
+}
+
+@if (variant === 'skeleton') {
+  <div class="skeleton-shimmer" data-testid="system-loader-skeleton" aria-hidden="true"></div>
+}

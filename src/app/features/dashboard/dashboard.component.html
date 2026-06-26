@@ -3,16 +3,11 @@
 
   @if (dbStatus() === 'connecting') {
     <!-- ── System Initialization Loader ── -->
-    <div class="system-loader-screen" data-testid="system-loader">
-      <div class="loader-orbit-wrap">
-        <div class="loader-orbit orbit-1"></div>
-        <div class="loader-orbit orbit-2"></div>
-        <div class="loader-orbit orbit-3"></div>
-        <span class="material-symbols-outlined loader-core-icon">settings_ethernet</span>
-      </div>
-      <h2 class="loader-status-title">Connecting to Services</h2>
-      <p class="loader-status-desc">Synchronizing system nodes and establishing secure pipeline...</p>
-    </div>
+    <app-loader 
+      variant="full-page" 
+      title="Connecting to Services" 
+      description="Synchronizing system nodes and establishing secure pipeline...">
+    </app-loader>
   } @else {
 
     <!-- ── Dashboard Header ── -->

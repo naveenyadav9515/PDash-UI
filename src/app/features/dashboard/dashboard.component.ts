@@ -22,6 +22,7 @@ import {
   STORAGE_KEYS,
 } from '@core/constants/app.constants';
 
+import { LoaderComponent } from '../../shared/components';
 /**
  * Dashboard Component.
  *
@@ -33,7 +34,7 @@ import {
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [],
+  imports: [LoaderComponent],
 })
 export class DashboardComponent {
   /* ── Protected Properties & Signals ── */

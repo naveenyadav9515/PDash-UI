@@ -15,6 +15,7 @@ import { Feature } from '@core/models/feature.model';
 import { FeatureLog } from '@core/models/feature-log.model';
 import { NotificationService } from '@core/services/notification.service';
 import { ThemeService } from '@core/services/theme.service';
+import { AuthService } from '@core/services/auth.service';
 import {
   DbConnectionStatus,
   APP_STRINGS,
@@ -71,6 +72,7 @@ export class DashboardComponent {
   private readonly apiService = inject(ApiService);
   private readonly notificationService = inject(NotificationService);
   private readonly themeService = inject(ThemeService);
+  private readonly authService = inject(AuthService);
   
   protected readonly currentTheme = this.themeService.currentTheme;
   private readonly router = inject(Router);
@@ -130,6 +132,12 @@ export class DashboardComponent {
       }, 1500);
     }
     this.isSettingsOpen.set(false);
+  }
+
+  /** Logs the user out and clears the session securely */
+  protected logout(): void {
+    this.isSettingsOpen.set(false);
+    this.authService.logout();
   }
 
   /** Click handler to automatically close the settings dropdown when clicking outside */

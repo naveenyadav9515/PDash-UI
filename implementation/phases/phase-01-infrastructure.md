@@ -100,12 +100,12 @@
 ## Epic 1.4: Theme Service
 
 ### Feature 1.4.1: Theme Detection & Persistence
-- [ ] Create `core/services/theme.service.ts`
-- [ ] SSR-safe detection using `PLATFORM_ID` + `isPlatformBrowser`
-- [ ] Respect `prefers-color-scheme` as default on first visit
-- [ ] Persist user preference in `localStorage` (with SSR guard)
-- [ ] Toggle `data-theme` attribute on `<html>` element
-- [ ] Expose `currentTheme` signal: `'dark' | 'light' | 'system'`
+- [x] **Completed** - Create `core/services/theme.service.ts`
+- [x] **Completed** - SSR-safe detection using `PLATFORM_ID` + `isPlatformBrowser`
+- [x] **Completed** - Respect `prefers-color-scheme` as default on first visit
+- [x] **Completed** - Persist user preference in `localStorage` (with SSR guard)
+- [x] **Completed** - Toggle `data-theme` attribute on `<html>` element
+- [x] **Completed** - Expose `currentTheme` signal: `'dark' | 'light' | 'system'`
 
 
 ---

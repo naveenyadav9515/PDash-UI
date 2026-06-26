@@ -1,0 +1,35 @@
+<div class="auth-layout-container">
+  
+  <!-- Global Glowing Background Orbs -->
+  <div class="bg-glow-container">
+    <div class="bg-orb orb-purple"></div>
+    <div class="bg-orb orb-pink"></div>
+    <div class="bg-orb orb-blue"></div>
+  </div>
+
+  <!-- Theme Toggle Button in Top Right -->
+  <button 
+    class="theme-toggle-btn icon-btn" 
+    (click)="toggleTheme()" 
+    [attr.aria-label]="'Switch to ' + (themeService.currentTheme() === 'dark' ? 'light' : 'dark') + ' mode'"
+  >
+    <span class="material-symbols-outlined">
+      {{ themeService.currentTheme() === 'dark' ? 'light_mode' : 'dark_mode' }}
+    </span>
+  </button>
+
+  <div class="auth-card-wrapper">
+    <!-- P-Dash Branding -->
+    <div class="auth-header">
+      <div class="logo-circle">
+        <span class="material-symbols-outlined">dashboard_customize</span>
+      </div>
+      <h1 class="brand-text">P-Dash</h1>
+    </div>
+
+    <!-- The actual login or register form will render here -->
+    <div class="auth-content glass-card border-etched">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,95 @@
+<div class="form-container">
+  <div class="form-header">
+    <h2>Create an Account</h2>
+    <p>Join P-Dash today</p>
+  </div>
+
+  <div *ngIf="errorMessage()" class="alert-box error">
+    <span class="material-symbols-outlined">error</span>
+    {{ errorMessage() }}
+  </div>
+
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="auth-form">
+    
+    <div class="name-row">
+      <div class="form-group">
+        <label for="firstName">First Name</label>
+        <input 
+          type="text" 
+          id="firstName" 
+          formControlName="firstName" 
+          class="form-control" 
+          placeholder="Jane"
+          [class.is-invalid]="registerForm.controls.firstName.invalid && registerForm.controls.firstName.touched"
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="lastName">Last Name</label>
+        <input 
+          type="text" 
+          id="lastName" 
+          formControlName="lastName" 
+          class="form-control" 
+          placeholder="Doe"
+          [class.is-invalid]="registerForm.controls.lastName.invalid && registerForm.controls.lastName.touched"
+        >
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email Address</label>
+      <input 
+        type="email" 
+        id="email" 
+        formControlName="email" 
+        class="form-control" 
+        placeholder="you@example.com"
+        [class.is-invalid]="registerForm.controls.email.invalid && registerForm.controls.email.touched"
+      >
+      <div class="invalid-feedback" *ngIf="registerForm.controls.email.invalid && registerForm.controls.email.touched">
+        Please enter a valid email.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input 
+        type="password" 
+        id="password" 
+        formControlName="password" 
+        class="form-control" 
+        placeholder="••••••••"
+        [class.is-invalid]="registerForm.controls.password.invalid && registerForm.controls.password.touched"
+      >
+      <div class="invalid-feedback" *ngIf="registerForm.controls.password.invalid && registerForm.controls.password.touched">
+        Password is required (min 6 chars).
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="confirmPassword">Confirm Password</label>
+      <input 
+        type="password" 
+        id="confirmPassword" 
+        formControlName="confirmPassword" 
+        class="form-control" 
+        placeholder="••••••••"
+        [class.is-invalid]="registerForm.controls.confirmPassword.invalid && registerForm.controls.confirmPassword.touched"
+      >
+      <div class="invalid-feedback" *ngIf="registerForm.controls.confirmPassword.hasError('passwordMismatch') && registerForm.controls.confirmPassword.touched">
+        Passwords do not match.
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-block" [disabled]="isLoading()">
+      <span class="material-symbols-outlined" *ngIf="!isLoading()">person_add</span>
+      <span class="material-symbols-outlined rotating" *ngIf="isLoading()">progress_activity</span>
+      {{ isLoading() ? 'Creating account...' : 'Create Account' }}
+    </button>
+  </form>
+
+  <div class="form-footer">
+    <p>Already have an account? <a routerLink="/auth/login">Log in here</a></p>
+  </div>
+</div>

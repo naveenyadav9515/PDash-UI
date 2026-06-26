@@ -2,8 +2,7 @@ import { Injectable, inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Observable, catchError, throwError, timeout } from 'rxjs';
-import { FeaturesResponse, HelloResponse } from '@core/models/api-response.model';
-
+import { FeaturesResponse, HelloResponse, AuthResponse } from '@core/models/api-response.model';
 /**
  * Stateless API client service.
  *
@@ -56,9 +55,37 @@ export class ApiService {
   fetchFeatures(): Observable<FeaturesResponse> {
     return this.http.get<FeaturesResponse>(`${this.apiUrl}/features`).pipe(
       timeout(this.REQUEST_TIMEOUT_MS),
-      catchError((error: unknown) => {
-        return throwError(() => error);
-      })
+      catchError((error: unknown) => throwError(() => error))
+    );
+  }
+
+  /**
+   * Registers a new user.
+   */
+  register(userData: any): Observable<AuthResponse> {
+    return this.http.post<AuthResponse>(`${this.apiUrl}/auth/register`, userData).pipe(
+      timeout(this.REQUEST_TIMEOUT_MS),
+      catchError((error: unknown) => throwError(() => error))
+    );
+  }
+
+  /**
+   * Logs in an existing user with email and password.
+   */
+  login(credentials: any): Observable<AuthResponse> {
+    return this.http.post<AuthResponse>(`${this.apiUrl}/auth/login`, credentials).pipe(
+      timeout(this.REQUEST_TIMEOUT_MS),
+      catchError((error: unknown) => throwError(() => error))
+    );
+  }
+
+  /**
+   * Authenticates a user using a Google OAuth ID Token.
+   */
+  loginWithGoogle(token: string): Observable<AuthResponse> {
+    return this.http.post<AuthResponse>(`${this.apiUrl}/auth/google`, { token }).pipe(
+      timeout(this.REQUEST_TIMEOUT_MS),
+      catchError((error: unknown) => throwError(() => error))
     );
   }
 }

@@ -4,6 +4,7 @@ import { User } from '../models/user.model';
 import { Router } from '@angular/router';
 import { ApiService } from './api.service';
 import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { AuthResponse } from '../models/api-response.model';
 
 @Injectable({
@@ -96,30 +97,21 @@ export class AuthService {
   private readonly router = inject(Router);
 
   public login(credentials: any): Observable<AuthResponse> {
-    const req = this.apiService.login(credentials);
-    req.subscribe({
-      next: (res: any) => this.setSession(res.data, res.data.token),
-      error: () => {} // Error handled by components
-    });
-    return req;
+    return this.apiService.login(credentials).pipe(
+      tap((res: any) => this.setSession(res.data, res.data.token))
+    );
   }
 
   public register(userData: any): Observable<AuthResponse> {
-    const req = this.apiService.register(userData);
-    req.subscribe({
-      next: (res: any) => this.setSession(res.data, res.data.token),
-      error: () => {} 
-    });
-    return req;
+    return this.apiService.register(userData).pipe(
+      tap((res: any) => this.setSession(res.data, res.data.token))
+    );
   }
   
   public loginWithGoogle(token: string): Observable<AuthResponse> {
-    const req = this.apiService.loginWithGoogle(token);
-    req.subscribe({
-      next: (res: any) => this.setSession(res.data, res.data.token),
-      error: () => {}
-    });
-    return req;
+    return this.apiService.loginWithGoogle(token).pipe(
+      tap((res: any) => this.setSession(res.data, res.data.token))
+    );
   }
 
   public logout(): void {

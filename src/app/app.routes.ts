@@ -28,5 +28,6 @@ export const routes: Routes = [
     ]
   },
   { path: 'upcoming-features', loadComponent: () => import('./features/feature-log/feature-log.component').then(m => m.FeatureLogComponent), title: 'P-Dash — Features Log' },
+  { path: 'expenses', loadComponent: () => import('./features/expense-tracker/expense-tracker.component').then(m => m.ExpenseTrackerComponent), canActivate: [authGuard], title: 'Expense Tracker' },
   { path: '**', redirectTo: '' },
 ];

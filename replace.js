@@ -1,50 +1,27 @@
 const fs = require('fs');
-const file = 'src/app/features/dashboard/dashboard.component.css';
-let content = fs.readFileSync(file, 'utf8');
 
-content = content.replace(/\.metric-emoji \{[^}]+\}/g, `.metric-emoji {
-  font-size: 26px;
-  background: var(--lm-color-surface-elevated);
-  border-radius: var(--lm-radius-sm);
-  width: 44px;
-  height: 44px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: var(--lm-shadow-card);
-  flex-shrink: 0;
-}`);
+// HTML replacement
+const htmlFile = 'C:/Users/Administrator/Desktop/MyDash/PDash-UI/src/app/features/dashboard/dashboard.component.html';
+const newHtml = fs.readFileSync('C:/Users/Administrator/Desktop/MyDash/PDash-UI/new_widget.html', 'utf8');
+let htmlContent = fs.readFileSync(htmlFile, 'utf8');
 
-content = content.replace(/\.metric-chip-val \{[^}]+\}/g, `.metric-chip-val {
-  font: var(--lm-type-heading-sm);
-  font-size: 1.15rem;
-  font-weight: 800;
-  color: var(--lm-color-text-primary);
-  line-height: 1.2;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  letter-spacing: -0.01em;
-}`);
+const startTag = '<!-- 3. Finance Tracker (Full Width) -->';
+const endTag = '<!-- 1. Features Log (Full Width) -->';
 
-content = content.replace(/\.metric-chip-lbl \{[^}]+\}/g, `.metric-chip-lbl {
-  font: var(--lm-type-overline);
-  font-size: 0.65rem;
-  font-weight: 600;
-  color: var(--lm-color-text-muted);
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin-top: 2px;
-}`);
+const startIdx = htmlContent.indexOf(startTag);
+const endIdx = htmlContent.indexOf(endTag);
 
-content = content.replace(/\.metric-chip \{\s+display: flex;\s+align-items: center;\s+gap: var\(--lm-space-sm\);\s+min-width: 0;\s+\}/g, `.metric-chip {
-  display: flex;
-  align-items: center;
-  gap: var(--lm-space-md);
-  min-width: 0;
-}`);
+if (startIdx !== -1 && endIdx !== -1) {
+  const before = htmlContent.substring(0, startIdx);
+  const after = htmlContent.substring(endIdx);
+  fs.writeFileSync(htmlFile, before + newHtml + '\n      ' + after, 'utf8');
+  console.log('HTML updated');
+} else {
+  console.log('Could not find HTML boundaries');
+}
 
-fs.writeFileSync(file, content);
+// CSS appended
+const cssFile = 'C:/Users/Administrator/Desktop/MyDash/PDash-UI/src/app/features/dashboard/dashboard.component.css';
+const newCss = fs.readFileSync('C:/Users/Administrator/Desktop/MyDash/PDash-UI/new_styles.css', 'utf8');
+fs.appendFileSync(cssFile, '\n' + newCss, 'utf8');
+console.log('CSS updated');

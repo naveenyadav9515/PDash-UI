@@ -1,0 +1,148 @@
+<!-- App Shell (§8.3: Mobile-perfect, Desktop-contained) -->
+<div class="app-shell fade-in-bottom">
+
+  <!-- ── Header ── -->
+  <header class="dashboard-header">
+    <div class="header-row">
+      <div class="header-left">
+        <a routerLink="/dashboard" class="nav-back-btn">
+          <span class="material-symbols-outlined">arrow_back</span>
+        </a>
+        <div class="title-stack">
+          <h1 class="brand-name">Expenses</h1>
+          <p class="greeting-text">Track your financial footprint</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ── Add Expense Card ── -->
+  <section class="flow-item">
+    <div class="hybrid-card detailed-full-card glass-card border-etched">
+      
+      <div class="card-header">
+        <div class="icon-wrap" style="color: var(--lm-color-primary); background: rgba(167, 139, 250, 0.12);">
+          <span class="material-symbols-outlined">add_circle</span>
+        </div>
+        <div class="card-titles">
+          <h2 class="card-name">Log New Expense</h2>
+          <p class="card-description">Manual entry</p>
+        </div>
+      </div>
+
+      <form [formGroup]="expenseForm" (ngSubmit)="submitExpense()" class="expense-form">
+        
+        <div class="input-row">
+          <div class="input-group flex-1">
+            <span class="input-prefix">₹</span>
+            <input type="number" formControlName="amount" class="premium-input pl-40" placeholder="0">
+            <label class="premium-label">Amount</label>
+          </div>
+          <div class="input-group flex-2">
+            <span class="material-symbols-outlined input-icon">storefront</span>
+            <input type="text" formControlName="merchant" class="premium-input pl-40" placeholder="e.g. Swiggy">
+            <label class="premium-label">Merchant / Reason</label>
+          </div>
+        </div>
+
+        <div class="input-row">
+          <div class="input-group flex-1">
+            <span class="material-symbols-outlined input-icon">category</span>
+            <select formControlName="category" class="premium-input pl-40 select-caret">
+              <option value="Food">Food & Dining</option>
+              <option value="Transport">Transport</option>
+              <option value="Shopping">Shopping</option>
+              <option value="Utilities">Utilities</option>
+              <option value="Entertainment">Entertainment</option>
+              <option value="Health">Health</option>
+              <option value="Other">Other</option>
+            </select>
+            <label class="premium-label">Category</label>
+          </div>
+          <div class="input-group flex-1">
+            <span class="material-symbols-outlined input-icon">payments</span>
+            <select formControlName="paymentMethod" class="premium-input pl-40 select-caret">
+              <option value="UPI">UPI</option>
+              <option value="Credit Card">Credit Card</option>
+              <option value="Debit Card">Debit Card</option>
+              <option value="Cash">Cash</option>
+              <option value="Other">Other</option>
+            </select>
+            <label class="premium-label">Method</label>
+          </div>
+        </div>
+
+        <div class="input-group flex-1">
+          <span class="material-symbols-outlined input-icon">sell</span>
+          <input type="text" formControlName="tags" class="premium-input pl-40" placeholder="e.g. Weekend, Dinner">
+          <label class="premium-label">Tags (Optional)</label>
+        </div>
+
+        <button type="submit" class="premium-submit-btn" [disabled]="expenseForm.invalid || isAdding()">
+          @if (isAdding()) {
+            <span class="material-symbols-outlined spin">sync</span> Adding...
+          } @else {
+            Save Transaction
+          }
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <!-- ── Transaction History ── -->
+  <section class="flow-item" style="margin-top: 16px;">
+    <div class="hybrid-card detailed-full-card glass-card border-etched">
+      <div class="card-header" style="justify-content: space-between; margin-bottom: 8px;">
+        <div style="display: flex; gap: 12px; align-items: center;">
+          <div class="icon-wrap" style="color: var(--lm-color-secondary); background: rgba(244, 114, 182, 0.12);">
+            <span class="material-symbols-outlined">receipt_long</span>
+          </div>
+          <div class="card-titles">
+            <h2 class="card-name">History</h2>
+            <p class="card-description">Recent activity</p>
+          </div>
+        </div>
+        <button class="settings-btn" (click)="fetchExpenses()" [disabled]="isLoading()" title="Refresh" style="width: 36px; height: 36px;">
+          <span class="material-symbols-outlined" [class.spin]="isLoading()" style="font-size: 18px;">refresh</span>
+        </button>
+      </div>
+
+      @if (expenses().length === 0 && !isLoading()) {
+        <div class="history-empty">
+          <div class="empty-icon-wrap">
+            <span class="material-symbols-outlined">inbox</span>
+          </div>
+          <p class="empty-title">No transactions yet</p>
+          <p class="empty-sub">Your recent expenses will appear here.</p>
+        </div>
+      } @else {
+        <div class="tx-list">
+          @for (exp of expenses(); track exp._id) {
+            <div class="tx-item">
+              <div class="tx-icon">
+                <span class="material-symbols-outlined">
+                  {{ exp.category === 'Food' ? 'restaurant' : 
+                     exp.category === 'Transport' ? 'directions_car' : 
+                     exp.category === 'Shopping' ? 'local_mall' : 'receipt' }}
+                </span>
+              </div>
+              <div class="tx-body">
+                <h4 class="tx-merchant">{{ exp.merchant }}</h4>
+                <div class="tx-meta">
+                  {{ exp.date | date:'MMM d' }} • {{ exp.paymentMethod }}
+                  @if (exp.tags.length) {
+                    <span class="tx-tag">#{{ exp.tags[0] }}</span>
+                  }
+                </div>
+              </div>
+              <div class="tx-trailing">
+                <span class="tx-amount">₹{{ exp.amount | number:'1.0-0' }}</span>
+              </div>
+            </div>
+          }
+        </div>
+      }
+    </div>
+  </section>
+
+</div>

@@ -8,14 +8,15 @@ import {
   HostListener,
   ElementRef,
 } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
-import { Router } from '@angular/router';
+import { isPlatformBrowser, DecimalPipe, SlicePipe, DatePipe } from '@angular/common';
+import { Router, RouterLink } from '@angular/router';
 import { ApiService } from '@core/services/api.service';
 import { Feature } from '@core/models/feature.model';
 import { FeatureLog } from '@core/models/feature-log.model';
 import { NotificationService } from '@core/services/notification.service';
 import { ThemeService } from '@core/services/theme.service';
 import { AuthService } from '@core/services/auth.service';
+import { ExpenseService } from '@core/services/expense.service';
 import {
   DbConnectionStatus,
   APP_STRINGS,
@@ -37,7 +38,7 @@ import { LoaderComponent } from '../../shared/components';
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [LoaderComponent],
+  imports: [LoaderComponent, DecimalPipe, RouterLink],
 })
 export class DashboardComponent {
   /* ── Protected Properties & Signals ── */
@@ -73,6 +74,7 @@ export class DashboardComponent {
   private readonly notificationService = inject(NotificationService);
   private readonly themeService = inject(ThemeService);
   private readonly authService = inject(AuthService);
+  protected readonly expenseService = inject(ExpenseService);
   
   protected readonly currentTheme = this.themeService.currentTheme;
   private readonly router = inject(Router);
@@ -228,6 +230,9 @@ export class DashboardComponent {
         this.dbStatus.set('error');
       },
     });
+
+    // Load Live Expense Summary
+    this.expenseService.fetchSummary().subscribe();
   }
 
 
@@ -262,5 +267,78 @@ export class DashboardComponent {
       case 'streak loggers': return 'grid_on';
       default: return 'widgets';
     }
+  }
+
+  /* ── Helper Methods for Rich Expense UI ── */
+  
+  protected getChartYPercent(val: number, data: number[]): number {
+    if (!data || data.length === 0) return 0;
+    const max = Math.max(...data, 100);
+    return ((max - val) / max) * 100;
+  }
+
+  protected generateChartPoints(data: number[]): string {
+    if (!data || data.length === 0) return '';
+    const max = Math.max(...data, 100);
+    const height = 40;
+    const step = 100 / (data.length - 1);
+    
+    return data.map((val, i) => {
+      const x = i * step;
+      const y = height - ((val / max) * height);
+      return `${x},${y}`;
+    }).join(' ');
+  }
+
+  protected generateChartPolygon(data: number[]): string {
+    if (!data || data.length === 0) return '';
+    const points = this.generateChartPoints(data);
+    return `${points} 100,40 0,40`;
+  }
+
+  protected getCategoryColor(index: number, name?: string): string {
+    if (name === 'Food & Dining') return '#F97316';
+    if (name === 'Shopping') return '#EC4899';
+    if (name === 'Transport') return '#3B82F6';
+    
+    const colors = [
+      '#14B8A6', // Teal
+      '#A855F7', // Purple
+      '#6B7280', // Gray
+      '#F59E0B',
+      '#22C55E'
+    ];
+    return colors[index % colors.length];
+  }
+
+  protected getDonutSegments(categories: { percentage: number }[] | undefined): any[] {
+    if (!categories || categories.length === 0) return [];
+    
+    // Circle with radius 40 has circumference of 251.327
+    const circumference = 251.327;
+    let currentOffset = 0; // Starts at 0
+    
+    return categories.map((cat, i) => {
+      const color = this.getCategoryColor(i, (cat as any).name);
+      
+      // Calculate length of this segment
+      // We subtract 4 to create a visual gap between segments
+      const rawLength = (cat.percentage / 100) * circumference;
+      const length = Math.max(0, rawLength - 4);
+      
+      const dasharray = `${length} ${circumference}`;
+      
+      // SVG stroke-dashoffset rotates backwards, and starts from right (3 o'clock)
+      // Offset moves the start point backwards.
+      const dashoffset = -currentOffset;
+      
+      currentOffset += rawLength;
+      
+      return {
+        color,
+        dasharray,
+        dashoffset
+      };
+    });
   }
 }

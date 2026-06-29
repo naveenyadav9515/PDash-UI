@@ -19,211 +19,215 @@
    ========================================================================== */
 
 :root {
-  /* --- Typography (§8.2) --- */
-  --lm-font-display: 'Outfit', 'Geist', sans-serif;
-  --lm-font-body: 'Geist', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  /* --- Typography --- */
+  --lm-font-display: 'SF Pro Display', 'Inter', -apple-system, sans-serif;
+  --lm-font-body: 'Inter', -apple-system, sans-serif;
   --lm-font-mono: 'Geist Mono', 'Fira Code', monospace;
 
-  /* Typography Scale (display-lg through mono-sm) */
+  /* Typography Scale */
   --lm-type-display-lg: 800 2.85rem/1.2 var(--lm-font-display);
   --lm-type-display-md: 700 2.1rem/1.25 var(--lm-font-display);
   --lm-type-display-sm: 600 1.6rem/1.3 var(--lm-font-display);
-  --lm-type-heading-lg: 600 1.3rem/1.35 var(--lm-font-body);
-  --lm-type-heading-md: 600 1.1rem/1.4 var(--lm-font-body);
-  --lm-type-body-lg: 400 1.15rem/1.5 var(--lm-font-body);
-  --lm-type-body-md: 400 1.02rem/1.5 var(--lm-font-body);
-  --lm-type-body-sm: 400 0.92rem/1.5 var(--lm-font-body);
-  --lm-type-caption: 500 0.85rem/1.4 var(--lm-font-body);
+  --lm-type-heading-lg: 700 1.3rem/1.35 var(--lm-font-display);
+  --lm-type-heading-md: 700 1.1rem/1.4 var(--lm-font-display);
+  --lm-type-body-lg: 500 1.15rem/1.5 var(--lm-font-body);
+  --lm-type-body-md: 500 1.02rem/1.5 var(--lm-font-body);
+  --lm-type-body-sm: 500 0.92rem/1.5 var(--lm-font-body);
+  --lm-type-caption: 400 0.85rem/1.4 var(--lm-font-body);
   --lm-type-overline: 600 0.78rem/1.4 var(--lm-font-body);
   --lm-type-mono-sm: 400 0.82rem/1.5 var(--lm-font-mono);
 
-  /* --- Color Palette — Deep Navy Dark Theme --- */
-  --lm-color-bg: #13111c;
-  --lm-color-surface: #1e1b2e;
-  --lm-color-surface-hover: rgba(255, 255, 255, 0.06);
-  --lm-color-surface-subtle: #252237;
-  --lm-color-surface-elevated: #2a2740;
+  /* --- Color Palette — Premium Dark Theme v1.0 --- */
+  --lm-color-bg: #0E0B18;
+  --lm-color-surface: #171325;
+  --lm-color-surface-hover: rgba(255, 255, 255, 0.04);
+  --lm-color-surface-subtle: #211B34;
+  --lm-color-surface-elevated: #2A2240;
+  --lm-color-surface-glass: rgba(42, 34, 64, 0.65);
 
-  --lm-color-primary: #a78bfa;
-  --lm-color-primary-solid: #7c5cbf;
-  --lm-color-primary-glow: rgba(124, 92, 191, 0.15);
-  --lm-color-secondary: #f472b6;
-  --lm-color-tertiary: #60a5fa;
+  --lm-color-primary: #A855F7;
+  --lm-color-primary-hover: #B96DFF;
+  --lm-color-primary-pressed: #8D3DF2;
+  --lm-color-primary-glow: rgba(168, 85, 247, 0.15);
+  
+  --lm-color-secondary: #7C5CFF; /* Electric Indigo */
+  --lm-color-tertiary: #A855F7;
 
-  --lm-color-success: #34d399;
-  --lm-color-success-subtle: rgba(52, 211, 153, 0.12);
-  --lm-color-success-glow: rgba(52, 211, 153, 0.15);
-  --lm-color-warning: #fbbf24;
-  --lm-color-warning-subtle: rgba(251, 191, 36, 0.12);
-  --lm-color-error: #f87171;
-  --lm-color-error-subtle: rgba(248, 113, 113, 0.12);
-  --lm-color-error-glow: rgba(248, 113, 113, 0.15);
-  --lm-color-info: #60a5fa;
-  --lm-color-info-subtle: rgba(96, 165, 250, 0.12);
+  --lm-color-success: #22C55E;
+  --lm-color-success-subtle: rgba(34, 197, 94, 0.12);
+  --lm-color-success-glow: rgba(34, 197, 94, 0.15);
+  --lm-color-warning: #F59E0B;
+  --lm-color-warning-subtle: rgba(245, 158, 11, 0.12);
+  --lm-color-error: #F43F5E;
+  --lm-color-error-subtle: rgba(244, 63, 94, 0.12);
+  --lm-color-error-glow: rgba(244, 63, 94, 0.15);
+  --lm-color-info: #38BDF8;
+  --lm-color-info-subtle: rgba(56, 189, 248, 0.12);
 
   /* Status badge colors */
-  --lm-color-status-completed: #34d399;
-  --lm-color-status-completed-bg: rgba(52, 211, 153, 0.12);
-  --lm-color-status-delayed: #fb923c;
-  --lm-color-status-delayed-bg: rgba(251, 146, 60, 0.12);
-  --lm-color-status-at-risk: #f87171;
-  --lm-color-status-at-risk-bg: rgba(248, 113, 113, 0.12);
-  --lm-color-status-ongoing: #38bdf8;
+  --lm-color-status-completed: #22C55E;
+  --lm-color-status-completed-bg: rgba(34, 197, 94, 0.12);
+  --lm-color-status-delayed: #F59E0B;
+  --lm-color-status-delayed-bg: rgba(245, 158, 11, 0.12);
+  --lm-color-status-at-risk: #F43F5E;
+  --lm-color-status-at-risk-bg: rgba(244, 63, 94, 0.12);
+  --lm-color-status-ongoing: #38BDF8;
   --lm-color-status-ongoing-bg: rgba(56, 189, 248, 0.12);
 
   /* Icon circle accent colors */
-  --lm-color-icon-purple: rgba(167, 139, 250, 0.15);
-  --lm-color-icon-orange: rgba(251, 146, 60, 0.15);
-  --lm-color-icon-blue: rgba(96, 165, 250, 0.15);
-  --lm-color-icon-green: rgba(52, 211, 153, 0.15);
-  --lm-color-icon-pink: rgba(244, 114, 182, 0.15);
-  --lm-color-icon-coral: rgba(251, 113, 133, 0.15);
+  --lm-color-icon-purple: rgba(168, 85, 247, 0.12);
+  --lm-color-icon-indigo: rgba(124, 92, 255, 0.12);
+  --lm-color-icon-blue: rgba(56, 189, 248, 0.12);
+  --lm-color-icon-green: rgba(34, 197, 94, 0.12);
+  --lm-color-icon-amber: rgba(245, 158, 11, 0.12);
+  --lm-color-icon-rose: rgba(244, 63, 94, 0.12);
 
-  --lm-color-text-primary: #f0eef6;
-  --lm-color-text-secondary: #9b95b0;
-  --lm-color-text-muted: #6b6580;
+  --lm-color-text-primary: #F8F8FC;
+  --lm-color-text-secondary: #B6B2C8;
+  --lm-color-text-muted: #8D89A2;
+  --lm-color-text-disabled: #67627D;
 
   /* --- Gradients --- */
-  --lm-gradient-text: linear-gradient(135deg, #a78bfa 0%, #f472b6 50%, #60a5fa 100%);
-  --lm-gradient-button: linear-gradient(135deg, #7c3aed 0%, #9333ea 100%);
-  --lm-gradient-button-hover: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%);
-  --lm-gradient-header: linear-gradient(135deg, #6c47c0 0%, #7c5cbf 100%);
+  --lm-gradient-primary: linear-gradient(135deg, #7C5CFF 0%, #A855F7 100%);
+  --lm-gradient-budget: linear-gradient(135deg, #A855F7 0%, #F97316 100%);
+  --lm-gradient-success: linear-gradient(135deg, #22C55E 0%, #4ADE80 100%);
+  
+  /* Fallback aliases for existing usage */
+  --lm-gradient-text: var(--lm-gradient-primary);
+  --lm-gradient-button: var(--lm-gradient-primary);
+  --lm-gradient-button-hover: linear-gradient(135deg, #8D3DF2 0%, #B96DFF 100%);
+  --lm-gradient-header: var(--lm-gradient-primary);
 
-  /* --- Orb Colors (background decorations) --- */
-  --lm-color-orb-1: #4c1d95;
-  --lm-color-orb-2: #9d174d;
-  --lm-color-orb-3: #1e40af;
-
-  /* --- Borders — Soft, refined edges --- */
-  --lm-border-subtle: 1px solid rgba(255, 255, 255, 0.06);
+  /* --- Borders — Minimal and unified --- */
+  --lm-border-subtle: 1px solid rgba(255, 255, 255, 0.04);
   --lm-border-hover: 1px solid rgba(255, 255, 255, 0.12);
-  --lm-border-etched: 1px solid rgba(255, 255, 255, 0.08);
-  --lm-border-accent: 1px solid rgba(124, 92, 191, 0.25);
+  --lm-border-etched: 1px solid rgba(255, 255, 255, 0.06);
+  --lm-border-accent: 1px solid rgba(168, 85, 247, 0.25);
   --lm-border-card: 1px solid rgba(255, 255, 255, 0.06);
 
-  /* --- Elevation — Gentle shadows for depth --- */
-  --lm-blur-sm: 8px;
-  --lm-blur-md: 16px;
-  --lm-blur-lg: 24px;
-  --lm-shadow-card: 0 2px 8px 0 rgba(0, 0, 0, 0.25);
-  --lm-shadow-panel: 0 4px 16px 0 rgba(0, 0, 0, 0.2);
-  --lm-shadow-panel-hover: 0 8px 24px 0 rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(167, 139, 250, 0.1);
-  --lm-shadow-float: 0 12px 40px 0 rgba(0, 0, 0, 0.4);
+  /* --- Elevation — Soft floating --- */
+  --lm-blur-sm: 12px;
+  --lm-blur-md: 24px;
+  --lm-blur-lg: 32px;
+  --lm-shadow-card: 0 4px 20px 0 rgba(0, 0, 0, 0.15);
+  --lm-shadow-panel: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+  --lm-shadow-panel-hover: 0 12px 48px 0 rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(124, 92, 255, 0.1);
+  --lm-shadow-float: 0 16px 40px 0 rgba(0, 0, 0, 0.3);
 
-  /* --- Spacing (§8.2: 4px base unit) --- */
-  --lm-space-unit: 4px;
-  --lm-space-2xs: 4px;    /* 1 unit  */
-  --lm-space-xs: 8px;     /* 2 units */
-  --lm-space-sm: 12px;    /* 3 units */
-  --lm-space-md: 16px;    /* 4 units */
-  --lm-space-lg: 24px;    /* 6 units */
-  --lm-space-xl: 32px;    /* 8 units */
-  --lm-space-2xl: 48px;   /* 12 units */
-  --lm-space-3xl: 64px;   /* 16 units */
+  /* --- Spacing System (8px based) --- */
+  --lm-space-unit: 8px;
+  --lm-space-2xs: 8px;
+  --lm-space-xs: 8px;
+  --lm-space-sm: 16px;
+  --lm-space-md: 24px;
+  --lm-space-lg: 32px;
+  --lm-space-xl: 40px;
+  --lm-space-2xl: 48px;
+  --lm-space-3xl: 64px;
 
   --lm-space-stack-sm: 8px;
   --lm-space-stack-md: 16px;
   --lm-space-stack-lg: 24px;
-  --lm-space-container-padding: 16px;
-  --lm-space-gutter: 16px;
+  --lm-space-container-padding: 24px;
+  --lm-space-gutter: 24px;
 
-  /* --- Radius — Soft, rounded corners --- */
-  --lm-radius-xs: 6px;
-  --lm-radius-sm: 10px;
-  --lm-radius-md: 14px;
-  --lm-radius-lg: 18px;
-  --lm-radius-xl: 24px;
+  /* --- Radius — Premium rounded --- */
+  --lm-radius-xs: 8px;
+  --lm-radius-sm: 12px;
+  --lm-radius-md: 16px;
+  --lm-radius-lg: 24px;
+  --lm-radius-xl: 32px;
   --lm-radius-pill: 9999px;
 
   /* --- Transitions --- */
-  --lm-transition-fast: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
-  --lm-transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  --lm-transition-slow: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  --lm-transition-fast: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --lm-transition-smooth: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  --lm-transition-slow: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 
-  /* --- Touch targets (§8.3: minimum 44×44px) --- */
   --lm-touch-target-min: 44px;
 
   /* --- Sticky Header Variables --- */
-  --lm-color-header-bg: rgba(19, 17, 28, 0.85);
-  --lm-color-header-border: rgba(255, 255, 255, 0.06);
-  --lm-color-header-divider: rgba(255, 255, 255, 0.08);
+  --lm-color-header-bg: rgba(14, 11, 24, 0.85);
+  --lm-color-header-border: rgba(255, 255, 255, 0.04);
+  --lm-color-header-divider: rgba(255, 255, 255, 0.06);
+
+  /* --- Ambient Orbs --- */
+  --lm-color-orb-1: #A855F7;
+  --lm-color-orb-2: #EC4899;
+  --lm-color-orb-3: #38BDF8;
 }
 
 /* ==========================================================================
-   Light Mode ("Snow Glass") — Theme Override (§8.4)
-   Clean white cards, soft gray borders, purple accents
+   Light Mode ("Snow Glass") Theme Tokens Override
    ========================================================================== */
 
-[data-theme="light"] {
-  --lm-color-bg: #f4f3f8;
-  --lm-color-surface: #ffffff;
+html[data-theme="light"] {
+  /* --- Color Palette — Snow Glass Light Theme --- */
+  --lm-color-bg: #F4F3F8;
+  --lm-color-surface: #FFFFFF;
   --lm-color-surface-hover: rgba(0, 0, 0, 0.03);
-  --lm-color-surface-subtle: #f0eef5;
-  --lm-color-surface-elevated: #ffffff;
+  --lm-color-surface-subtle: #F9F9FB;
+  --lm-color-surface-elevated: #FDFDFF;
+  --lm-color-surface-glass: rgba(255, 255, 255, 0.7);
 
-  --lm-color-primary: #7c5cbf;
-  --lm-color-primary-solid: #6c47c0;
-  --lm-color-primary-glow: rgba(124, 92, 191, 0.08);
-  --lm-color-secondary: #db2777;
-  --lm-color-tertiary: #2563eb;
+  --lm-color-primary: #7C5CFF; /* Electric Indigo */
+  --lm-color-primary-hover: #6B4EE0;
+  --lm-color-primary-pressed: #5A3EC1;
+  --lm-color-primary-glow: rgba(124, 92, 255, 0.12);
 
-  --lm-color-success: #059669;
-  --lm-color-success-subtle: rgba(5, 150, 105, 0.08);
-  --lm-color-success-glow: rgba(5, 150, 105, 0.1);
-  --lm-color-warning: #d97706;
+  --lm-color-secondary: #A855F7; /* Electric Purple */
+  --lm-color-tertiary: #7C5CFF;
+
+  --lm-color-success: #16A34A;
+  --lm-color-success-subtle: rgba(22, 163, 74, 0.08);
+  --lm-color-success-glow: rgba(22, 163, 74, 0.12);
+  --lm-color-warning: #D97706;
   --lm-color-warning-subtle: rgba(217, 119, 6, 0.08);
-  --lm-color-error: #dc2626;
-  --lm-color-error-subtle: rgba(220, 38, 38, 0.08);
-  --lm-color-error-glow: rgba(220, 38, 38, 0.1);
-  --lm-color-info: #2563eb;
-  --lm-color-info-subtle: rgba(37, 99, 235, 0.08);
+  --lm-color-error: #E11D48;
+  --lm-color-error-subtle: rgba(225, 29, 72, 0.08);
+  --lm-color-error-glow: rgba(225, 29, 72, 0.12);
+  --lm-color-info: #0284C7;
+  --lm-color-info-subtle: rgba(2, 132, 199, 0.08);
 
-  /* Status badge colors — light mode */
-  --lm-color-status-completed: #059669;
-  --lm-color-status-completed-bg: rgba(5, 150, 105, 0.08);
-  --lm-color-status-delayed: #d97706;
+  /* Status badge colors */
+  --lm-color-status-completed: #16A34A;
+  --lm-color-status-completed-bg: rgba(22, 163, 74, 0.08);
+  --lm-color-status-delayed: #D97706;
   --lm-color-status-delayed-bg: rgba(217, 119, 6, 0.08);
-  --lm-color-status-at-risk: #dc2626;
-  --lm-color-status-at-risk-bg: rgba(220, 38, 38, 0.08);
-  --lm-color-status-ongoing: #0284c7;
+  --lm-color-status-at-risk: #E11D48;
+  --lm-color-status-at-risk-bg: rgba(225, 29, 72, 0.08);
+  --lm-color-status-ongoing: #0284C7;
   --lm-color-status-ongoing-bg: rgba(2, 132, 199, 0.08);
 
-  /* Icon circle accent colors — light mode */
-  --lm-color-icon-purple: rgba(124, 92, 191, 0.1);
-  --lm-color-icon-orange: rgba(217, 119, 6, 0.1);
-  --lm-color-icon-blue: rgba(37, 99, 235, 0.1);
-  --lm-color-icon-green: rgba(5, 150, 105, 0.1);
-  --lm-color-icon-pink: rgba(219, 39, 119, 0.1);
-  --lm-color-icon-coral: rgba(225, 29, 72, 0.1);
+  /* Icon circle accent colors */
+  --lm-color-icon-purple: rgba(168, 85, 247, 0.08);
+  --lm-color-icon-indigo: rgba(124, 92, 255, 0.08);
+  --lm-color-icon-blue: rgba(56, 189, 248, 0.08);
+  --lm-color-icon-green: rgba(22, 163, 74, 0.08);
+  --lm-color-icon-amber: rgba(217, 119, 6, 0.08);
+  --lm-color-icon-rose: rgba(225, 29, 72, 0.08);
 
-  --lm-color-text-primary: #1a1525;
-  --lm-color-text-secondary: #5c5470;
-  --lm-color-text-muted: #9b95b0;
+  --lm-color-text-primary: #1A1525;
+  --lm-color-text-secondary: #5C5470;
+  --lm-color-text-muted: #837B97;
+  --lm-color-text-disabled: #B4AECA;
 
-  --lm-gradient-text: linear-gradient(135deg, #7c5cbf 0%, #db2777 50%, #2563eb 100%);
-  --lm-gradient-header: linear-gradient(135deg, #7c5cbf 0%, #6c47c0 100%);
-
-  --lm-color-orb-1: #ddd6fe;
-  --lm-color-orb-2: #fbcfe8;
-  --lm-color-orb-3: #bfdbfe;
-
-  /* Borders — clean, light gray */
-  --lm-border-subtle: 1px solid rgba(0, 0, 0, 0.06);
-  --lm-border-hover: 1px solid rgba(0, 0, 0, 0.12);
-  --lm-border-etched: 1px solid rgba(0, 0, 0, 0.08);
-  --lm-border-accent: 1px solid rgba(124, 92, 191, 0.2);
-  --lm-border-card: 1px solid rgba(0, 0, 0, 0.06);
-
-  /* Shadows — soft, clean */
-  --lm-shadow-card: 0 1px 4px 0 rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(0, 0, 0, 0.03);
-  --lm-shadow-panel: 0 2px 12px 0 rgba(0, 0, 0, 0.06);
-  --lm-shadow-panel-hover: 0 4px 20px 0 rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(124, 92, 191, 0.08);
-  --lm-shadow-float: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+  /* --- Borders --- */
+  --lm-border-subtle: 1px solid rgba(0, 0, 0, 0.04);
+  --lm-border-hover: 1px solid rgba(0, 0, 0, 0.08);
+  --lm-border-etched: 1px solid rgba(0, 0, 0, 0.05);
+  --lm-border-accent: 1px solid rgba(124, 92, 255, 0.2);
+  --lm-border-card: 1px solid rgba(0, 0, 0, 0.05);
 
   /* --- Sticky Header Variables --- */
   --lm-color-header-bg: rgba(244, 243, 248, 0.85);
-  --lm-color-header-border: rgba(0, 0, 0, 0.06);
-  --lm-color-header-divider: rgba(0, 0, 0, 0.06);
+  --lm-color-header-border: rgba(0, 0, 0, 0.04);
+  --lm-color-header-divider: rgba(0, 0, 0, 0.05);
+
+  /* --- Ambient Orbs --- */
+  --lm-color-orb-1: #c084fc;
+  --lm-color-orb-2: #f472b6;
+  --lm-color-orb-3: #60a5fa;
 }
 
 /* ==========================================================================

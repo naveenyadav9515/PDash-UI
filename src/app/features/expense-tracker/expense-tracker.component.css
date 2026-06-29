@@ -219,3 +219,8 @@
   font: var(--lm-type-heading-md);
   color: var(--lm-color-text-primary);
 }
+
+.tx-notes {
+  color: var(--lm-color-text-muted);
+  font-style: italic;
+}

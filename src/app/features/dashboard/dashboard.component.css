@@ -1803,8 +1803,8 @@
 
 .ex-chart-wrap {
   position: relative;
-  width: 140px;
-  height: 90px;
+  width: 156px;
+  height: 104px;
   flex-shrink: 0;
 }
 
@@ -1820,12 +1820,12 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
-  padding-bottom: 2px;
+  padding-bottom: 5px;
 }
 
 .ex-pct {
   color: #ffffff;
-  font-size: 28px;
+  font-size: 26px;
   font-weight: 700;
   line-height: 1;
 }

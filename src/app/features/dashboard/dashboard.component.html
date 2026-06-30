@@ -174,210 +174,94 @@
     <!-- ── Hybrid Bento Flow ── -->
     <div class="hybrid-flow" data-testid="features-section">
 
-      <!-- 3. Finance Tracker (Full Width) -->
+      <!-- 3. Expense Summary (Full Width) -->
       @if (getFeature('Finance Tracker'); as feat) {
         <section class="flow-item full-width">
-          <div class="pf-container">
-            
-            <div class="pf-header">
-              <div class="pf-header-left">
-                <div class="pf-icon-wrap">
-                  <span class="material-symbols-outlined pf-wallet-icon" aria-hidden="true">account_balance_wallet</span>
+          @if (expenseService.summary(); as summary) {
+            <a routerLink="/expenses" class="ex-summary-card" title="Open Full Expense Tracker" data-testid="open-expense-tracker">
+              <!-- Header -->
+              <div class="ex-header">
+                <div class="ex-header-left">
+                  <div class="ex-icon-box">
+                    <span class="material-symbols-outlined" aria-hidden="true">account_balance_wallet</span>
+                  </div>
+                  <div class="ex-title-wrap">
+                    <h2>Expense Summary</h2>
+                    <span class="ex-subtitle">This Month <span class="material-symbols-outlined pf-sm-icon">expand_more</span></span>
+                  </div>
                 </div>
-                <h2 class="pf-card-name">Expense Summary</h2>
+                <div class="ex-icon-btn">
+                  <span class="material-symbols-outlined">calendar_today</span>
+                </div>
               </div>
-              <div class="pf-header-right">
-                <div class="pf-dropdown">June 2025 <span class="material-symbols-outlined pf-sm-icon">expand_more</span></div>
-                <button class="pf-icon-btn"><span class="material-symbols-outlined">calendar_today</span></button>
-                <a routerLink="/expenses" class="pf-icon-btn" title="Open Full Expense Tracker" data-testid="open-expense-tracker"><span class="material-symbols-outlined">open_in_new</span></a>
-              </div>
-            </div>
 
-            @if (expenseService.summary(); as summary) {
-              <div class="pf-content fade-in-bottom">
+              <!-- Main Content -->
+              <div class="ex-main">
+                <!-- Arc Chart -->
+                <div class="ex-chart-wrap">
+                  <svg viewBox="0 0 200 130" class="ex-donut-svg">
+                    <defs>
+                      <linearGradient id="exGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="#4F46E5" />
+                        <stop offset="50%" stop-color="#EC4899" />
+                        <stop offset="100%" stop-color="#F97316" />
+                      </linearGradient>
+                    </defs>
+                    <!-- Background arc -->
+                    <path d="M 20 110 A 80 80 0 0 1 180 110" fill="none" stroke="#1F2937" stroke-width="16" stroke-linecap="round"/>
+                    <!-- Foreground arc -->
+                    <path d="M 20 110 A 80 80 0 0 1 180 110" fill="none" stroke="url(#exGrad)" stroke-width="16" stroke-linecap="round"
+                          [style.stroke-dasharray]="251.32"
+                          [style.stroke-dashoffset]="251.32 - (251.32 * (summary.budgetUsedPct / 100))" />
+                  </svg>
+                  <div class="ex-chart-text">
+                    <span class="ex-pct">{{ summary.budgetUsedPct }}%</span>
+                    <span class="ex-lbl">of budget used</span>
+                  </div>
+                </div>
+
+                <!-- Stats -->
+                <div class="ex-stats">
+                  <span class="ex-stats-lbl">Spent</span>
+                  <span class="ex-stats-val">₹{{ summary.spent | number:'1.0-0' }}</span>
+                  
+                  <div class="ex-progress-bar">
+                    <div class="ex-progress-fill" [style.width]="summary.budgetUsedPct + '%'"></div>
+                  </div>
+                  <span class="ex-stats-total">of ₹{{ summary.budgetTarget | number:'1.0-0' }}</span>
+                </div>
+              </div>
+
+              <!-- Bottom Cards -->
+              <div class="ex-bottom-cards">
+                <div class="ex-mini-card">
+                  <div class="ex-mini-icon green-icon">
+                    <span class="material-symbols-outlined">account_balance_wallet</span>
+                  </div>
+                  <div class="ex-mini-data">
+                    <span class="ex-mini-lbl">Available</span>
+                    <span class="ex-mini-val-green">₹{{ summary.available | number:'1.0-0' }}</span>
+                  </div>
+                </div>
                 
-                <!-- Row 1: Budget Overview -->
-                <div class="pf-row pf-budget-row">
-                  <div class="pf-gauge-col">
-                    <svg viewBox="0 0 200 130" class="pf-gauge-svg">
-                      <defs>
-                        <linearGradient id="pfGaugeGrad" x1="0%" y1="100%" x2="100%" y2="100%">
-                          <stop offset="0%" stop-color="#7C5CFF" />
-                          <stop offset="100%" stop-color="#F97316" />
-                        </linearGradient>
-                      </defs>
-                      <path d="M 20 110 A 80 80 0 0 1 180 110" fill="none" stroke="#211B34" stroke-width="16" stroke-linecap="round"/>
-                      <path d="M 20 110 A 80 80 0 0 1 180 110" fill="none" stroke="url(#pfGaugeGrad)" stroke-width="16" stroke-linecap="round"
-                            [style.stroke-dasharray]="251.32"
-                            [style.stroke-dashoffset]="251.32 - (251.32 * (summary.budgetUsedPct / 100))" />
-                    </svg>
-                    <div class="pf-gauge-info">
-                      <span class="pf-gauge-val">{{ summary.budgetUsedPct }}%</span>
-                      <span class="pf-gauge-lbl">Budget Used</span>
-                      <div class="pf-badge pf-badge-{{ summary.budgetStatus === 'Healthy' ? 'healthy' : 'warning' }}">
-                        <span class="material-symbols-outlined pf-badge-icon">{{ summary.budgetStatus === 'Healthy' ? 'check_circle' : 'warning' }}</span>
-                        {{ summary.budgetStatus }}
-                      </div>
-                    </div>
+                <div class="ex-mini-card">
+                  <div class="ex-mini-icon purple-icon">
+                    <span class="material-symbols-outlined">calendar_today</span>
                   </div>
-
-                  <div class="pf-budget-details-col">
-                    <span class="pf-sub-lbl">Monthly Budget</span>
-                    <div class="pf-budget-amounts">
-                      <span class="pf-amt-current">₹{{ summary.spent | number:'1.0-0' }}</span>
-                      <span class="pf-amt-total">/ ₹{{ summary.budgetTarget | number:'1.0-0' }}</span>
-                    </div>
-                    
-                    <div class="pf-linear-wrap">
-                      <div class="pf-linear-track">
-                        <div class="pf-linear-fill" [style.width]="summary.budgetUsedPct + '%'">
-                          <div class="pf-linear-thumb"></div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="pf-budget-split">
-                      <div class="pf-split-item">
-                        <span class="pf-split-lbl pf-lbl-spent">Spent</span>
-                        <span class="pf-split-val">₹{{ summary.spent | number:'1.0-0' }}</span>
-                      </div>
-                      <div class="pf-split-item">
-                        <span class="pf-split-lbl pf-lbl-available">Available</span>
-                        <span class="pf-split-val">₹{{ summary.available | number:'1.0-0' }}</span>
-                      </div>
-                    </div>
+                  <div class="ex-mini-data">
+                    <span class="ex-mini-lbl">Days Left</span>
+                    <span class="ex-mini-val">
+                      {{ summary.forecast.daysLeft || 9 }} <span class="ex-mini-sub">of 30 days</span>
+                    </span>
                   </div>
                 </div>
-
-                <!-- Row 2: Categories & Full Donut -->
-                <div class="pf-row pf-categories-row">
-                  <div class="pf-cat-col">
-                    <h3 class="pf-section-title">Top Categories</h3>
-                    <div class="pf-cat-list">
-                      @for (cat of summary.topCategories.slice(0,3); track cat.name; let i = $index) {
-                        <div class="pf-cat-item">
-                          <div class="pf-cat-item-top">
-                            <div class="pf-cat-icon-name">
-                              <div class="pf-cat-sq-icon" [style.background-color]="getCategoryColor(i, cat.name)">
-                                <span class="material-symbols-outlined pf-cat-material">
-                                  {{ cat.name === 'Food & Dining' ? 'restaurant' : 
-                                     cat.name === 'Shopping' ? 'local_mall' : 
-                                     cat.name === 'Transport' ? 'directions_car' : 'category' }}
-                                </span>
-                              </div>
-                              <span class="pf-cat-name">{{ cat.name }}</span>
-                            </div>
-                            <div class="pf-cat-stats">
-                              <span class="pf-cat-amt">₹{{ cat.amount | number:'1.0-0' }}</span>
-                              <span class="pf-cat-pct">{{ cat.percentage }}%</span>
-                            </div>
-                          </div>
-                          <div class="pf-cat-bar-track">
-                            <div class="pf-cat-bar-fill" [style.width]="cat.percentage + '%'" [style.background-color]="getCategoryColor(i, cat.name)"></div>
-                          </div>
-                        </div>
-                      }
-                    </div>
-                    <a routerLink="/expenses" class="pf-link-btn">View all categories <span class="material-symbols-outlined pf-sm-icon">chevron_right</span></a>
-                  </div>
-
-                  <div class="pf-donut-col">
-                    <div class="pf-donut-chart">
-                      <svg viewBox="0 0 100 100" class="pf-donut-svg">
-                        <!-- Rotate so segment 0 starts at 12 o'clock -->
-                        <g transform="rotate(-90 50 50)">
-                          @for (seg of getDonutSegments(summary.topCategories); track $index) {
-                            <circle cx="50" cy="50" r="40" fill="none"
-                                    [attr.stroke]="seg.color"
-                                    stroke-width="20"
-                                    [attr.stroke-dasharray]="seg.dasharray"
-                                    [attr.stroke-dashoffset]="seg.dashoffset" />
-                          }
-                        </g>
-                      </svg>
-                      <div class="pf-donut-center">
-                        <span class="pf-donut-val">₹{{ summary.spent | number:'1.0-0' }}</span>
-                        <span class="pf-donut-lbl">Total Spent</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Row 3: Trend & Forecast -->
-                <div class="pf-row pf-trend-row">
-                  <div class="pf-trend-col">
-                    <div class="pf-trend-header">
-                      <h3 class="pf-section-title">Spending Trend</h3>
-                      <div class="pf-dropdown pf-dropdown-sm">Weekly <span class="material-symbols-outlined pf-sm-icon">expand_more</span></div>
-                    </div>
-                    
-                    <div class="pf-area-wrap">
-                      <svg viewBox="0 0 100 40" preserveAspectRatio="none" class="pf-area-svg">
-                        <defs>
-                          <linearGradient id="pfAreaGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                            <stop offset="0%" stop-color="rgba(124, 92, 255, 0.4)" />
-                            <stop offset="100%" stop-color="rgba(124, 92, 255, 0)" />
-                          </linearGradient>
-                        </defs>
-                        <!-- Area -->
-                        <polygon [attr.points]="generateChartPolygon(summary.spendingTrend.data)" fill="rgba(168, 85, 247, 0.12)" />
-                        <!-- Line -->
-                        <polyline [attr.points]="generateChartPoints(summary.spendingTrend.data)" fill="none" stroke="#A855F7" stroke-width="2" />
-                      </svg>
-                      <!-- Dots directly over SVG exactly where they should be -->
-                      <div class="pf-chart-dots">
-                        @for (val of summary.spendingTrend.data; track $index) {
-                          <div class="pf-chart-dot" 
-                               [style.left]="($index * (100 / ($count - 1))) + '%'"
-                               [style.top]="getChartYPercent(val, summary.spendingTrend.data) + '%'"></div>
-                        }
-                      </div>
-                    </div>
-
-                    <div class="pf-trend-footer">
-                      <div class="pf-trend-stat">
-                        <span class="pf-trend-val">₹{{ summary.spendingTrend.avgPerWeek | number:'1.0-0' }}</span>
-                        <span class="pf-trend-lbl">Avg. per week</span>
-                      </div>
-                      <div class="pf-trend-stat">
-                        <span class="pf-trend-val pf-val-up"><span class="material-symbols-outlined pf-sm-icon">call_made</span> {{ summary.spendingTrend.trendPct }}%</span>
-                        <span class="pf-trend-lbl">vs last week</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="pf-forecast-col">
-                    <h3 class="pf-section-title">Forecast</h3>
-                    <span class="pf-forecast-lbl">Estimated spend by month end</span>
-                    <div class="pf-forecast-mid">
-                      <span class="pf-forecast-val">₹{{ summary.forecast.estimatedSpend | number:'1.0-0' }}</span>
-                      <span class="material-symbols-outlined pf-target-icon">ads_click</span>
-                    </div>
-                    <span class="pf-forecast-status" [style.color]="summary.forecast.statusColor">{{ summary.forecast.statusText }}</span>
-                  </div>
-                </div>
-
-                <!-- Row 4: AI Insight -->
-                <div class="pf-insight-row">
-                  <div class="pf-insight-icon-bg">
-                    <span class="material-symbols-outlined">lightbulb</span>
-                  </div>
-                  <div class="pf-insight-content">
-                    <span class="pf-insight-title">Insight for you</span>
-                    <p class="pf-insight-text">
-                      You're spending <span class="pf-highlight-text">{{ summary.insight.highlightPct }}</span> more on <span class="pf-highlight-text">{{ summary.insight.highlightCategory }}</span> compared to your monthly average.
-                    </p>
-                  </div>
-                  <span class="material-symbols-outlined pf-insight-arrow">chevron_right</span>
-                </div>
-
               </div>
-            } @else if (expenseService.isLoading()) {
-              <div class="glimpse-box preview-flex" style="justify-content: center; padding: 40px;">
-                <span class="material-symbols-outlined spin" style="font-size: 32px; color: var(--lm-color-primary);">sync</span>
-              </div>
-            }
-          </div>
+            </a>
+          } @else if (expenseService.isLoading()) {
+            <div class="glimpse-box preview-flex" style="justify-content: center; padding: 40px;">
+              <span class="material-symbols-outlined spin" style="font-size: 32px; color: var(--lm-color-primary);">sync</span>
+            </div>
+          }
         </section>
       }
 

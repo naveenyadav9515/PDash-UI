@@ -1712,3 +1712,242 @@
   font-size: 20px;
   flex-shrink: 0;
 }
+
+/* ==========================================================================
+   New Dark Theme Expense Summary Widget
+   ========================================================================== */
+
+.ex-summary-card {
+  display: flex;
+  flex-direction: column;
+  background-color: #0f111a;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 24px;
+  text-decoration: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.ex-summary-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+}
+
+.ex-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 30px;
+}
+
+.ex-header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.ex-icon-box {
+  width: 48px;
+  height: 48px;
+  background-color: #1e1b4b;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ex-icon-box .material-symbols-outlined {
+  color: #a855f7;
+  font-size: 24px;
+}
+
+.ex-title-wrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.ex-title-wrap h2 {
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 4px 0;
+}
+
+.ex-subtitle {
+  color: #9ca3af;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.ex-icon-btn {
+  width: 40px;
+  height: 40px;
+  background-color: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  color: #9ca3af;
+}
+
+.ex-main {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  margin-bottom: 30px;
+}
+
+.ex-chart-wrap {
+  position: relative;
+  width: 140px;
+  height: 100px;
+  flex-shrink: 0;
+}
+
+.ex-donut-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.ex-chart-text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 30px;
+}
+
+.ex-pct {
+  color: #ffffff;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.ex-lbl {
+  color: #9ca3af;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.ex-stats {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.ex-stats-lbl {
+  color: #9ca3af;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.ex-stats-val {
+  color: #ffffff;
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.ex-progress-bar {
+  width: 100%;
+  height: 8px;
+  background-color: #1f2937;
+  border-radius: 4px;
+  margin-bottom: 8px;
+  overflow: hidden;
+}
+
+.ex-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #EC4899, #F97316);
+  border-radius: 4px;
+}
+
+.ex-stats-total {
+  color: #9ca3af;
+  font-size: 14px;
+}
+
+.ex-bottom-cards {
+  display: flex;
+  gap: 16px;
+}
+
+.ex-mini-card {
+  flex: 1;
+  background-color: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.ex-mini-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.green-icon {
+  background-color: rgba(34, 197, 94, 0.1);
+  color: #22c55e;
+}
+
+.purple-icon {
+  background-color: rgba(99, 102, 241, 0.1);
+  color: #818cf8;
+}
+
+.ex-mini-data {
+  display: flex;
+  flex-direction: column;
+}
+
+.ex-mini-lbl {
+  color: #9ca3af;
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+
+.ex-mini-val {
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.ex-mini-val-green {
+  color: #22c55e;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.ex-mini-sub {
+  color: #9ca3af;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+@media (max-width: 600px) {
+  .ex-main {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .ex-chart-wrap {
+    align-self: center;
+  }
+  .ex-bottom-cards {
+    flex-direction: column;
+  }
+}

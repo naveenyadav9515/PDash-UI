@@ -3,7 +3,7 @@
 
   <!-- ── Header ── -->
   <header class="dashboard-header">
-    <div class="header-row">
+    <div class="header-row" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
       <div class="header-left">
         <a routerLink="/" class="nav-back-btn">
           <span class="material-symbols-outlined">arrow_back</span>
@@ -13,6 +13,17 @@
           <p class="greeting-text">Track your financial footprint</p>
         </div>
       </div>
+      
+      <div style="display: flex; gap: 8px;">
+        <button class="settings-btn" (click)="connectGmail()" title="Connect Gmail" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 16px; border: 1px solid var(--lm-color-border); background: var(--lm-color-surface);">
+          <span class="material-symbols-outlined" style="font-size: 18px; color: #DB4437;">mail</span>
+          <span style="font-size: 12px; font-weight: 600; color: var(--lm-color-text-primary);">Connect Gmail</span>
+        </button>
+        <button class="settings-btn" (click)="simulateAutoLog()" title="Simulate Auto-Log" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 16px; border: 1px solid var(--lm-color-border); background: var(--lm-color-surface);">
+          <span class="material-symbols-outlined" style="font-size: 18px; color: var(--lm-color-warning);">mark_email_unread</span>
+          <span style="font-size: 12px; font-weight: 600; color: var(--lm-color-text-primary);">Simulate Email</span>
+        </button>
+      </div>
     </div>
   </header>
 
@@ -20,14 +31,21 @@
   <section class="flow-item">
     <div class="hybrid-card detailed-full-card glass-card border-etched">
       
-      <div class="card-header">
-        <div class="icon-wrap" style="color: var(--lm-color-primary); background: rgba(167, 139, 250, 0.12);">
-          <span class="material-symbols-outlined">add_circle</span>
+      <div class="card-header" style="justify-content: space-between;">
+        <div style="display: flex; gap: 12px; align-items: center;">
+          <div class="icon-wrap" [style.color]="activePendingId() ? 'var(--lm-color-warning)' : 'var(--lm-color-primary)'" [style.background]="activePendingId() ? 'rgba(245, 158, 11, 0.12)' : 'rgba(167, 139, 250, 0.12)'">
+            <span class="material-symbols-outlined">{{ activePendingId() ? 'rule' : 'add_circle' }}</span>
+          </div>
+          <div class="card-titles">
+            <h2 class="card-name">{{ activePendingId() ? 'Complete Pending Review' : 'Log New Expense' }}</h2>
+            <p class="card-description">{{ activePendingId() ? 'Fill in missing details to approve' : 'Manual entry' }}</p>
+          </div>
         </div>
-        <div class="card-titles">
-          <h2 class="card-name">Log New Expense</h2>
-          <p class="card-description">Manual entry</p>
-        </div>
+        @if (activePendingId()) {
+          <button class="settings-btn" (click)="cancelReview()" title="Cancel Review" style="border: 1px solid var(--lm-color-border); padding: 6px 12px; border-radius: 12px; height: 36px; display: flex; align-items: center; gap: 6px;">
+            <span class="material-symbols-outlined" style="font-size: 16px;">close</span> Cancel
+          </button>
+        }
       </div>
 
       <form [formGroup]="expenseForm" (ngSubmit)="submitExpense()" class="expense-form">
@@ -84,16 +102,60 @@
           <label class="premium-label">Notes (Optional)</label>
         </div>
 
-        <button type="submit" class="premium-submit-btn" [disabled]="expenseForm.invalid || isAdding()">
-          @if (isAdding()) {
-            <span class="material-symbols-outlined spin">sync</span> Adding...
-          } @else {
-            Save Transaction
-          }
-        </button>
+        <div style="display: flex; gap: 12px; width: 100%;">
+          <button type="submit" class="premium-submit-btn" [disabled]="expenseForm.invalid || isAdding()" [style.background]="activePendingId() ? 'var(--lm-color-success)' : ''">
+            @if (isAdding()) {
+              <span class="material-symbols-outlined spin">sync</span> Saving...
+            } @else {
+              {{ activePendingId() ? 'Approve & Save Transaction' : 'Save Transaction' }}
+            }
+          </button>
+        </div>
       </form>
     </div>
   </section>
+
+  @if (pendingTransactions().length > 0) {
+    <!-- ── Pending Transactions (Auto Log) ── -->
+    <section class="flow-item" style="margin-top: 16px;">
+      <div class="hybrid-card detailed-full-card glass-card border-etched" style="border: 1px solid var(--lm-color-warning);">
+        <div class="card-header" style="justify-content: space-between; margin-bottom: 8px;">
+          <div style="display: flex; gap: 12px; align-items: center;">
+            <div class="icon-wrap" style="color: var(--lm-color-warning); background: rgba(245, 158, 11, 0.12);">
+              <span class="material-symbols-outlined">mark_email_unread</span>
+            </div>
+            <div class="card-titles">
+              <h2 class="card-name">Pending Review</h2>
+              <p class="card-description">Auto-detected transactions</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="tx-list">
+          @for (ptx of pendingTransactions(); track ptx._id) {
+            <div class="tx-item" style="background: rgba(245, 158, 11, 0.05); border: 1px dashed var(--lm-color-warning); border-radius: 12px; padding: 12px; margin-bottom: 8px;">
+              <div class="tx-icon">
+                <span class="material-symbols-outlined" style="color: var(--lm-color-warning);">schedule</span>
+              </div>
+              <div class="tx-body">
+                <h4 class="tx-merchant">{{ ptx.merchant }}</h4>
+                <div class="tx-meta">
+                  {{ ptx.date | date:'MMM d' }} • {{ ptx.paymentMethod }}
+                </div>
+              </div>
+              <div class="tx-trailing" style="display: flex; flex-direction: column; align-items: flex-end; gap: 8px;">
+                <span class="tx-amount">₹{{ ptx.amount | number:'1.0-0' }}</span>
+                <div style="display: flex; gap: 8px;">
+                  <button (click)="processPending(ptx._id, 'ignore')" style="background: none; border: 1px solid var(--lm-color-error); color: var(--lm-color-error); padding: 4px 12px; border-radius: 12px; cursor: pointer; font-size: 12px;">Ignore</button>
+                  <button (click)="reviewPending(ptx)" style="background: var(--lm-color-success); border: none; color: white; padding: 4px 12px; border-radius: 12px; cursor: pointer; font-size: 12px;">Review</button>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    </section>
+  }
 
   <!-- ── Transaction History ── -->
   <section class="flow-item" style="margin-top: 16px;">

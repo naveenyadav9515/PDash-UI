@@ -18,6 +18,7 @@
 ## Epic F3: Expense Tracker Screen
 > See full spec: `../modules/F3-expense-tracker.md`
 - [ ] Feature: Expense API & OAuth integration
+- [x] **Completed** - Feature: Automatic Expense Log / Pending Transactions
 - [ ] Feature: Fixed Cards (Monthly Chart, Recent Transactions, Pending Approvals)
 - [ ] Feature: Widget (Quick Add Expense, Pending Review Alert)
 

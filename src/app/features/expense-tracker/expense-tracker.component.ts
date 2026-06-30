@@ -38,7 +38,12 @@ export class ExpenseTrackerComponent implements OnInit {
 
   ngOnInit() {
     this.fetchExpenses();
-    this.fetchPendingTransactions();
+    
+    // Silently sync new emails in the background
+    this.http.post(`${this.apiUrl}/expenses/sync`, {}).subscribe({
+      next: () => this.fetchPendingTransactions(),
+      error: () => this.fetchPendingTransactions() // Still fetch what we have if sync fails
+    });
     
     // Check for Google OAuth code
     this.route.queryParams.subscribe(params => {

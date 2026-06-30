@@ -178,7 +178,7 @@
       @if (getFeature('Finance Tracker'); as feat) {
         <section class="flow-item full-width">
           @if (expenseService.summary(); as summary) {
-            <a routerLink="/expenses" class="ex-summary-card" title="Open Full Expense Tracker" data-testid="open-expense-tracker">
+            <div class="ex-summary-card">
               <!-- Header -->
               <div class="ex-header">
                 <div class="ex-header-left">
@@ -190,8 +190,13 @@
                     <span class="ex-subtitle">This Month <span class="material-symbols-outlined pf-sm-icon">expand_more</span></span>
                   </div>
                 </div>
-                <div class="ex-icon-btn">
-                  <span class="material-symbols-outlined">calendar_today</span>
+                <div style="display: flex; gap: 8px;">
+                  <div class="ex-icon-btn">
+                    <span class="material-symbols-outlined">calendar_today</span>
+                  </div>
+                  <a routerLink="/expenses" class="ex-icon-btn" title="Open Expense Tracker" style="text-decoration: none;">
+                    <span class="material-symbols-outlined">open_in_new</span>
+                  </a>
                 </div>
               </div>
 
@@ -256,7 +261,7 @@
                   </div>
                 </div>
               </div>
-            </a>
+            </div>
           } @else if (expenseService.isLoading()) {
             <div class="glimpse-box preview-flex" style="justify-content: center; padding: 40px;">
               <span class="material-symbols-outlined spin" style="font-size: 32px; color: var(--lm-color-primary);">sync</span>

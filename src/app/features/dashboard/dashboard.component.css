@@ -1804,7 +1804,7 @@
 .ex-chart-wrap {
   position: relative;
   width: 140px;
-  height: 100px;
+  height: 90px;
   flex-shrink: 0;
 }
 
@@ -1819,8 +1819,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding-top: 30px;
+  justify-content: flex-end;
+  padding-bottom: 2px;
 }
 
 .ex-pct {

@@ -1714,52 +1714,60 @@
 }
 
 /* ==========================================================================
-   New Dark Theme Expense Summary Widget
+   Expense Summary Widget — Matches screenshot exactly
+   Layout: Arc gauge + stats side-by-side, bottom mini cards side-by-side.
+   No item should ever wrap to the next line.
    ========================================================================== */
 
 .ex-summary-card {
   display: flex;
   flex-direction: column;
-  background-color: #0f111a;
+  background-color: var(--lm-color-surface);
   border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: var(--lm-border-card);
   padding: 24px;
   text-decoration: none;
   transition: transform 0.2s, box-shadow 0.2s;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--lm-shadow-card);
 }
 
 .ex-summary-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+  box-shadow: var(--lm-shadow-panel-hover);
 }
 
+/* ── Header Row ── */
 .ex-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 30px;
+  margin-bottom: 24px;
 }
 
 .ex-header-left {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
 }
 
 .ex-icon-box {
-  width: 48px;
-  height: 48px;
+  width: 44px;
+  height: 44px;
   background-color: #1e1b4b;
   border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
+}
+
+[data-theme="light"] .ex-icon-box {
+  background-color: rgba(124, 92, 255, 0.08);
 }
 
 .ex-icon-box .material-symbols-outlined {
   color: #a855f7;
-  font-size: 24px;
+  font-size: 22px;
 }
 
 .ex-title-wrap {
@@ -1768,49 +1776,63 @@
 }
 
 .ex-title-wrap h2 {
-  color: #ffffff;
-  font-size: 18px;
+  color: var(--lm-color-text-primary);
+  font-size: 16px;
   font-weight: 600;
-  margin: 0 0 4px 0;
+  margin: 0 0 2px 0;
+  white-space: nowrap;
 }
 
 .ex-subtitle {
-  color: #9ca3af;
-  font-size: 14px;
+  color: var(--lm-color-text-secondary);
+  font-size: 13px;
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 2px;
+  white-space: nowrap;
 }
 
 .ex-icon-btn {
-  width: 40px;
-  height: 40px;
-  background-color: rgba(255, 255, 255, 0.03);
-  border-radius: 12px;
+  width: 36px;
+  height: 36px;
+  background-color: var(--lm-color-surface-hover);
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  color: #9ca3af;
+  border: var(--lm-border-subtle);
+  color: var(--lm-color-text-secondary);
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: var(--lm-transition-fast);
 }
 
+.ex-icon-btn:hover {
+  color: var(--lm-color-primary);
+}
+
+/* ── Main Content: Arc + Stats — ALWAYS side-by-side ── */
 .ex-main {
   display: flex;
   align-items: center;
-  gap: 30px;
-  margin-bottom: 30px;
+  gap: 20px;
+  margin-bottom: 24px;
+  /* Critical: prevent wrapping to next line */
+  flex-wrap: nowrap;
 }
 
 .ex-chart-wrap {
   position: relative;
-  width: 156px;
-  height: 104px;
+  width: 150px;
+  min-width: 130px;
+  height: 100px;
   flex-shrink: 0;
 }
 
 .ex-donut-svg {
   width: 100%;
   height: 100%;
+  overflow: visible;
 }
 
 .ex-chart-text {
@@ -1820,75 +1842,93 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
-  padding-bottom: 5px;
+  padding-bottom: 2px;
 }
 
 .ex-pct {
-  color: #ffffff;
-  font-size: 26px;
+  color: var(--lm-color-text-primary);
+  font-size: 24px;
   font-weight: 700;
   line-height: 1;
 }
 
 .ex-lbl {
-  color: #9ca3af;
-  font-size: 12px;
-  margin-top: 4px;
+  color: var(--lm-color-text-secondary);
+  font-size: 11px;
+  margin-top: 3px;
+  white-space: nowrap;
 }
 
+/* ── Stats (right side of arc) ── */
 .ex-stats {
   display: flex;
   flex-direction: column;
   flex: 1;
+  min-width: 0;
 }
 
 .ex-stats-lbl {
-  color: #9ca3af;
+  color: var(--lm-color-text-secondary);
   font-size: 14px;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
+  white-space: nowrap;
 }
 
 .ex-stats-val {
-  color: #ffffff;
-  font-size: 32px;
+  color: var(--lm-color-text-primary);
+  font-size: 28px;
   font-weight: 700;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
+  line-height: 1.1;
+  white-space: nowrap;
 }
 
 .ex-progress-bar {
   width: 100%;
   height: 8px;
-  background-color: #1f2937;
+  background-color: var(--lm-color-surface-subtle);
   border-radius: 4px;
   margin-bottom: 8px;
   overflow: hidden;
+}
+
+[data-theme="light"] .ex-progress-bar {
+  background-color: rgba(0, 0, 0, 0.06);
 }
 
 .ex-progress-fill {
   height: 100%;
   background: linear-gradient(90deg, #EC4899, #F97316);
   border-radius: 4px;
+  transition: width 0.5s ease-out;
 }
 
 .ex-stats-total {
-  color: #9ca3af;
-  font-size: 14px;
+  color: var(--lm-color-text-secondary);
+  font-size: 13px;
+  white-space: nowrap;
 }
 
+/* ── Bottom Cards: Available + Days Left — ALWAYS side-by-side ── */
 .ex-bottom-cards {
   display: flex;
-  gap: 16px;
+  gap: 12px;
+  /* Critical: prevent wrapping to next line */
+  flex-wrap: nowrap;
 }
 
 .ex-mini-card {
   flex: 1;
-  background-color: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 16px;
-  padding: 16px;
+  min-width: 0;
+  background-color: var(--lm-color-surface-hover);
+  border: var(--lm-border-subtle);
+  border-radius: 14px;
+  padding: 14px;
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
+  /* Prevent children from wrapping */
+  flex-wrap: nowrap;
 }
 
 .ex-mini-icon {
@@ -1898,6 +1938,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
+}
+
+.ex-mini-icon .material-symbols-outlined {
+  font-size: 20px;
 }
 
 .green-icon {
@@ -1913,41 +1958,33 @@
 .ex-mini-data {
   display: flex;
   flex-direction: column;
+  min-width: 0;
 }
 
 .ex-mini-lbl {
-  color: #9ca3af;
-  font-size: 13px;
-  margin-bottom: 4px;
+  color: var(--lm-color-text-secondary);
+  font-size: 12px;
+  margin-bottom: 2px;
+  white-space: nowrap;
 }
 
 .ex-mini-val {
-  color: #ffffff;
-  font-size: 18px;
+  color: var(--lm-color-text-primary);
+  font-size: 17px;
   font-weight: 600;
+  white-space: nowrap;
 }
 
 .ex-mini-val-green {
   color: #22c55e;
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 600;
+  white-space: nowrap;
 }
 
 .ex-mini-sub {
-  color: #9ca3af;
-  font-size: 12px;
+  color: var(--lm-color-text-secondary);
+  font-size: 11px;
   font-weight: 400;
-}
-
-@media (max-width: 600px) {
-  .ex-main {
-    flex-direction: column;
-    align-items: stretch;
-  }
-  .ex-chart-wrap {
-    align-self: center;
-  }
-  .ex-bottom-cards {
-    flex-direction: column;
-  }
+  white-space: nowrap;
 }

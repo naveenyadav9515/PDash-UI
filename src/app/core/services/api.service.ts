@@ -25,7 +25,7 @@ export class ApiService {
    * Resolves the API base URL dynamically based on the current environment.
    * Uses `isPlatformBrowser` for SSR safety (§5.3).
    */
-  private get apiUrl(): string {
+  public get apiUrl(): string {
     if (isPlatformBrowser(this.platformId)) {
       const host = window.location.hostname;
       if (host !== 'localhost' && host !== '127.0.0.1') {

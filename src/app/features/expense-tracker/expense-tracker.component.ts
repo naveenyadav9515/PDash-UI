@@ -16,7 +16,6 @@ import { ApiService } from '@core/services/api.service';
 export class ExpenseTrackerComponent implements OnInit {
   private readonly fb = inject(FormBuilder);
   private readonly http = inject(HttpClient);
-  // @ts-ignore
   private readonly apiUrl = inject(ApiService).apiUrl;
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);

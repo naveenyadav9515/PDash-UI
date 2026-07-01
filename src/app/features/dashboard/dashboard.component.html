@@ -178,7 +178,7 @@
       @if (getFeature('Finance Tracker'); as feat) {
         <section class="flow-item full-width">
           @if (expenseService.summary(); as summary) {
-            <div class="ex-summary-card">
+            <a routerLink="/expenses" class="ex-summary-card" style="text-decoration: none; color: inherit;">
               <!-- Header -->
               <div class="ex-header">
                 <div class="ex-header-left">
@@ -190,17 +190,12 @@
                     <span class="ex-subtitle">This Month <span class="material-symbols-outlined pf-sm-icon">expand_more</span></span>
                   </div>
                 </div>
-                <div style="display: flex; gap: 8px;">
-                  <div class="ex-icon-btn">
-                    <span class="material-symbols-outlined">calendar_today</span>
-                  </div>
-                  <a routerLink="/expenses" class="ex-icon-btn" title="Open Expense Tracker" style="text-decoration: none;">
-                    <span class="material-symbols-outlined">open_in_new</span>
-                  </a>
+                <div class="ex-icon-btn">
+                  <span class="material-symbols-outlined">calendar_today</span>
                 </div>
               </div>
 
-              <!-- Main Content -->
+              <!-- Main Content: Arc gauge + Spent stats (always side-by-side) -->
               <div class="ex-main">
                 <!-- Arc Chart -->
                 <div class="ex-chart-wrap">
@@ -213,7 +208,7 @@
                       </linearGradient>
                     </defs>
                     <!-- Background arc -->
-                    <path d="M 20 110 A 80 80 0 0 1 180 110" fill="none" stroke="#1F2937" stroke-width="12" stroke-linecap="round"/>
+                    <path d="M 20 110 A 80 80 0 0 1 180 110" fill="none" stroke="var(--lm-color-surface-subtle)" stroke-width="12" stroke-linecap="round"/>
                     <!-- Foreground arc -->
                     <path d="M 20 110 A 80 80 0 0 1 180 110" fill="none" stroke="url(#exGrad)" stroke-width="12" stroke-linecap="round"
                           [style.stroke-dasharray]="251.32"
@@ -237,7 +232,7 @@
                 </div>
               </div>
 
-              <!-- Bottom Cards -->
+              <!-- Bottom Cards: Available + Days Left (always side-by-side) -->
               <div class="ex-bottom-cards">
                 <div class="ex-mini-card">
                   <div class="ex-mini-icon green-icon">
@@ -256,12 +251,12 @@
                   <div class="ex-mini-data">
                     <span class="ex-mini-lbl">Days Left</span>
                     <span class="ex-mini-val">
-                      9 <span class="ex-mini-sub">of 30 days</span>
+                      {{ summary.daysLeft }} <span class="ex-mini-sub">of {{ summary.daysInMonth }} days</span>
                     </span>
                   </div>
                 </div>
               </div>
-            </div>
+            </a>
           } @else if (expenseService.isLoading()) {
             <div class="glimpse-box preview-flex" style="justify-content: center; padding: 40px;">
               <span class="material-symbols-outlined spin" style="font-size: 32px; color: var(--lm-color-primary);">sync</span>

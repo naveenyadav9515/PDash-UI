@@ -10,6 +10,8 @@ export interface ExpenseSummary {
   budgetStatus: string;
   spent: number;
   available: number;
+  daysLeft: number;
+  daysInMonth: number;
   topCategories: {
     name: string;
     amount: number;
@@ -39,7 +41,6 @@ export interface ExpenseSummary {
 })
 export class ExpenseService {
   private readonly http = inject(HttpClient);
-  // @ts-ignore - reaching into private apiService property to get dynamic URL
   private readonly apiUrl = inject(ApiService).apiUrl;
 
   public readonly summary = signal<ExpenseSummary | null>(null);

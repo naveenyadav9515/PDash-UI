@@ -1,6 +1,6 @@
 import { Injectable, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import { Observable, tap, retry, timer } from 'rxjs';
 import { ApiService } from './api.service';
 
 export interface Expense {
@@ -80,6 +80,10 @@ export class ExpenseService {
   public fetchSummary(): Observable<{ status: string, data: ExpenseSummary }> {
     this.isLoading.set(true);
     return this.http.get<{ status: string, data: ExpenseSummary }>(`${this.apiUrl}/expenses/summary`).pipe(
+      retry({
+        count: 8,
+        delay: () => timer(5000)
+      }),
       tap({
         next: (res) => {
           this.summary.set(res.data);

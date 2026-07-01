@@ -58,8 +58,8 @@ export class ApiService {
     return this.http.get<HelloResponse>(`${this.apiUrl}/hello`).pipe(
       timeout(this.REQUEST_TIMEOUT_MS),
       retry({
-        count: 4,
-        delay: () => timer(3000)
+        count: 8,
+        delay: () => timer(5000)
       }),
       catchError((error: unknown) => {
         return throwError(() => error);
@@ -75,8 +75,8 @@ export class ApiService {
     return this.http.get<FeaturesResponse>(`${this.apiUrl}/features`).pipe(
       timeout(this.REQUEST_TIMEOUT_MS),
       retry({
-        count: 4,
-        delay: () => timer(3000)
+        count: 8,
+        delay: () => timer(5000)
       }),
       catchError((error: unknown) => throwError(() => error))
     );

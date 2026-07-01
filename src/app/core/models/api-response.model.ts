@@ -13,11 +13,12 @@ export interface FeaturesResponse {
   data: Feature[];
 }
 
-/** Response envelope for the hello/health-check endpoint */
-export interface HelloResponse {
+/** Response envelope for the health-check endpoint */
+export interface HealthResponse {
   status: string;
   message: string;
   timestamp: string;
+  uptime?: number;
 }
 
 /** Authentication Payload (User data + Token) */

@@ -35,7 +35,7 @@ export class Login implements AfterViewInit {
   ngAfterViewInit(): void {
     if (isPlatformBrowser(this.platformId)) {
       // 🚀 Background Warm-Up Ping: 
-      this.apiService.fetchHello().subscribe({
+      this.apiService.fetchHealth().subscribe({
         next: () => undefined,
         error: () => console.warn('Backend server is waking up...')
       });

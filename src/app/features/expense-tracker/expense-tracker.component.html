@@ -1,37 +1,45 @@
 <!-- App Shell (§8.3: Mobile-perfect, Desktop-contained) -->
 <div class="app-shell fade-in-bottom">
 
-  <!-- ── Header ── -->
-  <header class="dashboard-header">
-    <div class="header-row" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-      <div class="header-left">
-        <a routerLink="/" class="nav-back-btn">
-          <span class="material-symbols-outlined">arrow_back</span>
-        </a>
-        <div class="title-stack">
-          <h1 class="brand-name">Expenses</h1>
-          <p class="greeting-text">Track your financial footprint</p>
-        </div>
+  <!-- ── Premium Header ── -->
+  <header class="dashboard-header" style="padding-top: 16px; padding-bottom: 24px; border-bottom: none;">
+    
+    <!-- Top Row: Back Navigation -->
+    <div style="margin-bottom: 20px;">
+      <a routerLink="/" class="nav-back-btn" style="margin: 0; width: 40px; height: 40px;">
+        <span class="material-symbols-outlined" style="font-size: 20px;">arrow_back</span>
+      </a>
+    </div>
+    
+    <!-- Main Header Row -->
+    <div style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 16px; width: 100%;">
+      
+      <!-- Title Area -->
+      <div class="title-stack">
+        <h1 class="brand-name" style="font-size: 36px; margin-bottom: 8px; line-height: 1.1;">Expenses</h1>
+        <p class="greeting-text" style="font-size: 15px; opacity: 0.85; max-width: 280px; line-height: 1.4;">Track your financial footprint</p>
       </div>
       
-      <div style="display: flex; gap: 8px;">
-        <button class="settings-btn" (click)="connectGmail()" title="Connect Gmail" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 16px; border: 1px solid var(--lm-color-border); background: var(--lm-color-surface);">
-          <span class="material-symbols-outlined" style="font-size: 18px; color: #DB4437;">mail</span>
-          <span style="font-size: 12px; font-weight: 600; color: var(--lm-color-text-primary);">Connect Gmail</span>
+      <!-- Actions Area -->
+      <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+        <button class="settings-btn premium-action-btn" (click)="connectGmail()" title="Connect Gmail">
+          <span class="material-symbols-outlined btn-icon" style="color: #DB4437;">mail</span>
+          <span class="btn-text">Connect Gmail</span>
         </button>
         @if (canSimulateAutoLog) {
-          <button class="settings-btn" (click)="simulateAutoLog()" title="Simulate Auto-Log" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 16px; border: 1px solid var(--lm-color-border); background: var(--lm-color-surface);">
-            <span class="material-symbols-outlined" style="font-size: 18px; color: var(--lm-color-warning);">mark_email_unread</span>
-            <span style="font-size: 12px; font-weight: 600; color: var(--lm-color-text-primary);">Simulate Email</span>
+          <button class="settings-btn premium-action-btn" (click)="simulateAutoLog()" title="Simulate Auto-Log">
+            <span class="material-symbols-outlined btn-icon" style="color: var(--lm-color-warning);">mark_email_unread</span>
+            <span class="btn-text">Simulate Email</span>
           </button>
         }
       </div>
+      
     </div>
   </header>
 
   <!-- ── Add Expense Card ── -->
   <section class="flow-item">
-    <div class="hybrid-card detailed-full-card glass-card border-etched">
+    <div style="background: transparent; border: none; box-shadow: none; display: flex; flex-direction: column; gap: 16px; padding: 0 16px;">
       
       <div class="card-header" style="justify-content: space-between;">
         <div style="display: flex; gap: 12px; align-items: center;">
@@ -54,58 +62,72 @@
         
         <div class="input-row">
           <div class="input-group flex-1">
-            <span class="input-prefix">₹</span>
-            <input type="number" formControlName="amount" class="premium-input pl-40" placeholder="0">
             <label class="premium-label">Amount</label>
+            <div class="input-wrapper">
+              <span class="input-prefix">₹</span>
+              <input type="number" formControlName="amount" class="premium-input" placeholder="0">
+            </div>
           </div>
+          
           <div class="input-group flex-2">
-            <span class="material-symbols-outlined input-icon">storefront</span>
-            <input type="text" formControlName="merchant" class="premium-input pl-40" placeholder="e.g. Swiggy">
             <label class="premium-label">Merchant / Reason</label>
+            <div class="input-wrapper">
+              <span class="material-symbols-outlined input-icon">storefront</span>
+              <input type="text" formControlName="merchant" class="premium-input" placeholder="e.g. Swiggy">
+            </div>
           </div>
         </div>
 
         <div class="input-row">
           <div class="input-group flex-1">
-            <span class="material-symbols-outlined input-icon">category</span>
-            <select formControlName="category" class="premium-input pl-40 select-caret">
-              <option value="Food">Food & Dining</option>
-              <option value="Transport">Transport</option>
-              <option value="Shopping">Shopping</option>
-              <option value="Utilities">Utilities</option>
-              <option value="Entertainment">Entertainment</option>
-              <option value="Health">Health</option>
-              <option value="Other">Other</option>
-            </select>
             <label class="premium-label">Category</label>
+            <div class="input-wrapper">
+              <span class="material-symbols-outlined input-icon">category</span>
+              <select formControlName="category" class="premium-input select-caret">
+                <option value="Food">Food & Dining</option>
+                <option value="Transport">Transport</option>
+                <option value="Shopping">Shopping</option>
+                <option value="Utilities">Utilities</option>
+                <option value="Entertainment">Entertainment</option>
+                <option value="Health">Health</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
           </div>
+          
           <div class="input-group flex-1">
-            <span class="material-symbols-outlined input-icon">payments</span>
-            <select formControlName="paymentMethod" class="premium-input pl-40 select-caret">
-              <option value="UPI">UPI</option>
-              <option value="Credit Card">Credit Card</option>
-              <option value="Debit Card">Debit Card</option>
-              <option value="Net Banking">Net Banking</option>
-              <option value="Cash">Cash</option>
-              <option value="Other">Other</option>
-            </select>
             <label class="premium-label">Method</label>
+            <div class="input-wrapper">
+              <span class="material-symbols-outlined input-icon">payments</span>
+              <select formControlName="paymentMethod" class="premium-input select-caret">
+                <option value="UPI">UPI</option>
+                <option value="Credit Card">Credit Card</option>
+                <option value="Debit Card">Debit Card</option>
+                <option value="Net Banking">Net Banking</option>
+                <option value="Cash">Cash</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
           </div>
         </div>
 
-        <div class="input-group flex-1">
-          <span class="material-symbols-outlined input-icon">sell</span>
-          <input type="text" formControlName="tags" class="premium-input pl-40" placeholder="e.g. Weekend, Dinner">
+        <div class="input-group">
           <label class="premium-label">Tags (Optional)</label>
+          <div class="input-wrapper">
+            <span class="material-symbols-outlined input-icon">sell</span>
+            <input type="text" formControlName="tags" class="premium-input" placeholder="e.g. Weekend, Dinner">
+          </div>
         </div>
 
-        <div class="input-group flex-1">
-          <span class="material-symbols-outlined input-icon">description</span>
-          <textarea formControlName="notes" class="premium-input pl-40" placeholder="e.g. Shared with roommates" rows="2" style="resize: none; height: auto;"></textarea>
+        <div class="input-group">
           <label class="premium-label">Notes (Optional)</label>
+          <div class="input-wrapper">
+            <span class="material-symbols-outlined input-icon" style="top: 24px;">description</span>
+            <textarea formControlName="notes" class="premium-input" placeholder="e.g. Shared with roommates" rows="2" style="resize: none;"></textarea>
+          </div>
         </div>
 
-        <div style="display: flex; gap: 12px; width: 100%;">
+        <div style="display: flex; gap: 12px; width: 100%; margin-top: 8px;">
           <button type="submit" class="premium-submit-btn" [disabled]="expenseForm.invalid || isAdding()" [style.background]="activePendingId() ? 'var(--lm-color-success)' : ''">
             @if (isAdding()) {
               <span class="material-symbols-outlined spin">sync</span> Saving...
@@ -120,16 +142,16 @@
 
   @if (pendingTransactions().length > 0) {
     <!-- ── Pending Transactions (Auto Log) ── -->
-    <section class="flow-item" style="margin-top: 16px;">
-      <div class="hybrid-card detailed-full-card glass-card border-etched" style="border: 1px solid var(--lm-color-warning);">
-        <div class="card-header" style="justify-content: space-between; margin-bottom: 8px;">
+    <section class="flow-item" style="margin-top: 24px;">
+      <div style="padding: 20px; border-radius: 24px; background: rgba(245, 158, 11, 0.02); border: 1px solid rgba(245, 158, 11, 0.2);">
+        <div class="card-header" style="display: flex; flex-direction: row; flex-wrap: nowrap; justify-content: space-between; align-items: center; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
           <div style="display: flex; gap: 12px; align-items: center;">
-            <div class="icon-wrap" style="color: var(--lm-color-warning); background: rgba(245, 158, 11, 0.12);">
-              <span class="material-symbols-outlined">mark_email_unread</span>
+            <div class="icon-wrap" style="color: var(--lm-color-warning); background: rgba(245, 158, 11, 0.15);">
+              <span class="material-symbols-outlined" style="font-size: 24px;">mark_email_unread</span>
             </div>
             <div class="card-titles">
-              <h2 class="card-name">Pending Review</h2>
-              <p class="card-description">Auto-detected transactions</p>
+              <h2 class="card-name" style="font-size: 20px; font-weight: 700; letter-spacing: 0.5px; color: var(--lm-color-warning);">Pending Review</h2>
+              <p class="card-description" style="font-size: 13px; color: var(--lm-color-text-muted);">Auto-detected transactions</p>
             </div>
           </div>
         </div>
@@ -141,16 +163,16 @@
                 <span class="material-symbols-outlined" style="color: var(--lm-color-warning);">schedule</span>
               </div>
               <div class="tx-body">
-                <h4 class="tx-merchant">{{ ptx.merchant }}</h4>
+                <h4 class="tx-merchant">{{ ptx.merchant | slice:0:30 }}{{ ptx.merchant.length > 30 ? '...' : '' }}</h4>
                 <div class="tx-meta">
-                  {{ ptx.date | date:'MMM d' }} • {{ ptx.paymentMethod }}
+                  <span class="tx-date-method">{{ ptx.date | date:'MMM d' }} • {{ ptx.paymentMethod }}</span>
                 </div>
               </div>
               <div class="tx-trailing" style="display: flex; flex-direction: column; align-items: flex-end; gap: 8px;">
                 <span class="tx-amount">₹{{ ptx.amount | number:'1.0-0' }}</span>
                 <div style="display: flex; gap: 8px;">
-                  <button (click)="processPending(ptx._id, 'ignore')" style="background: none; border: 1px solid var(--lm-color-error); color: var(--lm-color-error); padding: 4px 12px; border-radius: 12px; cursor: pointer; font-size: 12px;">Ignore</button>
-                  <button (click)="reviewPending(ptx)" style="background: var(--lm-color-success); border: none; color: white; padding: 4px 12px; border-radius: 12px; cursor: pointer; font-size: 12px;">Review</button>
+                  <button (click)="processPending(ptx._id, 'ignore')" style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); color: var(--lm-color-text-primary); padding: 4px 12px; border-radius: 12px; cursor: pointer; font-size: 12px; font-weight: 600;">Ignore</button>
+                  <button (click)="reviewPending(ptx)" style="background: var(--lm-color-warning); border: none; color: #000; padding: 4px 12px; border-radius: 12px; cursor: pointer; font-size: 12px; font-weight: 700;">Review</button>
                 </div>
               </div>
             </div>
@@ -161,20 +183,20 @@
   }
 
   <!-- ── Transaction History ── -->
-  <section class="flow-item" style="margin-top: 16px;">
-    <div class="hybrid-card detailed-full-card glass-card border-etched">
-      <div class="card-header" style="justify-content: space-between; margin-bottom: 8px;">
+  <section class="flow-item" style="margin-top: 24px;">
+    <div style="padding: 20px; border-radius: 24px; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05);">
+      <div class="card-header" style="display: flex; flex-direction: row; flex-wrap: nowrap; justify-content: space-between; align-items: center; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
         <div style="display: flex; gap: 12px; align-items: center;">
-          <div class="icon-wrap" style="color: var(--lm-color-secondary); background: rgba(244, 114, 182, 0.12);">
-            <span class="material-symbols-outlined">receipt_long</span>
+          <div class="icon-wrap" style="color: var(--lm-color-primary); background: rgba(168, 85, 247, 0.15);">
+            <span class="material-symbols-outlined" style="font-size: 24px;">receipt_long</span>
           </div>
           <div class="card-titles">
-            <h2 class="card-name">History</h2>
-            <p class="card-description">Recent activity</p>
+            <h2 class="card-name" style="font-size: 20px; font-weight: 700; letter-spacing: 0.5px;">History</h2>
+            <p class="card-description" style="font-size: 13px; color: var(--lm-color-text-muted);">Recent activity</p>
           </div>
         </div>
-        <button class="settings-btn" (click)="fetchExpenses()" [disabled]="isLoading()" title="Refresh" style="width: 36px; height: 36px;">
-          <span class="material-symbols-outlined" [class.spin]="isLoading()" style="font-size: 18px;">refresh</span>
+        <button class="premium-icon-btn" (click)="fetchExpenses()" [disabled]="isLoading()" title="Refresh">
+          <span class="material-symbols-outlined" [class.spin]="isLoading()" style="font-size: 20px;">refresh</span>
         </button>
       </div>
 
@@ -198,9 +220,9 @@
                 </span>
               </div>
               <div class="tx-body">
-                <h4 class="tx-merchant">{{ exp.merchant }}</h4>
+                <h4 class="tx-merchant">{{ exp.merchant | slice:0:30 }}{{ exp.merchant.length > 30 ? '...' : '' }}</h4>
                 <div class="tx-meta">
-                  {{ exp.date | date:'MMM d' }} • {{ exp.paymentMethod }}
+                  <span class="tx-date-method">{{ exp.date | date:'MMM d' }} • {{ exp.paymentMethod }}</span>
                   @if (exp.tags && exp.tags.length) {
                     <span class="tx-tag"> • #{{ exp.tags.join(', #') }}</span>
                   }

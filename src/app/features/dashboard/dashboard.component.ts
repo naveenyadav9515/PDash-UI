@@ -8,8 +8,8 @@ import {
   HostListener,
   ElementRef,
 } from '@angular/core';
-import { isPlatformBrowser, DecimalPipe, SlicePipe, DatePipe } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
+import { isPlatformBrowser, SlicePipe, DatePipe, DecimalPipe } from '@angular/common';
 import { ApiService } from '@core/services/api.service';
 import { Feature } from '@core/models/feature.model';
 import { FeatureLog } from '@core/models/feature-log.model';
@@ -38,7 +38,7 @@ import { LoaderComponent } from '../../shared/components';
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [LoaderComponent, DecimalPipe, RouterLink],
+  imports: [LoaderComponent, RouterLink, DecimalPipe],
 })
 export class DashboardComponent {
   /* ── Protected Properties & Signals ── */
@@ -51,23 +51,13 @@ export class DashboardComponent {
   protected readonly dbStatus = signal<DbConnectionStatus>('connecting');
   protected readonly features = signal<Feature[]>([]);
   protected readonly apiMessage = signal<string>('');
-
-  /** Current date string formatted nicely for dashboard display */
-  protected readonly todayDate = signal<string>('');
-  protected readonly quoteText = signal<string>('');
-
-  /** Most recently logged upcoming features for dashboard glimpse */
-  protected readonly recentLogs = signal<FeatureLog[]>([]);
-
+  
   /** Current feature selected for showing detail modal */
   protected readonly selectedFeature = signal<Feature | null>(null);
 
   /** Settings and Theme options state */
   protected readonly isSettingsOpen = signal<boolean>(false);
 
-  /** Extra metrics for welcome card */
-  protected readonly notesCount = signal<number>(0);
-  protected readonly kitchenCount = signal<number>(0);
 
   /* ── Private Dependencies ── */
   private readonly apiService = inject(ApiService);
@@ -85,10 +75,6 @@ export class DashboardComponent {
     afterNextRender(() => {
       this.setGreetingByTimeOfDay();
       this.loadApiData();
-      this.loadRecentLogs();
-      this.setCurrentDate();
-      this.loadExtraMetrics();
-      this.setRandomQuote();
     });
   }
 
@@ -176,45 +162,15 @@ export class DashboardComponent {
   }
 
 
-  /** Sets a random motivational quote on load */
-  private setRandomQuote(): void {
-    // TODO: Connect to Quote API in backend
-    this.quoteText.set('');
-  }
 
-  /** Loads extra counts for welcome banner card from local storage */
-  private loadExtraMetrics(): void {
-    if (isPlatformBrowser(this.platformId)) {
-      const savedNotes = localStorage.getItem('pdash-notes-count');
-      if (savedNotes) {
-        this.notesCount.set(parseInt(savedNotes, 10));
-      } else {
-        this.notesCount.set(0);
-      }
-
-      const savedKitchen = localStorage.getItem('pdash-kitchen-count');
-      if (savedKitchen) {
-        this.kitchenCount.set(parseInt(savedKitchen, 10));
-      } else {
-        this.kitchenCount.set(0);
-      }
-    }
-  }
-
-  /** Formats and sets the current date for the dashboard header */
-  private setCurrentDate(): void {
-    const options: Intl.DateTimeFormatOptions = {
-      weekday: 'long',
-      month: 'short',
-      day: 'numeric',
-    };
-    this.todayDate.set(new Date().toLocaleDateString('en-US', options));
-  }
 
   /** Fetches features from the API */
   private loadApiData(): void {
-    this.apiService.fetchHello().subscribe({
-      next: (res) => this.apiMessage.set(res.message),
+    this.apiService.fetchHealth().subscribe({
+      next: (res) => {
+        this.apiMessage.set(res.message);
+        // Note: dbStatus will be set to connected by fetchFeatures
+      },
       error: () => {
         this.dbStatus.set('error');
         this.notificationService.error('Failed to establish connection with server', 'System Offline');
@@ -231,25 +187,11 @@ export class DashboardComponent {
       },
     });
 
-    // Load Live Expense Summary
     this.expenseService.fetchSummary().subscribe();
   }
 
 
-  /** Loads the 2 most recent logged features for preview */
-  private loadRecentLogs(): void {
-    if (isPlatformBrowser(this.platformId)) {
-      const stored = localStorage.getItem(STORAGE_KEYS.FEATURE_LOGS);
-      if (stored) {
-        try {
-          const logs: FeatureLog[] = JSON.parse(stored);
-          this.recentLogs.set(logs.slice(0, 2));
-        } catch {
-          /* ignore corrupted data */
-        }
-      }
-    }
-  }
+
 
   /** Gets fallback icon name based on feature name */
   private getIconForFeature(name: string): string {
@@ -341,4 +283,6 @@ export class DashboardComponent {
       };
     });
   }
+
+
 }

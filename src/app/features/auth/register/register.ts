@@ -34,7 +34,7 @@ export class Register implements OnInit {
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
       // 🚀 Background Warm-Up Ping: Wake up Render
-      this.apiService.fetchHello().subscribe({
+      this.apiService.fetchHealth().subscribe({
         next: () => undefined,
         error: () => console.warn('Backend server is waking up...')
       });

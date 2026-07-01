@@ -2,7 +2,7 @@ import { Injectable, inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Observable, catchError, throwError, timeout, retry, timer } from 'rxjs';
-import { FeaturesResponse, HelloResponse, AuthResponse } from '@core/models/api-response.model';
+import { FeaturesResponse, HealthResponse, AuthResponse } from '@core/models/api-response.model';
 import { environment } from '@env/environment';
 
 export interface LoginCredentials {
@@ -36,6 +36,7 @@ export class ApiService {
    * Resolves the API base URL dynamically based on the current environment.
    * Uses `isPlatformBrowser` for SSR safety (§5.3).
    */
+
   public get apiUrl(): string {
     if (environment.apiUrl) {
       return environment.apiUrl;
@@ -51,11 +52,11 @@ export class ApiService {
   }
 
   /**
-   * Fetches the hello/health-check response from the backend.
-   * @returns Observable of the hello response envelope
+   * Fetches the health-check response from the backend.
+   * @returns Observable of the health response envelope
    */
-  fetchHello(): Observable<HelloResponse> {
-    return this.http.get<HelloResponse>(`${this.apiUrl}/hello`).pipe(
+  fetchHealth(): Observable<HealthResponse> {
+    return this.http.get<HealthResponse>(`${this.apiUrl}/health`).pipe(
       timeout(this.REQUEST_TIMEOUT_MS),
       retry({
         count: 8,

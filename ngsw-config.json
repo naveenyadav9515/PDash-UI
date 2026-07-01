@@ -43,13 +43,14 @@
     {
       "name": "api-data",
       "urls": [
-        "/api/**"
+        "/api/**",
+        "https://pdash-services-latest.onrender.com/api/**"
       ],
       "cacheConfig": {
         "strategy": "freshness",
         "maxSize": 50,
         "maxAge": "1h",
-        "timeout": "5s"
+        "timeout": "30s"
       }
     }
   ]

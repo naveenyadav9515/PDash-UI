@@ -1,7 +1,7 @@
 import { Injectable, inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Observable, catchError, throwError, timeout } from 'rxjs';
+import { Observable, catchError, throwError, timeout, retry, timer } from 'rxjs';
 import { FeaturesResponse, HelloResponse, AuthResponse } from '@core/models/api-response.model';
 import { environment } from '@env/environment';
 
@@ -57,6 +57,10 @@ export class ApiService {
   fetchHello(): Observable<HelloResponse> {
     return this.http.get<HelloResponse>(`${this.apiUrl}/hello`).pipe(
       timeout(this.REQUEST_TIMEOUT_MS),
+      retry({
+        count: 4,
+        delay: () => timer(3000)
+      }),
       catchError((error: unknown) => {
         return throwError(() => error);
       })
@@ -70,6 +74,10 @@ export class ApiService {
   fetchFeatures(): Observable<FeaturesResponse> {
     return this.http.get<FeaturesResponse>(`${this.apiUrl}/features`).pipe(
       timeout(this.REQUEST_TIMEOUT_MS),
+      retry({
+        count: 4,
+        delay: () => timer(3000)
+      }),
       catchError((error: unknown) => throwError(() => error))
     );
   }

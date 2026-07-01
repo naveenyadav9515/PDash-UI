@@ -3,6 +3,17 @@ import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Observable, catchError, throwError, timeout } from 'rxjs';
 import { FeaturesResponse, HelloResponse, AuthResponse } from '@core/models/api-response.model';
+import { environment } from '@env/environment';
+
+export interface LoginCredentials {
+  email: string;
+  password: string;
+}
+
+export interface RegisterPayload extends LoginCredentials {
+  firstName: string;
+  lastName: string;
+}
 /**
  * Stateless API client service.
  *
@@ -26,6 +37,10 @@ export class ApiService {
    * Uses `isPlatformBrowser` for SSR safety (§5.3).
    */
   public get apiUrl(): string {
+    if (environment.apiUrl) {
+      return environment.apiUrl;
+    }
+
     if (isPlatformBrowser(this.platformId)) {
       const host = window.location.hostname;
       if (host !== 'localhost' && host !== '127.0.0.1') {
@@ -62,7 +77,7 @@ export class ApiService {
   /**
    * Registers a new user.
    */
-  register(userData: any): Observable<AuthResponse> {
+  register(userData: RegisterPayload): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${this.apiUrl}/auth/register`, userData).pipe(
       timeout(this.REQUEST_TIMEOUT_MS),
       catchError((error: unknown) => throwError(() => error))
@@ -72,7 +87,7 @@ export class ApiService {
   /**
    * Logs in an existing user with email and password.
    */
-  login(credentials: any): Observable<AuthResponse> {
+  login(credentials: LoginCredentials): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${this.apiUrl}/auth/login`, credentials).pipe(
       timeout(this.REQUEST_TIMEOUT_MS),
       catchError((error: unknown) => throwError(() => error))

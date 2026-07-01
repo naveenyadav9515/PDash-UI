@@ -19,10 +19,12 @@
           <span class="material-symbols-outlined" style="font-size: 18px; color: #DB4437;">mail</span>
           <span style="font-size: 12px; font-weight: 600; color: var(--lm-color-text-primary);">Connect Gmail</span>
         </button>
-        <button class="settings-btn" (click)="simulateAutoLog()" title="Simulate Auto-Log" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 16px; border: 1px solid var(--lm-color-border); background: var(--lm-color-surface);">
-          <span class="material-symbols-outlined" style="font-size: 18px; color: var(--lm-color-warning);">mark_email_unread</span>
-          <span style="font-size: 12px; font-weight: 600; color: var(--lm-color-text-primary);">Simulate Email</span>
-        </button>
+        @if (canSimulateAutoLog) {
+          <button class="settings-btn" (click)="simulateAutoLog()" title="Simulate Auto-Log" style="display: flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 16px; border: 1px solid var(--lm-color-border); background: var(--lm-color-surface);">
+            <span class="material-symbols-outlined" style="font-size: 18px; color: var(--lm-color-warning);">mark_email_unread</span>
+            <span style="font-size: 12px; font-weight: 600; color: var(--lm-color-text-primary);">Simulate Email</span>
+          </button>
+        }
       </div>
     </div>
   </header>

@@ -3,9 +3,10 @@ import { isPlatformBrowser } from '@angular/common';
 import { User } from '../models/user.model';
 import { Router } from '@angular/router';
 import { ApiService } from './api.service';
+import { LoginCredentials, RegisterPayload } from './api.service';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { AuthResponse } from '../models/api-response.model';
+import { AuthPayload, AuthResponse } from '../models/api-response.model';
 
 @Injectable({
   providedIn: 'root'
@@ -96,26 +97,31 @@ export class AuthService {
   private readonly apiService = inject(ApiService);
   private readonly router = inject(Router);
 
-  public login(credentials: any): Observable<AuthResponse> {
+  public login(credentials: LoginCredentials): Observable<AuthResponse> {
     return this.apiService.login(credentials).pipe(
-      tap((res: any) => this.setSession(res.data, res.data.token))
+      tap((res: AuthResponse) => this.setSessionFromPayload(res.data))
     );
   }
 
-  public register(userData: any): Observable<AuthResponse> {
+  public register(userData: RegisterPayload): Observable<AuthResponse> {
     return this.apiService.register(userData).pipe(
-      tap((res: any) => this.setSession(res.data, res.data.token))
+      tap((res: AuthResponse) => this.setSessionFromPayload(res.data))
     );
   }
   
   public loginWithGoogle(token: string): Observable<AuthResponse> {
     return this.apiService.loginWithGoogle(token).pipe(
-      tap((res: any) => this.setSession(res.data, res.data.token))
+      tap((res: AuthResponse) => this.setSessionFromPayload(res.data))
     );
   }
 
   public logout(): void {
     this.clearSession();
     this.router.navigate(['/auth/login']);
+  }
+
+  private setSessionFromPayload(payload: AuthPayload): void {
+    const { token, ...user } = payload;
+    this.setSession(user, token);
   }
 }

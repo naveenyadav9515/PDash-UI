@@ -2,8 +2,14 @@ import { Component, ChangeDetectionStrategy, inject, signal, OnInit } from '@ang
 import { CommonModule } from '@angular/common';
 import { RouterLink, ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
-import { ApiService } from '@core/services/api.service';
+import {
+  Expense,
+  ExpensePayload,
+  ExpenseService,
+  PendingTransaction
+} from '@core/services/expense.service';
+import { NotificationService } from '@core/services/notification.service';
+import { environment } from '@env/environment';
 
 @Component({
   selector: 'app-expense-tracker',
@@ -15,19 +21,20 @@ import { ApiService } from '@core/services/api.service';
 })
 export class ExpenseTrackerComponent implements OnInit {
   private readonly fb = inject(FormBuilder);
-  private readonly http = inject(HttpClient);
-  private readonly apiUrl = inject(ApiService).apiUrl;
+  private readonly expenseService = inject(ExpenseService);
+  private readonly notificationService = inject(NotificationService);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
 
-  protected readonly expenses = signal<any[]>([]);
-  protected readonly pendingTransactions = signal<any[]>([]);
+  protected readonly expenses = signal<Expense[]>([]);
+  protected readonly pendingTransactions = signal<PendingTransaction[]>([]);
   protected readonly isLoading = signal<boolean>(false);
   protected readonly isAdding = signal<boolean>(false);
   protected readonly activePendingId = signal<string | null>(null);
+  protected readonly canSimulateAutoLog = !environment.production && environment.featureFlags.enableExpenseSimulator;
 
   protected readonly expenseForm = this.fb.nonNullable.group({
-    amount: [null, [Validators.required, Validators.min(1)]],
+    amount: this.fb.control<number | null>(null, [Validators.required, Validators.min(1)]),
     merchant: ['', Validators.required],
     category: ['Food', Validators.required],
     paymentMethod: ['UPI', Validators.required],
@@ -39,7 +46,7 @@ export class ExpenseTrackerComponent implements OnInit {
     this.fetchExpenses();
     
     // Silently sync new emails in the background
-    this.http.post(`${this.apiUrl}/expenses/sync`, {}).subscribe({
+    this.expenseService.syncExpenses().subscribe({
       next: () => this.fetchPendingTransactions(),
       error: () => this.fetchPendingTransactions() // Still fetch what we have if sync fails
     });
@@ -55,14 +62,14 @@ export class ExpenseTrackerComponent implements OnInit {
 
   protected completeGmailConnection(code: string) {
     const redirectUri = window.location.origin + window.location.pathname;
-    this.http.post(`${this.apiUrl}/auth/google/connect`, { code, redirectUri }).subscribe({
+    this.expenseService.completeGmailConnection(code, redirectUri).subscribe({
       next: () => {
-        alert('Gmail successfully connected for automated logging!');
+        this.notificationService.success('Gmail connected for automated logging', 'Connected');
         this.router.navigate([], { queryParams: { code: null, scope: null, authuser: null, prompt: null }, queryParamsHandling: 'merge' });
       },
       error: (err) => {
         console.error('Failed to connect Gmail', err);
-        alert('Failed to connect Gmail. Please try again.');
+        this.notificationService.error('Failed to connect Gmail. Please try again.', 'Connection Failed');
         this.router.navigate([], { queryParams: { code: null, scope: null, authuser: null, prompt: null }, queryParamsHandling: 'merge' });
       }
     });
@@ -70,17 +77,20 @@ export class ExpenseTrackerComponent implements OnInit {
 
   protected connectGmail() {
     const redirectUri = window.location.origin + window.location.pathname;
-    this.http.get<{status: string, data: {url: string}}>(`${this.apiUrl}/auth/google/url?redirectUri=${encodeURIComponent(redirectUri)}`).subscribe({
+    this.expenseService.getGmailConnectionUrl(redirectUri).subscribe({
       next: (res) => {
         window.location.href = res.data.url;
       },
-      error: (err) => console.error('Failed to get auth URL', err)
+      error: (err) => {
+        console.error('Failed to get auth URL', err);
+        this.notificationService.error('Gmail connection is not configured yet.', 'Connection Failed');
+      }
     });
   }
 
   protected fetchExpenses() {
     this.isLoading.set(true);
-    this.http.get<{status: string, data: any[]}>(`${this.apiUrl}/expenses`).subscribe({
+    this.expenseService.fetchExpenses().subscribe({
       next: (res) => {
         this.expenses.set(res.data);
         this.isLoading.set(false);
@@ -90,7 +100,7 @@ export class ExpenseTrackerComponent implements OnInit {
   }
 
   protected fetchPendingTransactions() {
-    this.http.get<{status: string, data: any[]}>(`${this.apiUrl}/expenses/pending`).subscribe({
+    this.expenseService.fetchPendingTransactions().subscribe({
       next: (res) => {
         this.pendingTransactions.set(res.data);
       },
@@ -99,7 +109,7 @@ export class ExpenseTrackerComponent implements OnInit {
   }
 
   protected processPending(id: string, action: 'approve' | 'ignore') {
-    this.http.post(`${this.apiUrl}/expenses/pending/${id}`, { action }).subscribe({
+    this.expenseService.processPendingTransaction(id, { action }).subscribe({
       next: () => {
         this.fetchPendingTransactions();
         if (action === 'approve') {
@@ -110,7 +120,7 @@ export class ExpenseTrackerComponent implements OnInit {
     });
   }
 
-  protected reviewPending(ptx: any) {
+  protected reviewPending(ptx: PendingTransaction) {
     this.activePendingId.set(ptx._id);
     this.expenseForm.patchValue({
       amount: ptx.amount,
@@ -127,7 +137,7 @@ export class ExpenseTrackerComponent implements OnInit {
   }
 
   protected simulateAutoLog() {
-    this.http.post(`${this.apiUrl}/expenses/pending/simulate`, {}).subscribe({
+    this.expenseService.simulateAutoLog().subscribe({
       next: () => {
         this.fetchPendingTransactions();
       },
@@ -139,8 +149,9 @@ export class ExpenseTrackerComponent implements OnInit {
     if (this.expenseForm.invalid) return;
 
     const rawValue = this.expenseForm.getRawValue();
-    const payload = {
+    const payload: ExpensePayload = {
       ...rawValue,
+      amount: Number(rawValue.amount),
       tags: rawValue.tags ? rawValue.tags.split(',').map((t: string) => t.trim()) : []
     };
 
@@ -148,7 +159,7 @@ export class ExpenseTrackerComponent implements OnInit {
     
     const pendingId = this.activePendingId();
     if (pendingId) {
-      this.http.post(`${this.apiUrl}/expenses/pending/${pendingId}`, { action: 'approve', ...payload }).subscribe({
+      this.expenseService.processPendingTransaction(pendingId, { action: 'approve', ...payload }).subscribe({
         next: () => {
           this.isAdding.set(false);
           this.activePendingId.set(null);
@@ -159,7 +170,7 @@ export class ExpenseTrackerComponent implements OnInit {
         error: () => this.isAdding.set(false)
       });
     } else {
-      this.http.post(`${this.apiUrl}/expenses`, payload).subscribe({
+      this.expenseService.createExpense(payload).subscribe({
         next: () => {
           this.isAdding.set(false);
           this.expenseForm.reset({ category: 'Food', paymentMethod: 'UPI' });

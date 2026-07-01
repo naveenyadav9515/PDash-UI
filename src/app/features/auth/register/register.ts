@@ -35,7 +35,7 @@ export class Register implements OnInit {
     if (isPlatformBrowser(this.platformId)) {
       // 🚀 Background Warm-Up Ping: Wake up Render
       this.apiService.fetchHello().subscribe({
-        next: () => console.log('Backend server warmed up and ready!'),
+        next: () => undefined,
         error: () => console.warn('Backend server is waking up...')
       });
     }

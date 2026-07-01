@@ -1,9 +1,10 @@
 import { Component, inject, signal, AfterViewInit, NgZone, PLATFORM_ID } from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AuthService } from '@core/services/auth.service';
 import { ApiService } from '@core/services/api.service';
 import { NgIf, isPlatformBrowser } from '@angular/common';
+import { environment } from '@env/environment';
 
 declare var google: any;
 
@@ -19,6 +20,7 @@ export class Login implements AfterViewInit {
   private readonly authService = inject(AuthService);
   private readonly apiService = inject(ApiService);
   private readonly router = inject(Router);
+  private readonly route = inject(ActivatedRoute);
   private readonly ngZone = inject(NgZone);
   private readonly platformId = inject(PLATFORM_ID);
 
@@ -34,13 +36,13 @@ export class Login implements AfterViewInit {
     if (isPlatformBrowser(this.platformId)) {
       // 🚀 Background Warm-Up Ping: 
       this.apiService.fetchHello().subscribe({
-        next: () => console.log('Backend server warmed up and ready!'),
+        next: () => undefined,
         error: () => console.warn('Backend server is waking up...')
       });
 
-      if (typeof google !== 'undefined') {
+      if (typeof google !== 'undefined' && environment.googleClientId) {
         google.accounts.id.initialize({
-          client_id: '305562630147-u7hnu7q3udsbmtag2cjd98mr53eq59am.apps.googleusercontent.com',
+          client_id: environment.googleClientId,
           callback: this.handleGoogleCredentialResponse.bind(this)
         });
         
@@ -49,7 +51,7 @@ export class Login implements AfterViewInit {
           { theme: 'outline', size: 'large', width: '340' } 
         );
       } else {
-        console.warn('Google Identity Services SDK not loaded.');
+        console.warn('Google Identity Services SDK is not configured or not loaded.');
       }
     }
   }
@@ -63,7 +65,7 @@ export class Login implements AfterViewInit {
       this.authService.loginWithGoogle(response.credential).subscribe({
         next: () => {
           this.isLoading.set(false);
-          this.router.navigate(['/']); // Redirect to dashboard
+          this.router.navigateByUrl(this.getSafeReturnUrl());
         },
         error: (err) => {
           this.isLoading.set(false);
@@ -87,12 +89,17 @@ export class Login implements AfterViewInit {
     this.authService.login(credentials).subscribe({
       next: () => {
         this.isLoading.set(false);
-        this.router.navigate(['/']); // Redirect to dashboard
+        this.router.navigateByUrl(this.getSafeReturnUrl());
       },
       error: (err) => {
         this.isLoading.set(false);
         this.errorMessage.set(err.error?.message || 'An error occurred during login.');
       }
     });
+  }
+
+  private getSafeReturnUrl(): string {
+    const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
+    return returnUrl?.startsWith('/') && !returnUrl.startsWith('//') ? returnUrl : '/';
   }
 }
